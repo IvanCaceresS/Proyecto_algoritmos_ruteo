@@ -6,7 +6,7 @@ Para el segundo trabajo grupal del curso (fase 2), deber√° hacer una presentaci√
 
 El repositorio debe contener las siguientes carpetas y archivos:
 
-### 1. Carpeta Infraestructura
+### 1. Carpeta Infraestructura [listo]
 Debe contener:
 - Un archivo que automatice la descarga de la infraestructura.
 - El archivo descargado que contenga la infraestructura (nodos y aristas).

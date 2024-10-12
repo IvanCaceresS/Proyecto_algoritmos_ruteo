@@ -5,7 +5,7 @@ from geojson import FeatureCollection, Feature, LineString
 # Definir las coordenadas del bounding box
 norte = -33.2467   # Latitud máxima
 sur = -33.8454     # Latitud mínima
-este = -70.4333   # Longitud máxima
+este = -70.4333    # Longitud máxima
 oeste = -70.9360   # Longitud mínima
 
 # Crear la variable del bounding box en el orden: sur, oeste, norte, este
@@ -49,7 +49,10 @@ if response.status_code == 200:
                     coords.append((node['lon'], node['lat']))
             if coords:
                 geometry = LineString(coords)
-                properties = elem.get('tags', {})
+                # Filtrar las propiedades deseadas
+                desired_properties = ['highway', 'lanes', 'name']
+                tags = elem.get('tags', {})
+                properties = {key: tags.get(key) for key in desired_properties if key in tags}
                 properties['id'] = elem['id']
                 feature = Feature(geometry=geometry, properties=properties)
                 features.append(feature)
@@ -57,7 +60,7 @@ if response.status_code == 200:
     feature_collection = FeatureCollection(features)
 
     # Guardar el resultado en un archivo GeoJSON
-    with open('calles_primarias_secundarias_santiago.geojson', 'w', encoding='utf-8') as f:
+    with open('./Archivos_descargados/calles_primarias_secundarias_santiago.geojson', 'w', encoding='utf-8') as f:
         geojson.dump(feature_collection, f, ensure_ascii=False, indent=4)
     print("GeoJSON guardado exitosamente.")
 else:
