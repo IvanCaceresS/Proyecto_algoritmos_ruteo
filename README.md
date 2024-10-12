@@ -41,3 +41,6 @@ El sitio deberá mostrar una ruta generada con `pgr_dijkstra`, utilizando la lon
 
 ### 9. Archivo Main
 Debe crear un archivo `main` (en la carpeta raíz del repositorio de GitHub) que permita ejecutar los procesos anteriores de forma automatizada, desde la descarga de toda la información, su importación en la base de datos y la habilitación del sitio web.
+
+
+chromedirver: https://storage.googleapis.com/chrome-for-testing-public/129.0.6668.100/win64/chromedriver-win64.zip
