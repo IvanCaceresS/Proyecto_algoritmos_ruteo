@@ -3,24 +3,30 @@ import psycopg2
 import xml.etree.ElementTree as ET
 from shapely.geometry import LineString, Point
 from shapely.wkt import loads as load_wkt
+from dotenv import load_dotenv
+import os
 
-# Conectar a la base de datos
+load_dotenv(dotenv_path='../.env')
+
+host = os.getenv("DB_HOST")
+database = os.getenv("DB_NAME")
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
+
 conn = psycopg2.connect(
-    host="localhost",
-    database="postgres",
-    user="postgres",
-    password="7541"
+    host=host,
+    database=database,
+    user=user,
+    password=password
 )
 cur = conn.cursor()
 
-# Cargar datos de las ciclovías (KML)
 kml_path = '../Infraestructura/Archivos_descargados/ciclovias_santiago.kml'
 tree = ET.parse(kml_path)
 root = tree.getroot()
 
 namespace = {'kml': 'http://www.opengis.net/kml/2.2'}
 
-# Ciclovías en formato Shapely (para comparación con calles)
 ciclovias = []
 
 for placemark in root.findall(".//kml:Placemark", namespace):
@@ -31,35 +37,27 @@ for placemark in root.findall(".//kml:Placemark", namespace):
         ciclovia_coords = [(float(coord.split(',')[0]), float(coord.split(',')[1])) for coord in coord_pairs]
         ciclovias.append(LineString(ciclovia_coords))
 
-# Insertar datos del GeoJSON (red de calles)
 with open('../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson', 'r', encoding='utf-8') as f:
     geojson_data = json.load(f)
 
     for feature in geojson_data['features']:
-        # Extraer el id desde las properties del feature
         feature_id = feature['properties'].get('id', None)
         
-        # Verificar si el id es None
         if feature_id is None:
             print(f"Advertencia: El feature {feature['properties'].get('name', 'sin nombre')} no tiene 'id'.")
-            continue  # Saltar la inserción si no tiene un 'id'
+            continue  
 
-        # Otras propiedades de la calle
         name = feature['properties'].get('name', None)
         lanes = feature['properties'].get('lanes', None)
         highway_type = feature['properties'].get('highway', None)
         coordinates = feature['geometry']['coordinates']
 
-        # Convertir la calle a Shapely LineString para detectar intersecciones y ciclovías
         line_string_geom = LineString([(coord[0], coord[1]) for coord in coordinates])
 
-        # Verificar si la calle es una ciclovía
         is_ciclovia = any(line_string_geom.intersects(ciclovia) for ciclovia in ciclovias)
 
-        # Convertir a WKT para insertar en la base de datos
         line_string_wkt = line_string_geom.wkt
 
-        # Insertar los datos en la tabla infraestructura
         cur.execute("""
             INSERT INTO infraestructura (id, name, type, lanes, is_ciclovia, geometry)
             VALUES (%s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
@@ -77,7 +75,6 @@ cur.execute("""
 conn.commit()
 
 # Asignar los valores de 'source' y 'target' en base a los nodos más cercanos
-# Seleccionar todas las geometrías de la tabla infraestructura
 cur.execute("SELECT id, ST_AsText(geometry) FROM infraestructura")
 infraestructuras = cur.fetchall()
 
@@ -113,7 +110,6 @@ for infraestructura in infraestructuras:
             WHERE id = %s
         """, (source_node, target_node, infraestructura_id))
 
-# Confirmar las transacciones y cerrar la conexión
 conn.commit()
 cur.close()
 conn.close()

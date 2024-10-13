@@ -1,6 +1,12 @@
 import requests
 import time
 import csv
+from dotenv import load_dotenv
+import os
+
+load_dotenv(dotenv_path='../.env')
+
+api_key = os.getenv("WEATHER_API_KEY")
 
 # Lista de comunas
 comunas_rm = [
@@ -58,10 +64,6 @@ comunas_rm = [
     "ÑUÑOA"
 ]
 
-
-# Tu clave de API de WeatherAPI
-api_key = '68de4df5b5b14863bc522450240209'  # Reemplaza con tu clave
-
 def obtener_coordenadas(comuna):
     url = "https://nominatim.openstreetmap.org/search"
     params = {
@@ -99,7 +101,8 @@ def obtener_precipitacion(lat, lon, api_key):
 # Lista para almacenar los resultados
 resultados = []
 
-for comuna in comunas_rm:
+#for comuna in comunas_rm:
+for comuna in comunas_rm[:1]: #Limitar a 1 comuna para pruebas
     print(f"Procesando comuna: {comuna}")
     lat, lon = obtener_coordenadas(comuna)
     if lat and lon:

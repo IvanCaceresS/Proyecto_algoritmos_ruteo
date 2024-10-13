@@ -23,23 +23,18 @@ out body;
 out skel qt;
 """
 
-# Reemplazar {bbox} en la consulta con las coordenadas del bounding box
 overpass_query = overpass_query.format(bbox=bbox)
 
-# Enviar la solicitud a Overpass API
 overpass_url = "http://overpass-api.de/api/interpreter"
 response = requests.get(overpass_url, params={'data': overpass_query})
 
-# Verificar la respuesta y procesar el GeoJSON
 if response.status_code == 200:
     data = response.json()
     elements = data['elements']
     features = []
 
-    # Crear un diccionario para los nodos
     nodes = {elem['id']: elem for elem in elements if elem['type'] == 'node'}
 
-    # Procesar las vías
     for elem in elements:
         if elem['type'] == 'way':
             coords = []
@@ -49,7 +44,6 @@ if response.status_code == 200:
                     coords.append((node['lon'], node['lat']))
             if coords:
                 geometry = LineString(coords)
-                # Filtrar las propiedades deseadas
                 desired_properties = ['highway', 'lanes', 'name']
                 tags = elem.get('tags', {})
                 properties = {key: tags.get(key) for key in desired_properties if key in tags}
@@ -59,7 +53,6 @@ if response.status_code == 200:
 
     feature_collection = FeatureCollection(features)
 
-    # Guardar el resultado en un archivo GeoJSON
     with open('./Archivos_descargados/calles_primarias_secundarias_santiago.geojson', 'w', encoding='utf-8') as f:
         geojson.dump(feature_collection, f, ensure_ascii=False, indent=4)
     print("GeoJSON guardado exitosamente.")

@@ -22,32 +22,26 @@ out body;
 out skel qt;
 """
 
-# Enviar la solicitud a Overpass API
 overpass_url = "https://overpass-api.de/api/interpreter"
 response = requests.get(overpass_url, params={'data': overpass_query})
 
-# Verificar la respuesta y procesar el JSON
 if response.status_code == 200:
     data = response.json()
     elements = data['elements']
     features = []
 
-    # Crear diccionarios para nodos y ways
     nodes = {}
     ways = {}
     relations = {}
 
-    # Almacenar todos los nodos
     for elem in elements:
         if elem['type'] == 'node':
             nodes[elem['id']] = elem
 
-    # Almacenar todos los ways
     for elem in elements:
         if elem['type'] == 'way':
             ways[elem['id']] = elem
 
-    # Procesar los elementos y convertirlos en features
     for elem in elements:
         if elem['type'] == 'node' and 'tags' in elem:
             lon = elem['lon']
@@ -63,7 +57,6 @@ if response.status_code == 200:
                 if node:
                     coords.append((node['lon'], node['lat']))
             if coords:
-                # Comprobar si es un polígono (primer y último punto son iguales)
                 if coords[0] == coords[-1]:
                     geometry = Polygon([coords])
                 else:
@@ -72,13 +65,10 @@ if response.status_code == 200:
                 feature = Feature(geometry=geometry, properties=properties, id=f"way/{elem['id']}")
                 features.append(feature)
         elif elem['type'] == 'relation' and 'tags' in elem:
-            # Procesar relaciones si es necesario
-            # Esto puede ser complejo debido a los múltiples miembros
             pass
 
     feature_collection = FeatureCollection(features)
 
-    # Guardar el resultado en un archivo GeoJSON
     with open('./Archivos_descargados/estacionamientos.geojson', 'w', encoding='utf-8') as f:
         geojson.dump(feature_collection, f, ensure_ascii=False, indent=4)
     print("Archivo GeoJSON guardado exitosamente.")

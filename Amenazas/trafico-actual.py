@@ -1,12 +1,13 @@
-# Requiere instalar requests, geopandas y pandas: pip install requests geopandas pandas
 import requests
 import geopandas as gpd
 import pandas as pd
+from dotenv import load_dotenv
+import os
 
-# Reemplaza con tu clave de API de TomTom
-API_KEY = 'HjAS73C3c2bZnrPs7xrFbibOCiiRjKAz'
+load_dotenv(dotenv_path='../.env')
 
-# Cargar archivo GeoJSON con coordenadas de calles
+API_KEY = os.getenv("TOMTOM_API_KEY")
+
 def cargar_coordenadas(geojson_path):
     gdf = gpd.read_file(geojson_path)
     coordenadas = []
@@ -21,7 +22,6 @@ def cargar_coordenadas(geojson_path):
             })
     return coordenadas[:10]  # Solo retornar las primeras 10 coordenadas
 
-# 1. Obtener el tráfico actual y crear CSV
 def obtener_trafico_actual(point, api_key):
     url = 'https://api.tomtom.com/traffic/services/4/flowSegmentData/relative0/10/json'
     params = {
@@ -47,7 +47,6 @@ def obtener_trafico_actual(point, api_key):
         print(f"Error al obtener el tráfico actual para la coordenada {point['coordenada']}: {response.status_code}")
         return None
 
-# Ejecutar la función para obtener el tráfico actual para todas las coordenadas del archivo GeoJSON y guardar en CSV
 def procesar_trafico(geojson_path, api_key):
     coordenadas = cargar_coordenadas(geojson_path)
     resultados = []
@@ -58,8 +57,6 @@ def procesar_trafico(geojson_path, api_key):
     df = pd.DataFrame(resultados)
     df.to_csv('./Archivos_descargados/trafico_actual.csv', index=False)
 
-# Ruta al archivo GeoJSON
 geojson_path = '..\Infraestructura\Archivos_descargados\calles_primarias_secundarias_santiago.geojson'
 
-# Ejecutar funciones
 procesar_trafico(geojson_path, API_KEY)

@@ -10,14 +10,10 @@ ruta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Algo
 
 # Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
-    # Guardar el directorio de trabajo actual
     directorio_actual = os.getcwd()
     
     try:
-        # Cambiar al directorio específico
         os.chdir(ruta_carpeta)
-
-        # Ejecutar el script
         subprocess.run(["python", script], check=True)
         print(f"{script} ejecutado con éxito en {ruta_carpeta}.")
     
@@ -25,7 +21,6 @@ def ejecutar_script(script, ruta_carpeta):
         print(f"Error al ejecutar {script} en {ruta_carpeta}: {e}")
     
     finally:
-        # Volver al directorio de trabajo original
         os.chdir(directorio_actual)
 
 # Lista de scripts a ejecutar en 'Infraestructura'

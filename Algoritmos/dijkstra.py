@@ -1,17 +1,24 @@
 import psycopg2
 import json
+from dotenv import load_dotenv
+import os
 
-# Conectar a la base de datos PostgreSQL
+load_dotenv(dotenv_path='../.env')
+
+host = os.getenv("DB_HOST")
+database = os.getenv("DB_NAME")
+user = os.getenv("DB_USER")
+password = os.getenv("DB_PASSWORD")
+
 conn = psycopg2.connect(
-    host="localhost",
-    database="postgres",
-    user="postgres",
-    password="7541"
+    host=host,
+    database=database,
+    user=user,
+    password=password
 )
 cur = conn.cursor()
 
-# Paso 1: Seleccionar dos nodos aleatorios de la tabla 'infraestructura_nodos'
-# Utilizando la columna 'geometry' correctamente
+# Seleccionar dos nodos aleatorios de la tabla 'infraestructura_nodos'
 cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM infraestructura_nodos ORDER BY RANDOM() LIMIT 2;")
 nodos = cur.fetchall()
 source = nodos[0][0]
@@ -21,7 +28,7 @@ target_geom = nodos[1][1]  # Geometría del nodo de destino
 
 print(f"Source node: {source}, Target node: {target}")
 
-# Paso 2: Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos
+# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos
 cur.execute(f"""
     SELECT seq, node, edge, cost, ST_AsGeoJSON(infraestructura.geometry) AS geometry
     FROM pgr_dijkstra(
@@ -33,7 +40,7 @@ cur.execute(f"""
 
 ruta = cur.fetchall()
 
-# Paso 3: Comprobar si la ruta está vacía
+# Comprobar si la ruta está vacía
 features = []
 if len(ruta) == 0:
     geojson_result = {
@@ -44,7 +51,7 @@ if len(ruta) == 0:
 else:
     # Convertir la ruta en formato GeoJSON
     for row in ruta:
-        geometry = row[4]  # La geometría de cada segmento de la ruta en formato GeoJSON
+        geometry = row[4]  
         geojson_feature = {
             "type": "Feature",
             "properties": {
@@ -53,7 +60,7 @@ else:
                 "edge": row[2],
                 "cost": row[3]
             },
-            "geometry": json.loads(geometry)  # Convertir la geometría a formato JSON
+            "geometry": json.loads(geometry)
         }
         features.append(geojson_feature)
 
@@ -62,7 +69,7 @@ else:
         "type": "Feature",
         "properties": {
             "node": source,
-            "role": "source",  # Identificarlo como el nodo de origen
+            "role": "source",
             "marker-color": "#ff0000",  # Rojo para el origen
             "marker-symbol": "circle"
         },
@@ -75,7 +82,7 @@ else:
         "type": "Feature",
         "properties": {
             "node": target,
-            "role": "target",  # Identificarlo como el nodo de destino
+            "role": "target",
             "marker-color": "#0000ff",  # Azul para el destino
             "marker-symbol": "circle"
         },
@@ -94,6 +101,5 @@ with open("dijkstra.geojson", "w", encoding="utf-8") as geojson_file:
 
 print("Resultado exportado como 'dijkstra.geojson'")
 
-# Cerrar la conexión
 cur.close()
 conn.close()
