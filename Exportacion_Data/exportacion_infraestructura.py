@@ -21,10 +21,14 @@ conn = psycopg2.connect(
 cur = conn.cursor()
 
 # Función para exportar una tabla a GeoJSON
-def export_to_geojson(table_name, geometry_column, output_file):
+def export_to_geojson(table_name, geometry_column, output_file, extra_columns=None):
+    # Extraer columnas adicionales, si se proporcionan
+    extra_columns_str = ', '.join(extra_columns) if extra_columns else ''
+    columns = f"id, {extra_columns_str}, {geometry_column}, ST_AsGeoJSON({geometry_column}) AS geom_json" if extra_columns else f"id, {geometry_column}, ST_AsGeoJSON({geometry_column}) AS geom_json"
+
     # Ejecutar una consulta para obtener las geometrías en formato GeoJSON
     cur.execute(f"""
-        SELECT id, name, {geometry_column}, ST_AsGeoJSON({geometry_column}) AS geom_json
+        SELECT {columns}
         FROM proyectoalgoritmos.{table_name};
     """)
 
@@ -33,16 +37,19 @@ def export_to_geojson(table_name, geometry_column, output_file):
     features = []
     for row in rows:
         feature_id = row[0]
-        name = row[1]
-        geometry_json = row[3]
+        properties = {"id": feature_id}
+
+        # Agregar las propiedades adicionales si las hay
+        if extra_columns:
+            for i, col in enumerate(extra_columns):
+                properties[col] = row[i + 1]  # +1 porque la primera columna es id
+
+        geometry_json = row[-1]  # La geometría GeoJSON está al final de cada fila
 
         # Crear la estructura GeoJSON
         geojson_feature = {
             "type": "Feature",
-            "properties": {
-                "id": feature_id,
-                "name": name
-            },
+            "properties": properties,
             "geometry": json.loads(geometry_json)
         }
         features.append(geojson_feature)
@@ -60,7 +67,7 @@ def export_to_geojson(table_name, geometry_column, output_file):
     print(f"Exportación completada: {output_file}")
 
 # Exportar la tabla 'infraestructura' a un archivo GeoJSON
-export_to_geojson('infraestructura', 'geometry', 'infraestructura.geojson')
+export_to_geojson('infraestructura', 'geometry', 'infraestructura.geojson', extra_columns=['name', 'type', 'lanes', 'is_ciclovia', 'source', 'target'])
 
 # Exportar la tabla 'infraestructura_nodos' a un archivo GeoJSON
 export_to_geojson('infraestructura_nodos', 'geometry', 'infraestructura_nodos.geojson')
