@@ -1,5 +1,6 @@
 import requests
-import json
+import geojson
+from geojson import FeatureCollection, Feature, LineString
 
 # Definir las coordenadas del bounding box
 norte = -33.2467   # Latitud máxima
@@ -30,7 +31,10 @@ response = requests.get(overpass_url, params={'data': overpass_query})
 if response.status_code == 200:
     data = response.json()
     elements = data['elements']
-    resultado = []
+    features = []
+
+    # Crear un diccionario para los nodos
+    nodes = {elem['id']: elem for elem in elements if elem['type'] == 'node'}
 
     # Procesar las vías
     for elem in elements:
@@ -39,15 +43,31 @@ if response.status_code == 200:
             tags = elem.get('tags', {})
             # Obtener el valor de 'lit', si no existe, asignar 'no'
             lit = tags.get('lit', 'no')
-            resultado.append({
-                'id': way_id,
-                'lit': lit
-            })
+            # Obtener las coordenadas de los nodos de la vía
+            coords = []
+            for node_id in elem['nodes']:
+                node = nodes.get(node_id)
+                if node:
+                    coords.append((node['lon'], node['lat']))
+            if coords:
+                # Crear la geometría LineString
+                geometry = LineString(coords)
+                # Crear las propiedades de la feature
+                properties = {
+                    'id': way_id,
+                    'lit': lit
+                }
+                # Crear la feature y agregarla a la lista
+                feature = Feature(geometry=geometry, properties=properties)
+                features.append(feature)
 
-    # Guardar el resultado en un archivo JSON
-    with open('./Archivos_descargados/iluminacion.json', 'w', encoding='utf-8') as f:
-        json.dump(resultado, f, ensure_ascii=False, indent=4)
-    print("Archivo JSON guardado exitosamente.")
+    # Crear la FeatureCollection
+    feature_collection = FeatureCollection(features)
+
+    # Guardar el resultado en un archivo GeoJSON
+    with open('./Archivos_descargados/iluminacion.geojson', 'w', encoding='utf-8') as f:
+        geojson.dump(feature_collection, f, ensure_ascii=False, indent=4)
+    print("Archivo GeoJSON guardado exitosamente.")
 else:
     print(f"Error al obtener datos: {response.status_code}")
     print(response.text)

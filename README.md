@@ -11,7 +11,7 @@ Debe contener:
 - Un archivo que automatice la descarga de la infraestructura.
 - El archivo descargado que contenga la infraestructura (nodos y aristas).
 
-### 2. Carpeta Metadata
+### 2. Carpeta Metadata [listo]
 Debe contener:
 - N archivos, donde cada uno automatice la descarga de la metadata de n APIs o bases de datos distintas.
 - El archivo respectivo que contenga la metadata descargada.
@@ -21,7 +21,7 @@ Debe contener:
 - N archivos, donde cada uno automatice la descarga de la amenaza de n APIs o bases de datos distintas.
 - El archivo respectivo que contenga la amenaza descargada.
 
-### 4. Estructura Resultante
+### 4. Estructura Resultante [metadalisto] [amenazaNO]
 Por cada archivo de automatización, deberá indicar la estructura resultante de cada archivo descargado, para facilitar el entendimiento de la data obtenida.
 
 ### 5. Imagen de Tablas y Valores
