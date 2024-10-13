@@ -1,6 +1,7 @@
 import requests
 import geopandas as gpd
 import pandas as pd
+import json
 from dotenv import load_dotenv
 import os
 
@@ -54,8 +55,10 @@ def procesar_trafico(geojson_path, api_key):
         resultado = obtener_trafico_actual(point, api_key)
         if resultado:
             resultados.append(resultado)
-    df = pd.DataFrame(resultados)
-    df.to_csv('./Archivos_descargados/trafico_actual.csv', index=False)
+    
+    # Guardar los resultados en un archivo JSON
+    with open('./Archivos_descargados/trafico_actual.json', 'w', encoding='utf-8') as jsonfile:
+        json.dump(resultados, jsonfile, ensure_ascii=False, indent=4)
 
 geojson_path = '..\Infraestructura\Archivos_descargados\calles_primarias_secundarias_santiago.geojson'
 

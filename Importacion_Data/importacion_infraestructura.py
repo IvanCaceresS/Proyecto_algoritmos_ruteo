@@ -59,15 +59,15 @@ with open('../Infraestructura/Archivos_descargados/calles_primarias_secundarias_
         line_string_wkt = line_string_geom.wkt
 
         cur.execute("""
-            INSERT INTO infraestructura (id, name, type, lanes, is_ciclovia, geometry)
+            INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, is_ciclovia, geometry)
             VALUES (%s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
         """, (feature_id, name, highway_type, lanes, is_ciclovia, line_string_wkt))
 
 # Detección de intersecciones (nodos)
 cur.execute("""
-    INSERT INTO infraestructura_nodos (geometry)
+    INSERT INTO proyectoalgoritmos.infraestructura_nodos (geometry)
     SELECT ST_Intersection(a.geometry, b.geometry) AS geometry
-    FROM infraestructura a, infraestructura b
+    FROM proyectoalgoritmos.infraestructura a, proyectoalgoritmos.infraestructura b
     WHERE a.id < b.id
     AND ST_Intersects(a.geometry, b.geometry)
     AND ST_GeometryType(ST_Intersection(a.geometry, b.geometry)) = 'ST_Point'
@@ -75,7 +75,7 @@ cur.execute("""
 conn.commit()
 
 # Asignar los valores de 'source' y 'target' en base a los nodos más cercanos
-cur.execute("SELECT id, ST_AsText(geometry) FROM infraestructura")
+cur.execute("SELECT id, ST_AsText(geometry) FROM proyectoalgoritmos.infraestructura")
 infraestructuras = cur.fetchall()
 
 for infraestructura in infraestructuras:
@@ -85,7 +85,7 @@ for infraestructura in infraestructuras:
     # Encontrar el nodo más cercano al punto inicial (source)
     cur.execute("""
         SELECT id 
-        FROM infraestructura_nodos 
+        FROM proyectoalgoritmos.infraestructura_nodos 
         ORDER BY ST_Distance(geometry, ST_StartPoint(ST_GeomFromText(%s, 4326))) 
         LIMIT 1
     """, (geometry,))
@@ -94,7 +94,7 @@ for infraestructura in infraestructuras:
     # Encontrar el nodo más cercano al punto final (target)
     cur.execute("""
         SELECT id 
-        FROM infraestructura_nodos 
+        FROM proyectoalgoritmos.infraestructura_nodos 
         ORDER BY ST_Distance(geometry, ST_EndPoint(ST_GeomFromText(%s, 4326))) 
         LIMIT 1
     """, (geometry,))
@@ -105,7 +105,7 @@ for infraestructura in infraestructuras:
         source_node = source_result[0]
         target_node = target_result[0]
         cur.execute("""
-            UPDATE infraestructura 
+            UPDATE proyectoalgoritmos.infraestructura 
             SET source = %s, target = %s 
             WHERE id = %s
         """, (source_node, target_node, infraestructura_id))

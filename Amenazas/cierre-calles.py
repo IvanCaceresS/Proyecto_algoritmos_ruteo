@@ -53,7 +53,7 @@ def procesar_cierres_calles(geojson_path, api_key):
         if resultado:
             resultados.append(resultado)
     df = pd.DataFrame(resultados)
-    df.to_csv('.\Archivos_descargados\cierres_calles.csv', index=False)
+    df.to_json('.\Archivos_descargados\cierres_calles.json', orient='records', lines=True, force_ascii=False, indent=4)
 
 geojson_path = '..\Infraestructura\Archivos_descargados\calles_primarias_secundarias_santiago.geojson'
 

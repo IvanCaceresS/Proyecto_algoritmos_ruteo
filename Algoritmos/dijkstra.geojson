@@ -1,0 +1,37 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "node": 7282,
+                "role": "source",
+                "marker-color": "#ff0000",
+                "marker-symbol": "circle"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.549864,
+                    -33.40828
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "node": 5507,
+                "role": "target",
+                "marker-color": "#0000ff",
+                "marker-symbol": "circle"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.59927,
+                    -33.444376
+                ]
+            }
+        }
+    ]
+}

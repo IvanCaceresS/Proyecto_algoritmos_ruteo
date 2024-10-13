@@ -1,6 +1,6 @@
 import requests
 import time
-import csv
+import json
 from dotenv import load_dotenv
 import os
 
@@ -102,7 +102,7 @@ def obtener_precipitacion(lat, lon, api_key):
 resultados = []
 
 #for comuna in comunas_rm:
-for comuna in comunas_rm[:1]: #Limitar a 1 comuna para pruebas
+for comuna in comunas_rm[:1]: # Limitar a 1 comuna para pruebas
     print(f"Procesando comuna: {comuna}")
     lat, lon = obtener_coordenadas(comuna)
     if lat and lon:
@@ -121,13 +121,8 @@ for comuna in comunas_rm[:1]: #Limitar a 1 comuna para pruebas
         print(f"No se pudieron obtener las coordenadas para {comuna}")
     time.sleep(1)  # Espera 1 segundo entre solicitudes a Nominatim
 
-# Guardar los resultados en un archivo CSV
-with open('./Archivos_descargados/precipitacion_comunas_rm.csv', 'w', newline='', encoding='utf-8') as csvfile:
-    fieldnames = ['comuna', 'latitud', 'longitud', 'precip_mm']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+# Guardar los resultados en un archivo JSON
+with open('./Archivos_descargados/precipitacion_comunas_rm.json', 'w', encoding='utf-8') as jsonfile:
+    json.dump(resultados, jsonfile, ensure_ascii=False, indent=4)
 
-    writer.writeheader()
-    for row in resultados:
-        writer.writerow(row)
-
-print("Datos de precipitación guardados en 'precipitacion_comunas_rm.csv'")
+print("Datos de precipitación guardados en 'precipitacion_comunas_rm.json'")

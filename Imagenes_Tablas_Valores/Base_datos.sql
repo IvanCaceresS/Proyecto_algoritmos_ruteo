@@ -1,18 +1,8 @@
--- Crear el esquema 'proyectoalgoritmos' si no existe
-CREATE SCHEMA IF NOT EXISTS proyectoalgoritmos;
+-- Eliminar el esquema 'proyectoalgoritmos' si ya existe, eliminando todo lo que contiene
+DROP SCHEMA IF EXISTS proyectoalgoritmos CASCADE;
 
--- Eliminar todas las tablas en el esquema 'proyectoalgoritmos', excepto las requeridas por PostGIS
-DO $$ DECLARE
-    r RECORD;
-BEGIN
-    -- Eliminar todas las tablas en el esquema 'proyectoalgoritmos' excepto las relacionadas a PostGIS
-    FOR r IN (SELECT tablename 
-              FROM pg_tables 
-              WHERE schemaname = 'proyectoalgoritmos' 
-              AND tablename NOT IN ('spatial_ref_sys', 'geography_columns', 'geometry_columns', 'raster_columns', 'raster_overviews')) LOOP
-        EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
-    END LOOP;
-END $$;
+-- Crear el esquema 'proyectoalgoritmos' nuevamente
+CREATE SCHEMA proyectoalgoritmos;
 
 -- Crear la extensión PostGIS si no está habilitada
 CREATE EXTENSION IF NOT EXISTS postgis;
@@ -40,7 +30,4 @@ CREATE TABLE proyectoalgoritmos.infraestructura_nodos (
 CREATE INDEX infraestructura_geometry_idx ON proyectoalgoritmos.infraestructura USING GIST (geometry);
 CREATE INDEX infraestructura_nodos_geometry_idx ON proyectoalgoritmos.infraestructura_nodos USING GIST (geometry);
 
--- Crear una tabla de coste para pgRouting (usada en pgr_dijkstra) en el esquema 'proyectoalgoritmos'
-CREATE TABLE proyectoalgoritmos.infrastructure_cost AS
-    SELECT id, source, target, ST_Length(geometry) AS cost
-    FROM proyectoalgoritmos.infraestructura;
+
