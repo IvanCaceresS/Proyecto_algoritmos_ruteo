@@ -55,7 +55,7 @@ def procesar_cierres_calles(geojson_path, api_key):
     df = pd.DataFrame(resultados)
     
     # Corregir la ruta de archivo JSON usando barra invertida doble o cadena cruda
-    df.to_json(r'./Archivos_descargados/cierres_calles.json', orient='records', lines=True, force_ascii=False, indent=4)
+    df.to_json(r'./Archivos_descargados/cierres_calles.json', orient='records', force_ascii=False, indent=4)
 
 # Usar una ruta cruda o cambiar las barras invertidas a dobles
 geojson_path = r'../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson'

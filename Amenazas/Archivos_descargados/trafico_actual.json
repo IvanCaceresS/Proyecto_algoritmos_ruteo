@@ -3,7 +3,7 @@
         "id": 7981159,
         "name": "Irene Morales",
         "coordenada": "-33.436905,-70.636868",
-        "current_speed": 18,
+        "current_speed": 21,
         "free_flow_speed": 21
     },
     {
@@ -17,14 +17,14 @@
         "id": 7981317,
         "name": "San Antonio",
         "coordenada": "-33.433092,-70.648721",
-        "current_speed": 31,
-        "free_flow_speed": 31
+        "current_speed": 26,
+        "free_flow_speed": 32
     },
     {
         "id": 7981319,
         "name": "Miraflores",
         "coordenada": "-33.442375,-70.644909",
-        "current_speed": 59,
+        "current_speed": 55,
         "free_flow_speed": 59
     },
     {
@@ -38,7 +38,7 @@
         "id": 8000033,
         "name": "Morandé",
         "coordenada": "-33.444608,-70.652903",
-        "current_speed": 46,
+        "current_speed": 45,
         "free_flow_speed": 50
     },
     {
@@ -52,21 +52,21 @@
         "id": 8000232,
         "name": "Diagonal Paraguay",
         "coordenada": "-33.442262,-70.643907",
-        "current_speed": 46,
+        "current_speed": 45,
         "free_flow_speed": 50
     },
     {
         "id": 8000322,
         "name": "Avenida Providencia",
         "coordenada": "-33.436766,-70.634758",
-        "current_speed": 10,
-        "free_flow_speed": 12
+        "current_speed": 13,
+        "free_flow_speed": 13
     },
     {
         "id": 8000329,
         "name": "Santa Isabel",
         "coordenada": "-33.452874,-70.656967",
-        "current_speed": 41,
-        "free_flow_speed": 41
+        "current_speed": 36,
+        "free_flow_speed": 42
     }
 ]

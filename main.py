@@ -28,10 +28,10 @@ def ejecutar_script(script, ruta_carpeta):
 scripts_infraestructura = ["infraestructura_ciclovias.py", "infraestructura_vias.py"]
 
 # Lista de scripts a ejecutar en 'Metadata'
-scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", "velocidad_max.py"]
+#scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", "velocidad_max.py"]
 
 # Lista de scripts a ejecutar en 'Amenazas'
-scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
+#scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
 
 # Lista de scripts a ejecutar en 'Importacion_Data'
 scripts_importacion = ["importacion_infraestructura.py"]

@@ -4,7 +4,7 @@
         {
             "type": "Feature",
             "properties": {
-                "node": 412,
+                "node": 940,
                 "role": "source",
                 "marker-color": "#ff0000",
                 "marker-symbol": "circle"
@@ -12,15 +12,15 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -70.638461,
-                    -33.440437
+                    -70.632783,
+                    -33.445963
                 ]
             }
         },
         {
             "type": "Feature",
             "properties": {
-                "node": 372,
+                "node": 3210,
                 "role": "target",
                 "marker-color": "#0000ff",
                 "marker-symbol": "circle"
@@ -28,8 +28,8 @@
             "geometry": {
                 "type": "Point",
                 "coordinates": [
-                    -70.665081,
-                    -33.426496
+                    -70.631056,
+                    -33.442765
                 ]
             }
         }
