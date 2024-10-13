@@ -18,21 +18,36 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# Seleccionar dos nodos aleatorios de la tabla 'infraestructura_nodos'
-cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos ORDER BY RANDOM() LIMIT 2;")
+# Seleccionar dos nodos aleatorios que estén en source o target
+cur.execute("""
+    SELECT id 
+    FROM (
+        SELECT source AS id FROM proyectoalgoritmos.infraestructura
+        UNION
+        SELECT target AS id FROM proyectoalgoritmos.infraestructura
+    ) AS nodos_validos
+    ORDER BY RANDOM()
+    LIMIT 2;
+""")
 nodos = cur.fetchall()
 source = nodos[0][0]
 target = nodos[1][0]
-source_geom = nodos[0][1]  # Geometría del nodo de origen
-target_geom = nodos[1][1]  # Geometría del nodo de destino
+
+# Obtener las geometrías de los nodos fijos desde la tabla 'infraestructura_nodos'
+cur.execute(f"SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = {source};")
+source_geom = cur.fetchone()[1]  # Geometría del nodo de origen
+
+cur.execute(f"SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = {target};")
+target_geom = cur.fetchone()[1]  # Geometría del nodo de destino
 
 print(f"Source node: {source}, Target node: {target}")
 
-# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos
+# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos usando el campo 'cost'
 cur.execute(f"""
-    SELECT seq, node, edge, cost, ST_AsGeoJSON(proyectoalgoritmos.infraestructura.geometry) AS geometry
+    SELECT seq, node, edge, proyectoalgoritmos.infraestructura.cost, 
+           ST_AsGeoJSON(proyectoalgoritmos.infraestructura.geometry) AS geometry
     FROM pgr_dijkstra(
-        'SELECT id, source, target, ST_Length(geometry) AS cost FROM proyectoalgoritmos.infraestructura',
+        'SELECT id, source, target, proyectoalgoritmos.infraestructura.cost FROM proyectoalgoritmos.infraestructura',
         {source}, {target}, directed := false
     )
     JOIN proyectoalgoritmos.infraestructura ON proyectoalgoritmos.infraestructura.id = edge;
@@ -56,7 +71,9 @@ else:
                 "seq": row[0],
                 "node": row[1],
                 "edge": row[2],
-                "cost": row[3]
+                "cost": row[3],
+                "stroke": "#0000FF",  # Color azul
+                "stroke-width": 3     # Ancho de la línea
             },
             "geometry": json.loads(geometry)
         }

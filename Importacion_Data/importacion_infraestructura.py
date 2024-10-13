@@ -48,22 +48,36 @@ def procesar_calles(geojson_path, ciclovias, cursor):
             highway_type = feature['properties'].get('highway', None)
             coordinates = feature['geometry']['coordinates']
 
+            # Crear la geometría LineString con las coordenadas
             line_string_geom = LineString([(coord[0], coord[1]) for coord in coordinates])
 
             # Determinar si la línea intersecta alguna ciclovía
             is_ciclovia = any(line_string_geom.intersects(ciclovia) for ciclovia in ciclovias)
 
+            # Calcular el costo como la longitud de la geometría
+            cost = line_string_geom.length  # Esto calcula la longitud en unidades de coordenadas (grados)
+
+            # Si estás usando un sistema de coordenadas geográficas como EPSG:4326, podrías convertirlo a distancia en metros:
+            # Por ejemplo, si quieres calcular la longitud en metros, necesitarías transformar la geometría a un sistema métrico (EPSG:3857) antes de calcular la longitud.
+            # from shapely.ops import transform
+            # from functools import partial
+            # import pyproj
+            # project = partial(pyproj.transform, pyproj.Proj(init='epsg:4326'), pyproj.Proj(init='epsg:3857'))
+            # line_string_geom_meters = transform(project, line_string_geom)
+            # cost = line_string_geom_meters.length  # Longitud en metros
+
             line_string_wkt = line_string_geom.wkt
 
-            # Insertar la línea de infraestructura en la tabla
+            # Insertar la línea de infraestructura en la tabla con el costo calculado
             cursor.execute("""
-                INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, is_ciclovia, geometry)
-                VALUES (%s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
-            """, (feature_id, name, highway_type, lanes, is_ciclovia, line_string_wkt))
+                INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, is_ciclovia, cost, geometry)
+                VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326))
+            """, (feature_id, name, highway_type, lanes, is_ciclovia, cost, line_string_wkt))
 
         print("Datos de infraestructura insertados correctamente.")
     except Exception as e:
         print(f"Error procesando el archivo GeoJSON: {e}")
+
 
 # Función para detectar intersecciones entre las calles
 def detectar_intersecciones(cursor):

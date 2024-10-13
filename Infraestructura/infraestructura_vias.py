@@ -3,10 +3,15 @@ import geojson
 from geojson import FeatureCollection, Feature, LineString
 
 # Definir las coordenadas del bounding box
-norte = -33.2467   # Latitud máxima
-sur = -33.8454     # Latitud mínima
-este = -70.4333    # Longitud máxima
-oeste = -70.9360   # Longitud mínima
+#norte = -33.2467   # Latitud máxima
+#sur = -33.8454     # Latitud mínima
+#este = -70.4333    # Longitud máxima
+#oeste = -70.9360   # Longitud mínima
+
+norte = -33.42543   # Latitud máxima
+sur = -33.45764     # Latitud mínima
+este = -70.62939    # Longitud máxima
+oeste = -70.67814   # Longitud mínima
 
 # Crear la variable del bounding box en el orden: sur, oeste, norte, este
 bbox = f"{sur},{oeste},{norte},{este}"

@@ -11,12 +11,13 @@ CREATE EXTENSION IF NOT EXISTS pgrouting;
 -- Crear la tabla infraestructura con id como BIGINT en el esquema 'proyectoalgoritmos'
 CREATE TABLE proyectoalgoritmos.infraestructura (
     id BIGINT PRIMARY KEY,  -- id del GeoJSON o segmento de la infraestructura
-    name VARCHAR(255),
-    type VARCHAR(50),
-    lanes INT,
+    name VARCHAR(255),      -- nombre del segmento
+    type VARCHAR(50),       -- tipo de infraestructura (ej. residencial, terciaria)
+    lanes INT,              -- número de carriles
     is_ciclovia BOOLEAN DEFAULT FALSE,  -- Indicar si es una ciclovía o no
-    source BIGINT,  -- Nodo inicial
-    target BIGINT,  -- Nodo final
+    source BIGINT,          -- Nodo inicial
+    target BIGINT,          -- Nodo final
+    cost DOUBLE PRECISION,  -- Costo del segmento (ej. longitud de la geometría en metros)
     geometry GEOMETRY(LineString, 4326)  -- Geometría de la infraestructura
 );
 
