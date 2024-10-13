@@ -5,6 +5,7 @@ import threading
 # Ruta a las carpetas 'Metadata' y 'Amenazas'
 ruta_metadata = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Metadata')
 ruta_amenazas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Amenazas')
+ruta_importacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Importacion_Data')
 
 # Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
