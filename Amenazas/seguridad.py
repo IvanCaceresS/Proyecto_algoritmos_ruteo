@@ -45,7 +45,7 @@ matches = re.findall(pattern, response.json()['view'])
 data_dict = {data_name: data_value for data_name, data_value in matches}
 
 # Guardar el diccionario en un archivo JSON
-with open('indices-comunas.json', 'w', encoding='utf-8') as json_file:
+with open('Archivos_descargados/indices-comunas.json', 'w', encoding='utf-8') as json_file:
     json.dump(data_dict, json_file, ensure_ascii=False, indent=4)
 
 print("Datos guardados en resultados.json")
