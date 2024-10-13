@@ -1,33 +1,51 @@
--- Eliminar el esquema 'proyectoalgoritmos' si ya existe, eliminando todo lo que contiene
 DROP SCHEMA IF EXISTS proyectoalgoritmos CASCADE;
 
--- Crear el esquema 'proyectoalgoritmos' nuevamente
 CREATE SCHEMA proyectoalgoritmos;
 
--- Crear la extensión PostGIS si no está habilitada
 CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE EXTENSION IF NOT EXISTS pgrouting;
 
--- Crear la tabla infraestructura con id como BIGINT en el esquema 'proyectoalgoritmos'
 CREATE TABLE proyectoalgoritmos.infraestructura (
-    id BIGINT PRIMARY KEY,  -- id del GeoJSON o segmento de la infraestructura
+    id BIGINT PRIMARY KEY,
     name VARCHAR(255),
     type VARCHAR(50),
     lanes INT,
-    is_ciclovia BOOLEAN DEFAULT FALSE,  -- Indicar si es una ciclovía o no
-    source BIGINT,  -- Nodo inicial
-    target BIGINT,  -- Nodo final
-    geometry GEOMETRY(LineString, 4326)  -- Geometría de la infraestructura
+    is_ciclovia BOOLEAN DEFAULT FALSE,
+    source BIGINT,
+    target BIGINT,
+    geometry GEOMETRY(LineString, 4326)
 );
 
--- Crear la tabla para almacenar los nodos (intersecciones) en el esquema 'proyectoalgoritmos'
 CREATE TABLE proyectoalgoritmos.infraestructura_nodos (
-    id SERIAL PRIMARY KEY,  -- ID autoincremental de los nodos
-    geometry GEOMETRY(Point, 4326)  -- Geometría de los puntos de intersección (nodos)
+    id SERIAL PRIMARY KEY, 
+    geometry GEOMETRY(Point, 4326)
 );
 
--- Crear los índices espaciales para mejorar el rendimiento en el esquema 'proyectoalgoritmos'
+CREATE TABLE proyectoalgoritmos.comuna (
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(255),
+    geometry GEOMETRY(polygon, 4326) 
+);
+
+CREATE TABLE proyectoalgoritmos.infraestructura_metadata (
+	id_infraestructura BIGINT PRIMARY KEY,
+    maxSpeed INT,
+	currentSpeed INT,
+    lit BOOLEAN DEFAULT FALSE,
+    roadClosure BOOLEAN DEFAULT FALSE,
+	FOREIGN KEY (id_infraestructura) 
+	REFERENCES proyectoalgoritmos.infraestructura(id)
+);
+
+CREATE TABLE proyectoalgoritmos.comuna_metadata (
+	id_comuna SERIAL PRIMARY KEY,
+	precipitacion NUMERIC(3, 9),
+	delincuencia NUMERIC(3, 9),
+	FOREIGN KEY (id_infraestructura)
+	REFERENCES proyectoalgoritmos.comuna(id)
+);
+
+CREATE TABLE 
+
 CREATE INDEX infraestructura_geometry_idx ON proyectoalgoritmos.infraestructura USING GIST (geometry);
 CREATE INDEX infraestructura_nodos_geometry_idx ON proyectoalgoritmos.infraestructura_nodos USING GIST (geometry);
-
-
