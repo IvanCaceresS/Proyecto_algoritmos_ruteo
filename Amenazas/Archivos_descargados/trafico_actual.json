@@ -1,0 +1,72 @@
+[
+    {
+        "id": 7981159,
+        "name": "Irene Morales",
+        "coordenada": "-33.436905,-70.636868",
+        "current_speed": 21,
+        "free_flow_speed": 21
+    },
+    {
+        "id": 7981313,
+        "name": "Teatinos",
+        "coordenada": "-33.432377,-70.655518",
+        "current_speed": 41,
+        "free_flow_speed": 41
+    },
+    {
+        "id": 7981317,
+        "name": "San Antonio",
+        "coordenada": "-33.433092,-70.648721",
+        "current_speed": 25,
+        "free_flow_speed": 31
+    },
+    {
+        "id": 7981319,
+        "name": "Miraflores",
+        "coordenada": "-33.442375,-70.644909",
+        "current_speed": 55,
+        "free_flow_speed": 59
+    },
+    {
+        "id": 7991807,
+        "name": "Ismael Valdés Vergara",
+        "coordenada": "-33.433083,-70.652118",
+        "current_speed": 94,
+        "free_flow_speed": 94
+    },
+    {
+        "id": 7999982,
+        "name": "Santa Rosa",
+        "coordenada": "-33.483615,-70.737659",
+        "current_speed": 104,
+        "free_flow_speed": 104
+    },
+    {
+        "id": 8000030,
+        "name": "Lord Cochrane",
+        "coordenada": "-33.471644,-70.651976",
+        "current_speed": 32,
+        "free_flow_speed": 32
+    },
+    {
+        "id": 8000033,
+        "name": "Morandé",
+        "coordenada": "-33.444608,-70.652903",
+        "current_speed": 50,
+        "free_flow_speed": 50
+    },
+    {
+        "id": 8000035,
+        "name": "Purísima",
+        "coordenada": "-33.434982,-70.638862",
+        "current_speed": 21,
+        "free_flow_speed": 21
+    },
+    {
+        "id": 8000065,
+        "name": "General Gorostiaga",
+        "coordenada": "-33.453844,-70.582723",
+        "current_speed": 33,
+        "free_flow_speed": 39
+    }
+]

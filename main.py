@@ -58,7 +58,7 @@ for script in scripts_amenazas:
     ejecutar_script(script, ruta_amenazas)
 
 # 5. Ejecución de scripts de 'Importacion_Data'
-print("Ejecutando scripts de importación de infraestructura...")
+print("Ejecutando scripts de importación...")
 for script in scripts_importacion:
     ejecutar_script(script, ruta_importacion)
 

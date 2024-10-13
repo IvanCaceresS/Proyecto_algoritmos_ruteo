@@ -5,7 +5,8 @@ import json
 from dotenv import load_dotenv
 import os
 
-load_dotenv(dotenv_path='../.env')
+# Cargar las variables de entorno desde el archivo .env
+load_dotenv(dotenv_path=r'../.env')  # Ruta corregida a cruda
 
 API_KEY = os.getenv("TOMTOM_API_KEY")
 
@@ -13,7 +14,7 @@ def cargar_coordenadas(geojson_path):
     gdf = gpd.read_file(geojson_path)
     coordenadas = []
     for _, feature in gdf.iterrows():
-        if feature.geometry.type == 'LineString':
+        if feature.geometry.geom_type == 'LineString':  # Cambiado de 'type' a 'geom_type'
             # Obtener la primera coordenada de cada Feature de tipo LineString
             primera_coordenada = feature.geometry.coords[0]
             coordenadas.append({
@@ -57,9 +58,10 @@ def procesar_trafico(geojson_path, api_key):
             resultados.append(resultado)
     
     # Guardar los resultados en un archivo JSON
-    with open('./Archivos_descargados/trafico_actual.json', 'w', encoding='utf-8') as jsonfile:
+    with open(r'./Archivos_descargados/trafico_actual.json', 'w', encoding='utf-8') as jsonfile:  # Ruta corregida
         json.dump(resultados, jsonfile, ensure_ascii=False, indent=4)
 
-geojson_path = '..\Infraestructura\Archivos_descargados\calles_primarias_secundarias_santiago.geojson'
+# Usar una ruta cruda o cambiar las barras invertidas a dobles
+geojson_path = r'../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson'
 
 procesar_trafico(geojson_path, API_KEY)

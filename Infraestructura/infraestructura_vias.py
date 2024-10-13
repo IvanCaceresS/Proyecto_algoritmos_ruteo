@@ -17,6 +17,8 @@ overpass_query = """
 (
   way["highway"="primary"]({bbox});
   way["highway"="secondary"]({bbox});
+  way["highway"="tertiary"]({bbox});
+  way["highway"="residential"]({bbox});
 );
 out body;
 >;

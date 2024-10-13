@@ -4,7 +4,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
-load_dotenv(dotenv_path='../.env')
+load_dotenv(dotenv_path=r'../.env')  # Ruta corregida a cruda
 
 API_KEY = os.getenv("TOMTOM_API_KEY")
 
@@ -12,7 +12,7 @@ def cargar_coordenadas(geojson_path):
     gdf = gpd.read_file(geojson_path)
     coordenadas = []
     for _, feature in gdf.iterrows():
-        if feature.geometry.type == 'LineString':
+        if feature.geometry.geom_type == 'LineString':  # Cambiado de 'type' a 'geom_type'
             # Obtener la primera coordenada de cada Feature de tipo LineString
             primera_coordenada = feature.geometry.coords[0]
             coordenadas.append({
@@ -53,8 +53,11 @@ def procesar_cierres_calles(geojson_path, api_key):
         if resultado:
             resultados.append(resultado)
     df = pd.DataFrame(resultados)
-    df.to_json('.\Archivos_descargados\cierres_calles.json', orient='records', lines=True, force_ascii=False, indent=4)
+    
+    # Corregir la ruta de archivo JSON usando barra invertida doble o cadena cruda
+    df.to_json(r'./Archivos_descargados/cierres_calles.json', orient='records', lines=True, force_ascii=False, indent=4)
 
-geojson_path = '..\Infraestructura\Archivos_descargados\calles_primarias_secundarias_santiago.geojson'
+# Usar una ruta cruda o cambiar las barras invertidas a dobles
+geojson_path = r'../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson'
 
 procesar_cierres_calles(geojson_path, API_KEY)
