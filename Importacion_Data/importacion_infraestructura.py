@@ -74,6 +74,44 @@ cur.execute("""
     AND ST_Intersects(a.geometry, b.geometry)
     AND ST_GeometryType(ST_Intersection(a.geometry, b.geometry)) = 'ST_Point'
 """)
+conn.commit()
+
+# Asignar los valores de 'source' y 'target' en base a los nodos más cercanos
+# Seleccionar todas las geometrías de la tabla infraestructura
+cur.execute("SELECT id, ST_AsText(geometry) FROM infraestructura")
+infraestructuras = cur.fetchall()
+
+for infraestructura in infraestructuras:
+    infraestructura_id = infraestructura[0]
+    geometry = infraestructura[1]
+
+    # Encontrar el nodo más cercano al punto inicial (source)
+    cur.execute("""
+        SELECT id 
+        FROM infraestructura_nodos 
+        ORDER BY ST_Distance(geometry, ST_StartPoint(ST_GeomFromText(%s, 4326))) 
+        LIMIT 1
+    """, (geometry,))
+    source_result = cur.fetchone()
+
+    # Encontrar el nodo más cercano al punto final (target)
+    cur.execute("""
+        SELECT id 
+        FROM infraestructura_nodos 
+        ORDER BY ST_Distance(geometry, ST_EndPoint(ST_GeomFromText(%s, 4326))) 
+        LIMIT 1
+    """, (geometry,))
+    target_result = cur.fetchone()
+
+    # Si ambos nodos existen, actualiza los valores de 'source' y 'target'
+    if source_result and target_result:
+        source_node = source_result[0]
+        target_node = target_result[0]
+        cur.execute("""
+            UPDATE infraestructura 
+            SET source = %s, target = %s 
+            WHERE id = %s
+        """, (source_node, target_node, infraestructura_id))
 
 # Confirmar las transacciones y cerrar la conexión
 conn.commit()

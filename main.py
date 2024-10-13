@@ -6,6 +6,7 @@ ruta_metadata = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Metada
 ruta_amenazas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Amenazas')
 ruta_importacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Importacion_Data')
 ruta_infraestructura = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Infraestructura')
+ruta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Algoritmos')
 
 # Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
@@ -39,6 +40,9 @@ scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "t
 # Lista de scripts a ejecutar en 'Importacion_Data'
 scripts_importacion = ["importacion_infraestructura.py"]
 
+# Lista de scripts a ejecutar en 'Algoritmos'
+scripts_algoritmos = ["dijkstra.py"]
+
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
 print("Ejecutando scripts de creación de base de datos...")
 ejecutar_script("Creacion_base_datos.py", ruta_importacion)
@@ -63,4 +67,10 @@ print("Ejecutando scripts de importación de infraestructura...")
 for script in scripts_importacion:
     ejecutar_script(script, ruta_importacion)
 
+# 6. Ejecución de scripts de 'Algoritmos'
+print("Ejecutando scripts de algoritmos...")
+for script in scripts_importacion:
+    ejecutar_script(script, ruta_algoritmos)
+
 print("Todos los scripts han sido ejecutados en el orden especificado.")
+
