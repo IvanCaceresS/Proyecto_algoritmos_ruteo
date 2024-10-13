@@ -1,3 +1,16 @@
+-- Eliminar todas las tablas en el esquema 'public', excepto las que son requeridas por PostGIS
+DO $$ DECLARE
+    r RECORD;
+BEGIN
+    -- Eliminar todas las tablas en el esquema 'public' excepto las relacionadas a PostGIS
+    FOR r IN (SELECT tablename 
+              FROM pg_tables 
+              WHERE schemaname = 'public' 
+              AND tablename NOT IN ('spatial_ref_sys', 'geography_columns', 'geometry_columns')) LOOP
+        EXECUTE 'DROP TABLE IF EXISTS ' || quote_ident(r.tablename) || ' CASCADE';
+    END LOOP;
+END $$;
+
 -- Crear la extensión PostGIS si no está habilitada
 CREATE EXTENSION IF NOT EXISTS postgis;
 

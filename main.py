@@ -6,7 +6,6 @@ ruta_metadata = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Metada
 ruta_amenazas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Amenazas')
 ruta_importacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Importacion_Data')
 ruta_infraestructura = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Infraestructura')
-ruta_bbdd = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Imagenes_Tablas_Valores')
 
 # Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
@@ -42,7 +41,7 @@ scripts_importacion = ["importacion_infraestructura.py"]
 
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
 print("Ejecutando scripts de creación de base de datos...")
-ejecutar_script("Creacion_base_datos.py", ruta_bbdd)
+ejecutar_script("Creacion_base_datos.py", ruta_importacion)
 
 # 2. Ejecución de scripts de 'Infraestructura'
 print("Ejecutando scripts de infraestructura...")
