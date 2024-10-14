@@ -1,0 +1,617 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 1,
+                "geojson_id": "node/1824576689",
+                "name": "La Chimba Hostel",
+                "amenity": "bicycle_parking",
+                "capacity": 10,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.637248,
+                    -33.431179
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 2,
+                "geojson_id": "node/1824583025",
+                "name": "Facultad de Economia y Negocios",
+                "amenity": "bicycle_parking",
+                "capacity": 10,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.637125,
+                    -33.442627
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 3,
+                "geojson_id": "node/1824705865",
+                "name": "FAU",
+                "amenity": "bicycle_parking",
+                "capacity": 30,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.638213,
+                    -33.441836
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 4,
+                "geojson_id": "node/1824709487",
+                "name": "Marcoleta UC",
+                "amenity": "bicycle_parking",
+                "capacity": 8,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.639093,
+                    -33.441824
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 5,
+                "geojson_id": "node/1824712348",
+                "name": "Alameda UC",
+                "amenity": "bicycle_parking",
+                "capacity": 8,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.641698,
+                    -33.441135
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 6,
+                "geojson_id": "node/1824717149",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 30,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.640036,
+                    -33.439165
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 7,
+                "geojson_id": "node/1824721152",
+                "name": "FEN ex jaula",
+                "amenity": "bicycle_parking",
+                "capacity": 46,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.636942,
+                    -33.442282
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 8,
+                "geojson_id": "node/1824805569",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 10,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.653332,
+                    -33.44342
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 9,
+                "geojson_id": "node/1833779638",
+                "name": "Parque Metropolitano",
+                "amenity": "bicycle_parking",
+                "capacity": 12,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.636117,
+                    -33.430568
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 10,
+                "geojson_id": "node/1912904703",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.662178,
+                    -33.445229
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 11,
+                "geojson_id": "node/2663380028",
+                "name": "FEN biblioteca",
+                "amenity": "bicycle_parking",
+                "capacity": 50,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.636395,
+                    -33.441815
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 12,
+                "geojson_id": "node/2869299598",
+                "name": "Bandera c/ Compañía",
+                "amenity": "bicycle_parking",
+                "capacity": 80,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.652513,
+                    -33.438452
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 13,
+                "geojson_id": "node/2869299599",
+                "name": "Bandera c/ Moneda",
+                "amenity": "bicycle_parking",
+                "capacity": 40,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.651934,
+                    -33.442102
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 14,
+                "geojson_id": "node/2869300201",
+                "name": "Esmeralda",
+                "amenity": "bicycle_parking",
+                "capacity": 8,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.647873,
+                    -33.434566
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 15,
+                "geojson_id": "node/2869300204",
+                "name": "Merced",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.640856,
+                    -33.437037
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 16,
+                "geojson_id": "node/2869300207",
+                "name": "Pergola",
+                "amenity": "bicycle_parking",
+                "capacity": 32,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.651955,
+                    -33.431269
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 17,
+                "geojson_id": "node/2869300208",
+                "name": "Plaza Esmeralda",
+                "amenity": "bicycle_parking",
+                "capacity": 8,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.648667,
+                    -33.434584
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 18,
+                "geojson_id": "node/2869300212",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 3,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.641242,
+                    -33.439645
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 19,
+                "geojson_id": "node/2869300213",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.640722,
+                    -33.436854
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 20,
+                "geojson_id": "node/2869300214",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.641637,
+                    -33.437225
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 21,
+                "geojson_id": "node/2869300215",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.641051,
+                    -33.437301
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 22,
+                "geojson_id": "node/2869300216",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.642683,
+                    -33.437461
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 23,
+                "geojson_id": "node/2869300217",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.638993,
+                    -33.437579
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 24,
+                "geojson_id": "node/2869300219",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.642514,
+                    -33.438273
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 25,
+                "geojson_id": "node/2869300220",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 6,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.641027,
+                    -33.438291
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 26,
+                "geojson_id": "node/3102823084",
+                "name": "El Túnel",
+                "amenity": "bicycle_parking",
+                "capacity": 10,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.643754,
+                    -33.43612
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 27,
+                "geojson_id": "node/3726922713",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": 5,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.650688,
+                    -33.437076
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 28,
+                "geojson_id": "node/3750036532",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.645026,
+                    -33.436656
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 29,
+                "geojson_id": "node/5503328324",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.638512,
+                    -33.429645
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 30,
+                "geojson_id": "node/8507454172",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.654354,
+                    -33.42837
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 31,
+                "geojson_id": "node/10687309322",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.640903,
+                    -33.438257
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 32,
+                "geojson_id": "node/11114698065",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.644731,
+                    -33.428939
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 33,
+                "geojson_id": "node/11124057501",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.656021,
+                    -33.432436
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "id": 34,
+                "geojson_id": "node/11575230727",
+                "name": "Sin nombre",
+                "amenity": "bicycle_parking",
+                "capacity": null,
+                "network": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.650369,
+                    -33.441943
+                ]
+            }
+        }
+    ]
+}

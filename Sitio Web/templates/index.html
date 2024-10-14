@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Algoritmos de Ruteo </title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
+    
+    <style>
+        #map { height: 500px; }
+        #simbologia {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            width: 300px;
+            background-color: #f9f9f9;
+        }
+        .simbologia-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .simbologia-item img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+        }
+        .velocidades-container {
+            display: flex;
+            align-items: center;
+        }
+        .velocidad-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        .velocidad-item .color-box {
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            border-radius: 3px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Ruta generada</h1>
+    <div id="map"></div>
+
+    <!-- Simbología debajo del mapa -->
+    <div id="simbologia">
+        <h2>Simbología (haz clic para mostrar/ocultar)</h2>
+        <div class="simbologia-item" id="toggle-infraestructura">
+            <div style="width: 20px; height: 20px; background-color: orange; border-radius: 3px; margin-right: 10px;"></div>
+            <span>Infraestructura</span>
+        </div>
+        <div class="simbologia-item" id="toggle-dijkstra">
+            <div style="width: 20px; height: 20px; background-color: #FF4500; border-radius: 3px; margin-right: 10px;"></div>
+            <span>Ruta (Dijkstra)</span>
+        </div>
+        <div class="simbologia-item" id="toggle-estacionamientos">
+            <div style="width: 20px; height: 20px; background-color: green; border: 2px solid darkgreen; border-radius: 50%; margin-right: 10px;"></div>
+            <span>Estacionamientos</span>
+        </div>
+        <div class="simbologia-item" id="toggle-velocidades">
+            <span>Velocidades máximas:</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>null</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: blue;"></div>
+                    <span>40</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: red;"></div>
+                    <span>50</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script>
+    // Inicializar el mapa centrado en las coordenadas dadas
+    var map = L.map('map').setView([-33.454868, -70.644747], 13);
+
+    // Añadir el tile layer de OpenStreetMap
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    // Definir variables para almacenar las capas
+    var infraestructuraLayer, dijkstraLayer, estacionamientosLayer, velocidadesLayer;
+
+    // Cargar y mostrar el archivo GeoJSON de infraestructura
+    fetch('../static/Archivos_exportados/infraestructura.geojson')
+        .then(response => response.json())
+        .then(data => {
+            infraestructuraLayer = L.geoJSON(data, {
+                style: {
+                    color: 'orange',
+                    weight: 2,
+                    opacity: 0.8
+                }
+            }).addTo(map);
+        })
+        .catch(error => console.error('Error cargando infraestructura.geojson:', error));
+
+    var startIcon = L.icon({
+        iconUrl: '../static/Simbologia/inicio.png',
+        iconSize: [16, 16]
+    });
+
+    var endIcon = L.icon({
+        iconUrl: '../static/Simbologia/meta.png',
+        iconSize: [16, 16]
+    });
+
+    // Cargar y mostrar el archivo GeoJSON de Dijkstra
+    fetch('../static/dijkstra.geojson')
+        .then(response => response.json())
+        .then(data => {
+            dijkstraLayer = L.geoJSON(null, {
+                style: {
+                    color: '#FF4500',
+                    weight: 6,
+                    opacity: 0.9
+                }
+            }).addTo(map);
+
+            // Añadir las rutas al layer de Dijkstra
+            L.geoJSON(data, {
+                style: {
+                    color: '#FF4500',
+                    weight: 6,
+                    opacity: 0.9
+                }
+            }).addTo(dijkstraLayer);
+
+            // Añadir los marcadores de inicio y meta al layer de Dijkstra
+            L.geoJSON(data, {
+                pointToLayer: function(feature, latlng) {
+                    if (feature.properties.role === "source") {
+                        return L.marker(latlng, { icon: startIcon }).bindPopup("Inicio de la ruta");
+                    } else if (feature.properties.role === "target") {
+                        return L.marker(latlng, { icon: endIcon }).bindPopup("Final de la ruta");
+                    }
+                }
+            }).addTo(dijkstraLayer);
+        })
+        .catch(error => console.error('Error cargando dijkstra.geojson:', error));
+
+    // Cargar y mostrar el archivo GeoJSON de estacionamientos
+    fetch('../static/Archivos_exportados/estacionamientos.geojson')
+        .then(response => response.json())
+        .then(data => {
+            estacionamientosLayer = L.geoJSON(data, {
+                pointToLayer: function (feature, latlng) {
+                    return L.circleMarker(latlng, {
+                        radius: 4,
+                        fillColor: 'green',
+                        color: 'darkgreen',
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+                    if (feature.properties && feature.properties.name) {
+                        layer.bindPopup(feature.properties.name);
+                    }
+                }
+            }).addTo(map);
+        })
+        .catch(error => console.error('Error cargando estacionamientos.geojson:', error));
+
+    // Cargar y mostrar el archivo GeoJSON de velocidades máximas
+    fetch('../static/Archivos_exportados/velocidades_maximas.geojson')
+        .then(response => response.json())
+        .then(data => {
+            velocidadesLayer = L.geoJSON(data, {
+                style: function (feature) {
+                    var maxspeed = feature.properties.maxspeed;
+                    var color;
+
+                    if (maxspeed === "50") {
+                        color = 'red';
+                    } else if (maxspeed === "40") {
+                        color = 'blue';
+                    } else {
+                        color = 'gray';
+                    }
+
+                    return {
+                        color: color,
+                        weight: 4,
+                        opacity: 0.9
+                    };
+                }
+            }).addTo(map);
+        })
+        .catch(error => console.error('Error cargando velocidades_maximas.geojson:', error));
+
+    // Funciones para alternar la visibilidad de las capas
+    function toggleLayer(layer) {
+        if (map.hasLayer(layer)) {
+            map.removeLayer(layer);
+        } else {
+            map.addLayer(layer);
+        }
+    }
+
+    // Asignar eventos de clic a la simbología
+    document.getElementById('toggle-infraestructura').addEventListener('click', function() {
+        toggleLayer(infraestructuraLayer);
+    });
+
+    document.getElementById('toggle-dijkstra').addEventListener('click', function() {
+        toggleLayer(dijkstraLayer);
+    });
+
+    document.getElementById('toggle-estacionamientos').addEventListener('click', function() {
+        toggleLayer(estacionamientosLayer);
+    });
+
+    document.getElementById('toggle-velocidades').addEventListener('click', function() {
+        toggleLayer(velocidadesLayer);
+    });
+
+</script>
+
+</html>

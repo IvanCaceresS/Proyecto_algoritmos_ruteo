@@ -8,6 +8,7 @@ ruta_importacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Imp
 ruta_infraestructura = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Infraestructura')
 ruta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Algoritmos')
 ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exportacion_Data')
+ruta_sitio_web = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Sitio Web')
 
 def ejecutar_script(script, ruta_carpeta):
     directorio_actual = os.getcwd()
@@ -95,6 +96,10 @@ for script in scripts_algoritmos:
 print("Ejecutando scripts de exportación...")
 for script in scripts_exportacion:
     ejecutar_script(script, ruta_exportacion)
+
+# 8. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
+print("Ejecutando Leaflet en el puerto 8080...")
+ejecutar_script("app.py", ruta_sitio_web)
 
 print("Todos los scripts han sido ejecutados en el orden especificado.")
 
