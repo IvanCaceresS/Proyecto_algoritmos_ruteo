@@ -18,21 +18,9 @@
         "road_closure":"No"
     },
     {
-        "id":7981319,
-        "name":"Miraflores",
-        "coordenada":"-33.442375,-70.644909",
-        "road_closure":"No"
-    },
-    {
         "id":7991807,
         "name":"Ismael Valdés Vergara",
         "coordenada":"-33.433083,-70.652118",
-        "road_closure":"No"
-    },
-    {
-        "id":8000033,
-        "name":"Morandé",
-        "coordenada":"-33.444608,-70.652903",
         "road_closure":"No"
     },
     {
@@ -42,9 +30,21 @@
         "road_closure":"No"
     },
     {
+        "id":8000089,
+        "name":"Avenida 5 de Abril",
+        "coordenada":"-33.510172,-70.743489",
+        "road_closure":"No"
+    },
+    {
         "id":8000232,
         "name":"Diagonal Paraguay",
         "coordenada":"-33.442262,-70.643907",
+        "road_closure":"No"
+    },
+    {
+        "id":8000309,
+        "name":"Rotonda Rodrigo de Araya",
+        "coordenada":"-33.473436,-70.588616",
         "road_closure":"No"
     },
     {

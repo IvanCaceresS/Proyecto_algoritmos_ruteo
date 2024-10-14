@@ -1,12 +1,24 @@
 import requests
 import geojson
 from geojson import FeatureCollection, Feature, LineString
+from dotenv import load_dotenv
+import os
 
-# Definir las coordenadas del bounding box
-norte = -33.2467   # Latitud máxima
-sur = -33.8454     # Latitud mínima
-este = -70.4333    # Longitud máxima
-oeste = -70.9360   # Longitud mínima
+load_dotenv('../.env')
+
+# Leer la variable BBOX_RM del archivo .env
+BBOX_RM = os.getenv("BBOX_RM")
+BBOX_ZONA_PEQUENA = os.getenv("BBOX_ZONA_PEQUENA")
+
+# Separar los valores de BBOX_RM en una lista
+#bbox_values = BBOX_RM.split(',')
+bbox_values = BBOX_ZONA_PEQUENA.split(',')
+
+# Asignar los valores a sur, oeste, norte, este (en el orden correcto)
+norte = bbox_values[0]
+este = bbox_values[1]
+sur = bbox_values[2]
+oeste = bbox_values[3]
 
 # Crear la variable del bounding box en el orden: sur, oeste, norte, este
 bbox = f"{sur},{oeste},{norte},{este}"

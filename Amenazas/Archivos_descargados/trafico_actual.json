@@ -17,15 +17,8 @@
         "id": 7981317,
         "name": "San Antonio",
         "coordenada": "-33.433092,-70.648721",
-        "current_speed": 26,
-        "free_flow_speed": 32
-    },
-    {
-        "id": 7981319,
-        "name": "Miraflores",
-        "coordenada": "-33.442375,-70.644909",
-        "current_speed": 55,
-        "free_flow_speed": 59
+        "current_speed": 31,
+        "free_flow_speed": 31
     },
     {
         "id": 7991807,
@@ -35,25 +28,32 @@
         "free_flow_speed": 94
     },
     {
-        "id": 8000033,
-        "name": "Morandé",
-        "coordenada": "-33.444608,-70.652903",
-        "current_speed": 45,
-        "free_flow_speed": 50
-    },
-    {
         "id": 8000035,
         "name": "Purísima",
         "coordenada": "-33.434982,-70.638862",
-        "current_speed": 17,
-        "free_flow_speed": 20
+        "current_speed": 21,
+        "free_flow_speed": 21
+    },
+    {
+        "id": 8000089,
+        "name": "Avenida 5 de Abril",
+        "coordenada": "-33.510172,-70.743489",
+        "current_speed": 98,
+        "free_flow_speed": 98
     },
     {
         "id": 8000232,
         "name": "Diagonal Paraguay",
         "coordenada": "-33.442262,-70.643907",
-        "current_speed": 45,
+        "current_speed": 50,
         "free_flow_speed": 50
+    },
+    {
+        "id": 8000309,
+        "name": "Rotonda Rodrigo de Araya",
+        "coordenada": "-33.473436,-70.588616",
+        "current_speed": 41,
+        "free_flow_speed": 41
     },
     {
         "id": 8000322,
@@ -66,7 +66,7 @@
         "id": 8000329,
         "name": "Santa Isabel",
         "coordenada": "-33.452874,-70.656967",
-        "current_speed": 36,
-        "free_flow_speed": 42
+        "current_speed": 41,
+        "free_flow_speed": 41
     }
 ]

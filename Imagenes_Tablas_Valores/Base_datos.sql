@@ -27,6 +27,26 @@ CREATE TABLE proyectoalgoritmos.ciclovias (
     geometry GEOMETRY(LineString, 4326)
 );
 
+-- Crear la tabla 'estacionamientos' para almacenar los datos de estacionamientos
+CREATE TABLE proyectoalgoritmos.estacionamientos (
+    id SERIAL PRIMARY KEY,                     -- Identificador único
+    geojson_id VARCHAR(50),                    -- ID del GeoJSON
+    name VARCHAR(255),                         -- Nombre del estacionamiento
+    amenity VARCHAR(50),                       -- Tipo de servicio, ej. 'bicycle_parking'
+    capacity INT,                              -- Capacidad del estacionamiento
+    network VARCHAR(50),                       -- Nombre de la red, ej. 'Bicimetro'
+    geometry GEOMETRY(Point, 4326)             -- Geometría en formato Point con SRID 4326
+);
+
+-- Crear la tabla 'iluminacion' para almacenar los datos de iluminación
+CREATE TABLE proyectoalgoritmos.iluminacion (
+    id SERIAL PRIMARY KEY,                   -- Identificador único
+    geojson_id BIGINT,                       -- ID del GeoJSON
+    lit VARCHAR(10),                         -- Si está iluminado o no (yes/no)
+    geometry GEOMETRY(LineString, 4326)      -- Geometría en formato LineString con SRID 4326
+);
+
+
 -- CREATE TABLE proyectoalgoritmos.comuna (
 -- 	id SERIAL PRIMARY KEY,
 -- 	name VARCHAR(255),
