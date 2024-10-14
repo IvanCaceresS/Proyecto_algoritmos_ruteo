@@ -21,7 +21,7 @@ Debe contener:
 - N archivos, donde cada uno automatice la descarga de la amenaza de n APIs o bases de datos distintas.
 - El archivo respectivo que contenga la amenaza descargada.
 
-### 4. Estructura Resultante [metadalisto] [amenazalisto]
+### 4. Estructura Resultante
 Por cada archivo de automatización, deberá indicar la estructura resultante de cada archivo descargado, para facilitar el entendimiento de la data obtenida.
 
 ### 5. Imagen de Tablas y Valores

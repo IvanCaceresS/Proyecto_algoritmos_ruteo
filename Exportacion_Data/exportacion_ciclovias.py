@@ -67,7 +67,7 @@ def export_to_geojson(table_name, geometry_column, output_file, extra_columns=No
     print(f"Exportación completada: {output_file}")
 
 # Exportar la tabla 'ciclovias' a un archivo GeoJSON
-export_to_geojson('ciclovias', 'geometry', 'ciclovias.geojson')
+export_to_geojson('ciclovias', 'geometry', './Archivos_exportados/ciclovias.geojson')
 
 # Cerrar la conexión
 cur.close()

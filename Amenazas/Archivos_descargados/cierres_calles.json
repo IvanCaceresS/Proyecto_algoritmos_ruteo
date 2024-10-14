@@ -30,33 +30,33 @@
         "road_closure":"No"
     },
     {
-        "id":8000089,
-        "name":"Avenida 5 de Abril",
-        "coordenada":"-33.510172,-70.743489",
-        "road_closure":"No"
-    },
-    {
         "id":8000232,
         "name":"Diagonal Paraguay",
         "coordenada":"-33.442262,-70.643907",
         "road_closure":"No"
     },
     {
-        "id":8000309,
-        "name":"Rotonda Rodrigo de Araya",
-        "coordenada":"-33.473436,-70.588616",
+        "id":8000667,
+        "name":"Avenida Presidente Balmaceda",
+        "coordenada":"-33.43278,-70.653648",
         "road_closure":"No"
     },
     {
-        "id":8000322,
-        "name":"Avenida Providencia",
-        "coordenada":"-33.436766,-70.634758",
+        "id":8000866,
+        "name":"Loreto",
+        "coordenada":"-33.43346,-70.642477",
         "road_closure":"No"
     },
     {
-        "id":8000329,
-        "name":"Santa Isabel",
-        "coordenada":"-33.452874,-70.656967",
+        "id":11490172,
+        "name":"Santa Lucía",
+        "coordenada":"-33.437714,-70.64346",
+        "road_closure":"No"
+    },
+    {
+        "id":13858477,
+        "name":"José Miguel de la Barra",
+        "coordenada":"-33.437695,-70.643303",
         "road_closure":"No"
     }
 ]

@@ -9,7 +9,6 @@ ruta_infraestructura = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 ruta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Algoritmos')
 ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exportacion_Data')
 
-# Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
     directorio_actual = os.getcwd()
     try:
@@ -33,13 +32,35 @@ scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", 
 scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
 
 # Lista de scripts a ejecutar en 'Importacion_Data'
-scripts_importacion = ["importacion_ciclovias.py","importacion_infraestructura.py","importacion_metadata_estacionamientos.py","importacion_metadata_iluminacion.py"]
+scripts_importacion = [
+    "importacion_ciclovias.py",
+    "importacion_infraestructura.py",
+    "importacion_metadata_estacionamientos.py",
+    "importacion_metadata_iluminacion.py",
+    "importacion_metadata_inundacion.py",
+    "importacion_metadata_velocidades.py",
+    "importacion_amenaza_cierre_calles.py",
+    "importacion_amenaza_precipitaciones.py",
+    "importacion_amenaza_seguridad.py",
+    "importacion_amenaza_trafico_actual.py"
+    ]
 
 # Lista de scripts a ejecutar en 'Algoritmos'
 scripts_algoritmos = ["dijkstra.py"]
 
 # Lista de scripts a ejecutar en 'Exportacion_Data'
-scripts_exportacion = ["exportacion_infraestructura.py","exportacion_ciclovias.py"]
+scripts_exportacion = [
+    "exportacion_infraestructura.py",
+    "exportacion_ciclovias.py",
+    "exportacion_metadata_estacionamientos.py",
+    "exportacion_metadata_iluminacion.py",
+    "exportacion_metadata_inundacion.py",
+    "exportacion_metadata_velocidades.py",
+    "exportacion_amenaza_cierre_calles.py",
+    "exportacion_amenaza_precipitaciones.py",
+    "exportacion_amenaza_seguridad.py",
+    "exportacion_amenaza_trafico_actual.py"
+    ]
 
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
 print("Ejecutando scripts de creación de base de datos...")

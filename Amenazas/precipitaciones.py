@@ -4,66 +4,31 @@ import json
 from dotenv import load_dotenv
 import os
 
+# Cargar las variables de entorno desde el archivo .env
 load_dotenv(dotenv_path='../.env')
 
 api_key = os.getenv("WEATHER_API_KEY")
 
-# Lista de comunas
-comunas_rm = [
-    "ALHUÉ",
-    "BUIN",
-    "CALERA DE TANGO",
-    "CERRILLOS",
-    "CERRO NAVIA",
-    "COLINA",
-    "CONCHALÍ",
-    "CURACAVÍ",
-    "EL BOSQUE",
-    "EL MONTE",
-    "ESTACIÓN CENTRAL",
-    "HUECHURABA",
-    "INDEPENDENCIA",
-    "ISLA DE MAIPO",
-    "LA CISTERNA",
-    "LA FLORIDA",
-    "LA GRANJA",
-    "LA PINTANA",
-    "LA REINA",
-    "LAMPA",
-    "LAS CONDES",
-    "LO BARNECHEA",
-    "LO ESPEJO",
-    "LO PRADO",
-    "MACUL",
-    "MAIPÚ",
-    "MARÍA PINTO",
-    "MELIPILLA",
-    "PADRE HURTADO",
-    "PAINE",
-    "PEDRO AGUIRRE CERDA",
-    "PEÑAFLOR",
-    "PEÑALOLÉN",
-    "PIRQUE",
-    "PROVIDENCIA",
-    "PUDAHUEL",
-    "PUENTE ALTO",
-    "QUILICURA",
-    "QUINTA NORMAL",
-    "RECOLETA",
-    "RENCA",
-    "SAN BERNARDO",
-    "SAN JOAQUÍN",
-    "SAN JOSÉ DE MAIPO",
-    "SAN MIGUEL",
-    "SAN PEDRO",
-    "SAN RAMÓN",
-    "SANTIAGO",
-    "TALAGANTE",
-    "TILTIL",
-    "VITACURA",
-    "ÑUÑOA"
-]
+# Función para leer las comunas desde el archivo inundaciones.geojson
+def obtener_comunas_desde_geojson(archivo_geojson):
+    with open(archivo_geojson, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+    
+    # Extraer los nombres de las comunas desde el campo "NOM_COMUNA"
+    comunas = set()  # Usar un set para evitar duplicados
+    for feature in data['features']:
+        properties = feature.get('properties', {})
+        comuna = properties.get('NOM_COMUNA', None)
+        if comuna:
+            comunas.add(comuna)
+    
+    return list(comunas)
 
+# Obtener comunas desde el archivo GeoJSON
+archivo_inundaciones = '../Metadata/Archivos_descargados/inundaciones.geojson'
+comunas_rm = obtener_comunas_desde_geojson(archivo_inundaciones)
+
+# Función para obtener coordenadas desde Nominatim
 def obtener_coordenadas(comuna):
     url = "https://nominatim.openstreetmap.org/search"
     params = {
@@ -72,7 +37,7 @@ def obtener_coordenadas(comuna):
         'limit': 1,
     }
     headers = {
-        'User-Agent': 'MiAplicacion/1.0 (tuemail@dominio.com)'
+        'User-Agent': 'MiAplicacion/1.0 (tuemail@dominio.com)'  # Reemplazar con un email válido
     }
     response = requests.get(url, params=params, headers=headers)
     data = response.json()
@@ -83,6 +48,7 @@ def obtener_coordenadas(comuna):
     else:
         return None, None
 
+# Función para obtener la precipitación desde la API de WeatherAPI
 def obtener_precipitacion(lat, lon, api_key):
     url = "http://api.weatherapi.com/v1/current.json"
     params = {
@@ -101,8 +67,8 @@ def obtener_precipitacion(lat, lon, api_key):
 # Lista para almacenar los resultados
 resultados = []
 
-#for comuna in comunas_rm:
-for comuna in comunas_rm[:1]: # Limitar a 1 comuna para pruebas
+# Limitar a 1 comuna para pruebas
+for comuna in comunas_rm[:1]:  
     print(f"Procesando comuna: {comuna}")
     lat, lon = obtener_coordenadas(comuna)
     if lat and lon:

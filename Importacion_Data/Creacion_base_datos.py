@@ -19,7 +19,7 @@ cur = conn.cursor()
 
 sql_file_path = '../Imagenes_Tablas_Valores/Base_datos.sql'
 
-with open(sql_file_path, 'r') as sql_file:
+with open(sql_file_path, 'r', encoding='utf-8') as sql_file:
     sql_commands = sql_file.read()
 
 cur.execute(sql_commands)
