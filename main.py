@@ -12,7 +12,6 @@ ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exp
 # Función para ejecutar un script en una carpeta específica
 def ejecutar_script(script, ruta_carpeta):
     directorio_actual = os.getcwd()
-    
     try:
         os.chdir(ruta_carpeta)
         subprocess.run(["python", script], check=True)
@@ -28,10 +27,10 @@ def ejecutar_script(script, ruta_carpeta):
 scripts_infraestructura = ["infraestructura_ciclovias.py", "infraestructura_vias.py"]
 
 # Lista de scripts a ejecutar en 'Metadata'
-#scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", "velocidad_max.py"]
+scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", "velocidad_max.py"]
 
 # Lista de scripts a ejecutar en 'Amenazas'
-#scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
+scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
 
 # Lista de scripts a ejecutar en 'Importacion_Data'
 scripts_importacion = ["importacion_infraestructura.py"]
@@ -53,13 +52,13 @@ for script in scripts_infraestructura:
 
 # 3. Ejecución de scripts de 'Metadata'
 print("Ejecutando scripts de metadata...")
-for script in scripts_metadata:
-    ejecutar_script(script, ruta_metadata)
+# for script in scripts_metadata:
+#     ejecutar_script(script, ruta_metadata)
 
 # 4. Ejecución de scripts de 'Amenazas'
 print("Ejecutando scripts de amenazas...")
-for script in scripts_amenazas:
-    ejecutar_script(script, ruta_amenazas)
+# for script in scripts_amenazas:
+#     ejecutar_script(script, ruta_amenazas)
 
 # 5. Ejecución de scripts de 'Importacion_Data'
 print("Ejecutando scripts de importación...")
