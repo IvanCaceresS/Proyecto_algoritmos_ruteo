@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv(dotenv_path='../.env')
+#84 (FACULTAD INGENIERIA UDP)
+#441 (MALL PLAZA EGAÑA)
 
 host = os.getenv("DB_HOST")
 database = os.getenv("DB_NAME")

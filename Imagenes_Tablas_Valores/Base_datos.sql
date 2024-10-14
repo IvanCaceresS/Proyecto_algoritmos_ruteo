@@ -22,6 +22,11 @@ CREATE TABLE proyectoalgoritmos.infraestructura_nodos (
     geometry GEOMETRY(Point, 4326)
 );
 
+CREATE TABLE proyectoalgoritmos.ciclovias (
+    id SERIAL PRIMARY KEY,
+    geometry GEOMETRY(LineString, 4326)
+);
+
 -- CREATE TABLE proyectoalgoritmos.comuna (
 -- 	id SERIAL PRIMARY KEY,
 -- 	name VARCHAR(255),

@@ -33,13 +33,13 @@ scripts_metadata = ["estacionamientos.py", "iluminacion.py", "inundaciones.py", 
 scripts_amenazas = ["precipitaciones.py", "cierre-calles.py", "seguridad.py", "trafico-actual.py"]
 
 # Lista de scripts a ejecutar en 'Importacion_Data'
-scripts_importacion = ["importacion_infraestructura.py"]
+scripts_importacion = ["importacion_ciclovias.py","importacion_infraestructura.py"]
 
 # Lista de scripts a ejecutar en 'Algoritmos'
 scripts_algoritmos = ["dijkstra.py"]
 
 # Lista de scripts a ejecutar en 'Exportacion_Data'
-scripts_exportacion = ["exportacion_infraestructura.py"]
+scripts_exportacion = ["exportacion_infraestructura.py","exportacion_ciclovias.py"]
 
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
 print("Ejecutando scripts de creación de base de datos...")

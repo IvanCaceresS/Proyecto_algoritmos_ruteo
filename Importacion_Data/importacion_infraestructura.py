@@ -4,7 +4,6 @@ from psycopg2 import sql
 from dotenv import load_dotenv
 import os
 from shapely.geometry import shape, Point, LineString
-from shapely.ops import linemerge, nearest_points
 from shapely import wkt  # Importar para cargar geometría WKT
 
 # Cargar credenciales desde archivo .env
@@ -19,6 +18,13 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
+# Agregar la columna 'is_ciclovia' a la tabla infraestructura si no existe
+cur.execute("""
+    ALTER TABLE proyectoalgoritmos.infraestructura 
+    ADD COLUMN IF NOT EXISTS is_ciclovia BOOLEAN DEFAULT FALSE;
+""")
+conn.commit()
+
 # Leer archivo GeoJSON
 with open('../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson', 'r', encoding='utf-8') as f:
     geojson_data = json.load(f)
@@ -31,8 +37,8 @@ insert_node_query = sql.SQL("""
 """)
 
 insert_line_query = sql.SQL("""
-    INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, source, target, geometry, cost)
-    VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s)
+    INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, source, target, geometry, cost, is_ciclovia)
+    VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s, %s)
 """)
 
 # Crear una lista para todas las geometrías (líneas) del GeoJSON
@@ -83,11 +89,10 @@ for feature in geojson_data['features']:
 
         # Insertar la línea original en la tabla (esto será eliminado después)
         cur.execute(insert_line_query, (
-            line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost
+            line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost, False  # Ciclovía inicialmente como False
         ))
 
-# Limpiar la tabla infraestructura para reiniciar
-cur.execute("DELETE FROM proyectoalgoritmos.infraestructura")
+# Confirmar la inserción de las líneas
 conn.commit()
 
 # Función para encontrar los nodos que intersectan una línea
@@ -129,13 +134,24 @@ for idx, line in enumerate(line_geometries):
 
             # Insertar el segmento como una nueva línea en la tabla infraestructura
             cur.execute(insert_line_query, (
-                new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost
+                new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False  # Ciclovía inicialmente como False
             ))
 
             new_line_id += 1  # Incrementar el ID de la nueva línea
 
 # Confirmar la transacción
 conn.commit()
+print("Intersectando con ciclovías...")
+# Intersección con ciclovías
+cur.execute("""
+    UPDATE proyectoalgoritmos.infraestructura
+    SET is_ciclovia = TRUE
+    FROM proyectoalgoritmos.ciclovias
+    WHERE ST_Intersects(proyectoalgoritmos.infraestructura.geometry, proyectoalgoritmos.ciclovias.geometry);
+""")
+conn.commit()
+
+print("Las intersecciones con ciclovías han sido actualizadas.")
 
 # Cerrar la conexión
 cur.close()
