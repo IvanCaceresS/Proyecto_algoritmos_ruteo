@@ -127,6 +127,32 @@
                 </div>
             </div>
         </div>
+        <!-- Seguridad -->
+        <div class="simbologia-item" id="toggle-seguridad">
+            <span>Seguridad (índice):</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #00FF00;"></div>
+                    <span>Bajo</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FFD700;"></div>
+                    <span>Medio</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FF8C00;"></div>
+                    <span>Alto</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FF0000;"></div>
+                    <span>Crítico</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>Sin datos</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -353,6 +379,90 @@
             });
         })
         .catch(error => console.error('Error cargando inundaciones.geojson:', error));
+
+
+
+
+
+    // Función para definir el color basado en el índice de seguridad
+    function getColorSeguridad(value) {
+        return value === null ? 'gray' :
+               value >= 900 ? '#FF0000' : // Crítico
+               value >= 660 ? '#FF8C00' : // Alto
+               value >= 350 ? '#FFD700' : // Medio
+                              '#00FF00';  // Bajo
+    }
+
+    // Cargar y mostrar la capa de seguridad desde el archivo JSON
+    fetch('../static/Archivos_exportados/seguridad_comunas_rm.json')
+        .then(response => response.json())
+        .then(data => {
+            seguridadLayer = L.geoJSON(null, {
+                style: function(feature) {
+                    var comuna = feature.properties.nom_comuna;
+                    var value = parseFloat(data[comuna]); // Obtener el valor de seguridad de la comuna del archivo JSON
+                    return {
+                        fillColor: getColorSeguridad(value),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        fillOpacity: 0.7
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var comuna = feature.properties.nom_comuna;
+                    var value = data[comuna] !== undefined ? data[comuna] : 'Sin datos';
+                    var popupContent = "<strong>Comuna:</strong> " + comuna + "<br>" +
+                                      "<strong>Índice de Seguridad:</strong> " + value;
+                    layer.bindPopup(popupContent);
+                }
+            });
+
+            // Cargar y mostrar el archivo GeoJSON de inundaciones para asociar las comunas
+            fetch('../static/Archivos_exportados/inundaciones.geojson')
+                .then(response => response.json())
+                .then(dataInundaciones => {
+                    L.geoJSON(dataInundaciones, {
+                        style: function(feature) {
+                            var comuna = feature.properties.nom_comuna;
+                            var value = parseFloat(data[comuna]); // Obtener el valor de seguridad del archivo JSON
+                            return {
+                                fillColor: getColorSeguridad(value),
+                                weight: 2,
+                                opacity: 1,
+                                color: 'black',
+                                fillOpacity: 0.7
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var comuna = feature.properties.nom_comuna;
+                            var value = data[comuna] !== undefined ? data[comuna] : 'Sin datos';
+                            var popupContent = "<strong>Comuna:</strong> " + comuna + "<br>" +
+                                              "<strong>Índice de Seguridad:</strong> " + value;
+                            layer.bindPopup(popupContent);
+                        }
+                    }).addTo(seguridadLayer);
+                })
+                .catch(error => console.error('Error cargando inundaciones.geojson:', error));
+
+            seguridadLayer.addTo(map);
+
+            // Toggle de la capa de seguridad
+            document.getElementById('toggle-seguridad').addEventListener('click', function() {
+                if (map.hasLayer(seguridadLayer)) {
+                    map.removeLayer(seguridadLayer);
+                } else {
+                    map.addLayer(seguridadLayer);
+                }
+            });
+        })
+        .catch(error => console.error('Error cargando seguridad_comunas_rm.json:', error));
+
+
+
+
+
+
 
     // Funciones para alternar la visibilidad de las capas
     function toggleLayer(layer) {
