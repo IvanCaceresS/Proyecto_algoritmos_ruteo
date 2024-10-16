@@ -51,6 +51,14 @@
             margin-right: 5px;
             border-radius: 3px;
         }
+        .color-line {
+            width: 40px; /* El ancho de la línea */
+            height: 5px; /* El alto de la línea, hazlo más pequeño para parecerse a una línea */
+            display: inline-block; /* Asegúrate de que se muestre en línea */
+            margin-right: 10px; /* Espacio entre la línea y el texto */
+            vertical-align: middle; /* Alinea la línea con el texto */
+        }
+        
     </style>
 
 </head>
@@ -63,7 +71,7 @@
     <div id="simbologia">
         <h2>Simbología (haz clic para mostrar/ocultar)</h2>
         <div class="simbologia-item" id="toggle-infraestructura">
-            <div style="width: 20px; height: 20px; background-color: orange; border-radius: 3px; margin-right: 10px;"></div>
+            <div style="width: 20px; height: 20px; background-color: #505050; border-radius: 3px; margin-right: 10px;"></div>
             <span>Infraestructura</span>
         </div>
         <div class="simbologia-item" id="toggle-dijkstra">
@@ -176,23 +184,23 @@
             <span>Tráfico Actual:</span>
             <div class="velocidades-container">
                 <div class="velocidad-item">
-                    <div class="color-box" style="background-color: #FF0000;"></div>
+                    <div class="color-line" style="background-color: #FF0000;"></div>
                     <span>Muy alta congestión (0-20)</span>
                 </div>
                 <div class="velocidad-item">
-                    <div class="color-box" style="background-color: #FFA500;"></div>
+                    <div class="color-line" style="background-color: #FFA500;"></div>
                     <span>Alta congestión (20-30)</span>
                 </div>
                 <div class="velocidad-item">
-                    <div class="color-box" style="background-color: #FFFF00;"></div>
+                    <div class="color-line" style="background-color: #FFFF00;"></div>
                     <span>Tráfico moderado (30-40)</span>
                 </div>
                 <div class="velocidad-item">
-                    <div class="color-box" style="background-color: #00FF00;"></div>
+                    <div class="color-line" style="background-color: #00FF00;"></div>
                     <span>Sin congestión (&gt;40)</span>
                 </div>
                 <div class="velocidad-item">
-                    <div class="color-box" style="background-color: gray;"></div>
+                    <div class="color-line" style="background-color: #505050;"></div>
                     <span>Sin datos</span>
                 </div>
             </div>
@@ -220,7 +228,7 @@
         .then(data => {
             infraestructuraLayer = L.geoJSON(data, {
                 style: {
-                    color: 'orange',
+                    color: '#505050',
                     weight: 2,
                     opacity: 0.8
                 }
