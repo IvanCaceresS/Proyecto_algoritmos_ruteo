@@ -17,7 +17,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
     
     <style>
-        #map { height: 500px; }
+        #map { height: 800px; }
         #simbologia {
             margin-top: 20px;
             padding: 10px;
@@ -79,7 +79,7 @@
             <div class="velocidades-container">
                 <div class="velocidad-item">
                     <div class="color-box" style="background-color: gray;"></div>
-                    <span>null</span>
+                    <span>Sin datos</span>
                 </div>
                 <div class="velocidad-item">
                     <div class="color-box" style="background-color: blue;"></div>
@@ -88,6 +88,42 @@
                 <div class="velocidad-item">
                     <div class="color-box" style="background-color: red;"></div>
                     <span>50</span>
+                </div>
+            </div>
+        </div>
+        <!--Inundaciones-->
+        <div class="simbologia-item" id="toggle-inundaciones">
+            <span>Riesgo de Inundaciones:</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: green;"></div>
+                    <span>Bajo</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: red;"></div>
+                    <span>Alto</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>Sin datos</span>
+                </div>
+            </div>
+        </div>
+        <!-- Simbología Precipitación -->
+        <div class="simbologia-item" id="toggle-precipitacion">
+            <span>Precipitación (mm):</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #add8e6;"></div>
+                    <span>0 mm</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #00008b;"></div>
+                    <span>10 mm</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>Sin datos</span>
                 </div>
             </div>
         </div>
@@ -216,6 +252,107 @@
             }).addTo(map);
         })
         .catch(error => console.error('Error cargando velocidades_maximas.geojson:', error));
+
+    // Función para definir el color basado en el índice de riesgo de precipitación
+    function getColorPrecipitation(value) {
+        return value === null ? 'gray' : // Sin datos
+               value > 10   ? '#00008b' : // Azul oscuro (mayor precipitación)
+               value > 5    ? '#4169e1' : // Azul medio
+               value >= 0   ? '#add8e6' : // Azul claro (incluso para 0.0)
+                              'gray';    // Valor no válido
+    }
+
+    // Variable para almacenar los datos de precipitaciones
+    var precipitacionesData = {};
+
+    // Cargar los datos de precipitaciones
+    fetch('../static/Archivos_exportados/precipitacion_comunas_rm.json')
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(function(entry) {
+                precipitacionesData[entry.comuna] = parseFloat(entry.precip_mm); // Guardamos las precipitaciones por comuna
+            });
+        })
+        .catch(error => console.error('Error cargando precipitacion_comunas_rm.json:', error));
+
+    // Cargar y mostrar el archivo GeoJSON de inundaciones
+    fetch('../static/Archivos_exportados/inundaciones.geojson')
+        .then(response => response.json())
+        .then(data => {
+            var inundacionesLayer = L.geoJSON(data, {
+                style: function(feature) {
+                    var comuna = feature.properties.nom_comuna;
+                    var precipValue = precipitacionesData[comuna]; // Buscamos si la comuna tiene datos de precipitación
+                    return {
+                        fillColor: getColorPrecipitation(precipValue), // Usamos el valor de precipitación si existe
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        fillOpacity: 0.7
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var comuna = feature.properties.nom_comuna;
+                    var precipValue = precipitacionesData[comuna] !== undefined ? precipitacionesData[comuna] : 'Sin datos';
+                    var popupContent = "<strong>Comuna:</strong> " + comuna + "<br>" +
+                                        "<strong>Precipitación:</strong> " + precipValue + " mm";
+                    layer.bindPopup(popupContent);
+                }
+            }).addTo(map);
+
+            // Toggle de la capa de precipitaciones
+            document.getElementById('toggle-precipitacion').addEventListener('click', function() {
+                if (map.hasLayer(inundacionesLayer)) {
+                    map.removeLayer(inundacionesLayer);
+                } else {
+                    map.addLayer(inundacionesLayer);
+                }
+            });
+        })
+        .catch(error => console.error('Error cargando inundaciones.geojson:', error));
+
+    // Función para definir el color basado en el índice de riesgo
+    function getColor(d) {
+        return d === null ? 'gray' :
+               d > 0.05  ? '#FF0000' : // Rojo para valores altos
+               d > 0.03  ? '#FF8C00' : // Naranja
+               d > 0.01  ? '#FFD700' : // Amarillo
+               d > 0     ? '#9ACD32' : // Verde claro
+                           '#00FF00';  // Verde
+    }
+
+    // Cargar y mostrar el archivo GeoJSON de inundaciones
+    fetch('../static/Archivos_exportados/inundaciones.geojson')
+        .then(response => response.json())
+        .then(data => {
+            var inundacionesLayer = L.geoJSON(data, {
+                style: function(feature) {
+                    var riesgo = feature.properties.ind_riesgo_inundaciones_t10_delta;
+                    return {
+                        fillColor: getColor(riesgo),
+                        weight: 2,
+                        opacity: 1,
+                        color: 'black',
+                        fillOpacity: 0.7
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var popupContent = "<strong>Comuna:</strong> " + feature.properties.nom_comuna + "<br>" +
+                                        "<strong>Riesgo de Inundación:</strong> " + (feature.properties.ind_riesgo_inundaciones_t10_delta !== null ? feature.properties.ind_riesgo_inundaciones_t10_delta : 'Sin datos');
+                    layer.bindPopup(popupContent);
+                }
+            }).addTo(map);
+
+            // Toggle de la capa de inundaciones
+            document.getElementById('toggle-inundaciones').addEventListener('click', function() {
+                if (map.hasLayer(inundacionesLayer)) {
+                    map.removeLayer(inundacionesLayer);
+                } else {
+                    map.addLayer(inundacionesLayer);
+                }
+            });
+        })
+        .catch(error => console.error('Error cargando inundaciones.geojson:', error));
 
     // Funciones para alternar la visibilidad de las capas
     function toggleLayer(layer) {
