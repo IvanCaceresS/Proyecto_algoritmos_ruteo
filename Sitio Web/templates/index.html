@@ -153,6 +153,24 @@
                 </div>
             </div>
         </div>
+        <!-- Cierre de calles -->
+        <div class="simbologia-item" id="toggle-cierres">
+            <span>Cierre de Calles:</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FF0000;"></div>
+                    <span>Cerrada</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #00FF00;"></div>
+                    <span>Abierta</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>Sin datos</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -380,10 +398,6 @@
         })
         .catch(error => console.error('Error cargando inundaciones.geojson:', error));
 
-
-
-
-
     // Función para definir el color basado en el índice de seguridad
     function getColorSeguridad(value) {
         return value === null ? 'gray' :
@@ -413,7 +427,7 @@
                     var comuna = feature.properties.nom_comuna;
                     var value = data[comuna] !== undefined ? data[comuna] : 'Sin datos';
                     var popupContent = "<strong>Comuna:</strong> " + comuna + "<br>" +
-                                      "<strong>Índice de Seguridad:</strong> " + value;
+                                        "<strong>Índice de Seguridad:</strong> " + value;
                     layer.bindPopup(popupContent);
                 }
             });
@@ -438,7 +452,7 @@
                             var comuna = feature.properties.nom_comuna;
                             var value = data[comuna] !== undefined ? data[comuna] : 'Sin datos';
                             var popupContent = "<strong>Comuna:</strong> " + comuna + "<br>" +
-                                              "<strong>Índice de Seguridad:</strong> " + value;
+                                                "<strong>Índice de Seguridad:</strong> " + value;
                             layer.bindPopup(popupContent);
                         }
                     }).addTo(seguridadLayer);
@@ -457,6 +471,87 @@
             });
         })
         .catch(error => console.error('Error cargando seguridad_comunas_rm.json:', error));
+
+
+
+
+
+    // Función para definir el color basado en el estado de cierre de calles
+    function getColorCierre(roadClosure) {
+        return roadClosure === "Yes" ? '#FF0000' :
+                roadClosure === "No" ? '#00FF00' :
+                                        'gray';
+    }
+
+    // Cargar y mostrar la capa de cierre de calles desde el archivo JSON
+    fetch('../static/Archivos_exportados/cierres_calles.json')
+        .then(response => response.json())
+        .then(data => {
+            cierreCallesLayer = L.geoJSON(null, {
+                style: function(feature) {
+                    var streetName = feature.properties.name;
+                    var roadClosureData = data.find(street => street.name === streetName);
+                    var roadClosure = roadClosureData ? roadClosureData.road_closure : 'Sin datos';
+                    return {
+                        fillColor: getColorCierre(roadClosure),
+                        weight: 2,
+                        opacity: 1,
+                        color: getColorCierre(roadClosure),
+                        fillOpacity: 0.7
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var streetName = feature.properties.name;
+                    var roadClosureData = data.find(street => street.name === streetName);
+                    var roadClosure = roadClosureData ? roadClosureData.road_closure : 'Sin datos';
+                    var popupContent = "<strong>Calle:</strong> " + streetName + "<br>" +
+                                        "<strong>Cierre de Calle:</strong> " + roadClosure;
+                    layer.bindPopup(popupContent);
+                }
+            });
+
+            // Cargar y mostrar el archivo GeoJSON de infraestructura para asociar las calles
+            fetch('../static/Archivos_exportados/infraestructura.geojson')
+                .then(response => response.json())
+                .then(dataInfraestructura => {
+                    L.geoJSON(dataInfraestructura, {
+                        style: function(feature) {
+                            var streetName = feature.properties.name;
+                            var roadClosureData = data.find(street => street.name === streetName);
+                            var roadClosure = roadClosureData ? roadClosureData.road_closure : 'Sin datos';
+                            return {
+                                fillColor: getColorCierre(roadClosure),
+                                weight: 2,
+                                opacity: 1,
+                                color: getColorCierre(roadClosure),
+                                fillOpacity: 0.7
+                            };
+                        },
+                        onEachFeature: function(feature, layer) {
+                            var streetName = feature.properties.name;
+                            var roadClosureData = data.find(street => street.name === streetName);
+                            var roadClosure = roadClosureData ? roadClosureData.road_closure : 'Sin datos';
+                            var popupContent = "<strong>Calle:</strong> " + streetName + "<br>" +
+                                                "<strong>Cierre de Calle:</strong> " + roadClosure;
+                            layer.bindPopup(popupContent);
+                        }
+                    }).addTo(cierreCallesLayer);
+                })
+                .catch(error => console.error('Error cargando infraestructura.geojson:', error));
+
+            cierreCallesLayer.addTo(map);
+
+            // Toggle de la capa de cierre de calles
+            document.getElementById('toggle-cierres').addEventListener('click', function() {
+                if (map.hasLayer(cierreCallesLayer)) {
+                    map.removeLayer(cierreCallesLayer);
+                } else {
+                    map.addLayer(cierreCallesLayer);
+                }
+            });
+        })
+        .catch(error => console.error('Error cargando cierres_calles.json:', error));
+
 
 
 
