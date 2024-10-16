@@ -171,6 +171,32 @@
                 </div>
             </div>
         </div>
+        <!-- Tráfico Actual -->
+        <div class="simbologia-item" id="toggle-trafico">
+            <span>Tráfico Actual:</span>
+            <div class="velocidades-container">
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FF0000;"></div>
+                    <span>Muy alta congestión (0-20)</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FFA500;"></div>
+                    <span>Alta congestión (20-30)</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #FFFF00;"></div>
+                    <span>Tráfico moderado (30-40)</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: #00FF00;"></div>
+                    <span>Sin congestión (&gt;40)</span>
+                </div>
+                <div class="velocidad-item">
+                    <div class="color-box" style="background-color: gray;"></div>
+                    <span>Sin datos</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
@@ -472,10 +498,6 @@
         })
         .catch(error => console.error('Error cargando seguridad_comunas_rm.json:', error));
 
-
-
-
-
     // Función para definir el color basado en el estado de cierre de calles
     function getColorCierre(roadClosure) {
         return roadClosure === "Yes" ? '#FF0000' :
@@ -553,12 +575,80 @@
         .catch(error => console.error('Error cargando cierres_calles.json:', error));
 
 
+    // Función para definir el color basado en el nivel de congestión
+    function getTrafficColor(speed) {
+        return speed <= 20 ? '#FF0000' : // Muy alta congestión
+                speed <= 30 ? '#FFA500' : // Alta congestión
+                speed <= 40 ? '#FFFF00' : // Tráfico moderado
+                                '#00FF00';  // Sin congestión
+    }
+        
+    // Cargar y mostrar la capa de tráfico actual desde el archivo JSON
+    fetch('../static/Archivos_exportados/trafico_actual.json')
+        .then(response => response.json())
+        .then(data => {
+            traficoLayer = L.geoJSON(null, {
+                style: function(feature) {
+                    var streetName = feature.properties.name;
+                    var trafficData = data.find(street => street.name === streetName);
+                    var speed = trafficData ? trafficData.current_speed : null;
+                    return {
+                        color: speed !== null ? getTrafficColor(speed) : 'gray',
+                        weight: 3,
+                        opacity: 0.8
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var streetName = feature.properties.name;
+                    var trafficData = data.find(street => street.name === streetName);
+                    var speed = trafficData ? trafficData.current_speed : 'Sin datos';
+                    var popupContent = "<strong>Calle:</strong> " + streetName + "<br>" +
+                                        "<strong>Velocidad Actual:</strong> " + speed + " km/h";
+                    layer.bindPopup(popupContent);
+                }
+            });
+        
+    // Cargar y mostrar el archivo GeoJSON de infraestructura para asociar las calles
+    fetch('../static/Archivos_exportados/infraestructura.geojson')
+        .then(response => response.json())
+        .then(dataInfraestructura => {
+            L.geoJSON(dataInfraestructura, {
+                style: function(feature) {
+                    var streetName = feature.properties.name;
+                    var trafficData = data.find(street => street.name === streetName);
+                    var speed = trafficData ? trafficData.current_speed : null;
+                    return {
+                        color: speed !== null ? getTrafficColor(speed) : 'gray',
+                        weight: 3,
+                        opacity: 0.8
+                    };
+                },
+                onEachFeature: function(feature, layer) {
+                    var streetName = feature.properties.name;
+                    var trafficData = data.find(street => street.name === streetName);
+                    var speed = trafficData ? trafficData.current_speed : 'Sin datos';
+                    var popupContent = "<strong>Calle:</strong> " + streetName + "<br>" +
+                                                "<strong>Velocidad Actual:</strong> " + speed + " km/h";
+                    layer.bindPopup(popupContent);
+                }
+            }).addTo(traficoLayer);
+        })
+        .catch(error => console.error('Error cargando infraestructura.geojson:', error));
+        
+        traficoLayer.addTo(map);
+        
+        // Toggle de la capa de tráfico
+        document.getElementById('toggle-trafico').addEventListener('click', function() {
+            if (map.hasLayer(traficoLayer)) {
+                map.removeLayer(traficoLayer);
+            } else {
+                map.addLayer(traficoLayer);
+            }
+        });
+    })
+    .catch(error => console.error('Error cargando trafico_actual.json:', error));
 
-
-
-
-
-
+        
     // Funciones para alternar la visibilidad de las capas
     function toggleLayer(layer) {
         if (map.hasLayer(layer)) {
