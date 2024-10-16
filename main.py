@@ -87,15 +87,15 @@ print("Ejecutando scripts de importación...")
 for script in scripts_importacion:
     ejecutar_script(script, ruta_importacion)
 
-# 6. Ejecución de scripts de 'Algoritmos'
-print("Ejecutando scripts de algoritmos...")
-for script in scripts_algoritmos:
-    ejecutar_script(script, ruta_algoritmos)
-
-# 7. Ejecución de scripts de 'Exportacion_Data'
+# 6. Ejecución de scripts de 'Exportacion_Data'
 print("Ejecutando scripts de exportación...")
 for script in scripts_exportacion:
     ejecutar_script(script, ruta_exportacion)
+    
+# 7. Ejecución de scripts de 'Algoritmos'
+print("Ejecutando scripts de algoritmos...")
+for script in scripts_algoritmos:
+    ejecutar_script(script, ruta_algoritmos)    
 
 # 8. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
 print("Ejecutando Leaflet en el puerto 8080...")
