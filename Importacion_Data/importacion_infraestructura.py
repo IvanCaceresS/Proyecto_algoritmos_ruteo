@@ -78,7 +78,8 @@ for feature in geojson_data['features']:
         target_node_id = insert_node_if_not_exists(end_point)
 
         cost = geom.length
-
+        if(len(oneway) > 3):
+            oneway = 'no'
         cur.execute(insert_line_query, (
             line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost, False, oneway
         ))
@@ -113,7 +114,8 @@ for idx, line in enumerate(line_geometries):
             target_node_id = intersecting_nodes[i + 1][0]
 
             cost = segment.length
-
+            if(len(oneway) > 3):
+                oneway = 'no'
             cur.execute(insert_line_query, (
                 new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False, oneway 
             ))

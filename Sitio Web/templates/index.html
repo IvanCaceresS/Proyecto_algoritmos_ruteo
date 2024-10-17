@@ -129,12 +129,12 @@
         <!-- Infraestructura -->
         <div class="simbologia-item" id="toggle-infraestructura">
             <div class="linea-general" style=" background-color: #505050;"></div>
-            <span>Infraestructura</span>
+            <span>Enlaces</span>
         </div>
          <!-- Nodos de Infraestructura -->
          <div class="simbologia-item" id="toggle-infraestructura-nodos">
             <div class="nodo-circulo"></div>
-            <span>Nodos de infraestructura</span>
+            <span>Nodos</span>
         </div>
         <!--Ruta calculada-->
         <div class="simbologia-item" id="toggle-dijkstra">
@@ -296,20 +296,6 @@
     // Definir variables para almacenar las capas
     var infraestructuraLayer, dijkstraLayer, estacionamientosLayer, velocidadesLayer;
 
-    // Cargar y mostrar el archivo GeoJSON de infraestructura
-    fetch('../static/Archivos_exportados/infraestructura.geojson')
-        .then(response => response.json())
-        .then(data => {
-            infraestructuraLayer = L.geoJSON(data, {
-                style: {
-                    color: '#505050',
-                    weight: 2,
-                    opacity: 0.8
-                }
-            }).addTo(map);
-        })
-        .catch(error => console.error('Error cargando infraestructura.geojson:', error));
-
     var startIcon = L.icon({
         iconUrl: '../static/Simbologia/inicio.png',
         iconSize: [16, 16]
@@ -330,7 +316,8 @@
                     weight: 2,
                     opacity: 0.8
                 }
-            }).addTo(map);
+            })
+            //.addTo(map);
         })
         .catch(error => console.error('Error cargando infraestructura.geojson:', error));
 
@@ -354,7 +341,8 @@
                         layer.bindPopup("Nodo ID: " + feature.properties.id);
                     }
                 }
-            }).addTo(map);
+            })
+            //.addTo(map);
         })
         .catch(error => console.error('Error cargando infraestructura_nodos.geojson:', error));
 
@@ -811,6 +799,10 @@ fetch('../static/Archivos_exportados/estacionamientos.geojson')
     // Asignar eventos de clic a la simbología
     document.getElementById('toggle-infraestructura').addEventListener('click', function() {
         toggleLayer(infraestructuraLayer);
+    });
+    
+    document.getElementById('toggle-infraestructura-nodos').addEventListener('click', function() {
+        toggleLayer(infraestructuraNodosLayer);
     });
 
     document.getElementById('toggle-dijkstra').addEventListener('click', function() {
