@@ -3,7 +3,6 @@ import json
 from dotenv import load_dotenv
 import os
 
-# Cargar las variables de entorno desde el archivo .env
 load_dotenv(dotenv_path='../.env')
 
 host = os.getenv("DB_HOST")
@@ -11,7 +10,6 @@ database = os.getenv("DB_NAME")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
-# Conectar a la base de datos
 conn = psycopg2.connect(
     host=host,
     database=database,
@@ -20,13 +18,10 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# Función para exportar la tabla 'iluminacion' a GeoJSON
 def export_to_geojson(table_name, geometry_column, output_file, extra_columns=None):
-    # Extraer columnas adicionales, si se proporcionan
     extra_columns_str = ', '.join(extra_columns) if extra_columns else ''
     columns = f"id, {extra_columns_str}, {geometry_column}, ST_AsGeoJSON({geometry_column}) AS geom_json" if extra_columns else f"id, {geometry_column}, ST_AsGeoJSON({geometry_column}) AS geom_json"
 
-    # Ejecutar una consulta para obtener las geometrías en formato GeoJSON
     cur.execute(f"""
         SELECT {columns}
         FROM proyectoalgoritmos.{table_name};
@@ -39,14 +34,12 @@ def export_to_geojson(table_name, geometry_column, output_file, extra_columns=No
         feature_id = row[0]
         properties = {"id": feature_id}
 
-        # Agregar las propiedades adicionales si las hay
         if extra_columns:
             for i, col in enumerate(extra_columns):
-                properties[col] = row[i + 1]  # +1 porque la primera columna es id
+                properties[col] = row[i + 1]
 
-        geometry_json = row[-1]  # La geometría GeoJSON está al final de cada fila
+        geometry_json = row[-1]
 
-        # Crear la estructura GeoJSON
         geojson_feature = {
             "type": "Feature",
             "properties": properties,
@@ -54,21 +47,17 @@ def export_to_geojson(table_name, geometry_column, output_file, extra_columns=No
         }
         features.append(geojson_feature)
 
-    # Crear el FeatureCollection
     geojson_result = {
         "type": "FeatureCollection",
         "features": features
     }
 
-    # Guardar el resultado en un archivo GeoJSON
     with open(output_file, "w", encoding="utf-8") as geojson_file:
         json.dump(geojson_result, geojson_file, ensure_ascii=False, indent=4)
 
     print(f"Exportación completada: {output_file}")
 
-# Exportar la tabla 'iluminacion' a un archivo GeoJSON
 export_to_geojson('iluminacion', 'geometry', './Archivos_exportados/iluminacion.geojson', extra_columns=['geojson_id', 'lit'])
 
-# Cerrar la conexión
 cur.close()
 conn.close()

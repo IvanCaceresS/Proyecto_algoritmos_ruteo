@@ -6,27 +6,22 @@ import os
 
 load_dotenv('../.env')
 
-# Leer la variable BBOX_RM del archivo .env
 BBOX_RM = os.getenv("BBOX_RM")
 BBOX_ZONA_PEQUENA = os.getenv("BBOX_ZONA_PEQUENA")
 USAR_BBOX_RM = os.getenv("USAR_BBOX_RM")
 
-#Condicion para saber si usa BBOX_RM o BBOX_ZONA_PEQUENA
 if USAR_BBOX_RM == "True":
     bbox_values = BBOX_RM.split(',')
 else:
     bbox_values = BBOX_ZONA_PEQUENA.split(',')
 
-# Asignar los valores a sur, oeste, norte, este (en el orden correcto)
 norte = bbox_values[0]
 sur = bbox_values[1]
 este = bbox_values[2]
 oeste = bbox_values[3]
 
-# Crear la variable del bounding box en el orden: sur, oeste, norte, este
 bbox = f"{sur},{oeste},{norte},{este}"
 
-# Definir la consulta de Overpass
 overpass_query = f"""
 [out:json][timeout:25];
 (

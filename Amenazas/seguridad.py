@@ -35,22 +35,17 @@ data = {
 
 response = requests.post('https://datoscomunales.pazciudadana.cl/datoscomunales/', cookies=cookies, headers=headers, data=data)
 
-# Patrón para capturar tanto 'data-name' como 'data-value'
 pattern = r'data-name="([^"]+)"[^>]+data-value="([^"]+)"'
 
-# Encontrar todas las coincidencias
 matches = re.findall(pattern, response.json()['view'])
 
-# Crear un diccionario con los datos encontrados
 data_dict = {data_name: data_value for data_name, data_value in matches}
 
-# Función para leer las comunas desde el archivo inundaciones.geojson
 def obtener_comunas_desde_geojson(archivo_geojson):
     with open(archivo_geojson, 'r', encoding='utf-8') as f:
         data = json.load(f)
     
-    # Extraer los nombres de las comunas desde el campo "NOM_COMUNA"
-    comunas = set()  # Usar un set para evitar duplicados
+    comunas = set()
     for feature in data['features']:
         properties = feature.get('properties', {})
         comuna = properties.get('NOM_COMUNA', None)
@@ -59,11 +54,9 @@ def obtener_comunas_desde_geojson(archivo_geojson):
     
     return list(comunas)
 
-# Usar la función para obtener las comunas y crear un diccionario
 archivo_geojson = '../Metadata/Archivos_descargados/inundaciones.geojson'
 comunas = obtener_comunas_desde_geojson(archivo_geojson)
 
-# Actualizar los nombres de las comunas en el diccionario original
 def normalizar_nombres_comunas(data_dict, comunas):
     for key in list(data_dict.keys()):
         for comuna in comunas:
@@ -72,10 +65,8 @@ def normalizar_nombres_comunas(data_dict, comunas):
                 break
     return data_dict
 
-# Normalizar los nombres de las comunas en el diccionario
 data_dict_actualizado = normalizar_nombres_comunas(data_dict, comunas)
 
-# Guardar el diccionario actualizado en un archivo JSON
 with open('Archivos_descargados/seguridad.json', 'w', encoding='utf-8') as json_file:
     json.dump(data_dict_actualizado, json_file, ensure_ascii=False, indent=4)
 

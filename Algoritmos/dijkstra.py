@@ -3,16 +3,13 @@ import json
 from dotenv import load_dotenv
 import os
 
-# Cargar las variables de entorno desde el archivo .env
 load_dotenv(dotenv_path='../.env')
 
-# Cargar variables de entorno
 host = os.getenv("DB_HOST")
 database = os.getenv("DB_NAME")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
-# Conectar a la base de datos
 conn = psycopg2.connect(
     host=host,
     database=database,
@@ -21,7 +18,6 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# Seleccionar dos nodos aleatorios que estén en source o target
 cur.execute("""
     SELECT id 
     FROM (
@@ -34,7 +30,6 @@ cur.execute("""
 """)
 nodos = cur.fetchall()
 
-# Verificar si la consulta devolvió al menos dos nodos
 if len(nodos) < 2:
     print("No se encontraron suficientes nodos para realizar la búsqueda.")
     cur.close()
@@ -44,16 +39,14 @@ if len(nodos) < 2:
 source = nodos[0][0]
 target = nodos[1][0]
 
-# Obtener las geometrías de los nodos fijos desde la tabla 'infraestructura_nodos' usando parámetros
 cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = %s;", (source,))
-source_geom = cur.fetchone()[1]  # Geometría del nodo de origen
+source_geom = cur.fetchone()[1]
 
 cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = %s;", (target,))
-target_geom = cur.fetchone()[1]  # Geometría del nodo de destino
+target_geom = cur.fetchone()[1]
 
 print(f"Source node: {source}, Target node: {target}")
 
-# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos considerando 'oneway'
 cur.execute("""
     SELECT seq, node, edge, proyectoalgoritmos.infraestructura.cost, 
            ST_AsGeoJSON(proyectoalgoritmos.infraestructura.geometry) AS geometry
@@ -68,14 +61,11 @@ cur.execute("""
 
 ruta = cur.fetchall()
 
-# Crear una lista vacía para los features
 features = []
 
-# Comprobar si la ruta está vacía
 if len(ruta) == 0:
     print("No existe una ruta que conecte los nodos seleccionados.")
 else:
-    # Convertir la ruta en formato GeoJSON
     for row in ruta:
         geometry = row[4]  
         geojson_feature = {
@@ -85,51 +75,46 @@ else:
                 "node": row[1],
                 "edge": row[2],
                 "cost": row[3],
-                "stroke": "#0000FF",  # Color azul
-                "stroke-width": 3     # Ancho de la línea
+                "stroke": "#0000FF",
+                "stroke-width": 3
             },
             "geometry": json.loads(geometry)
         }
         features.append(geojson_feature)
 
-# Agregar el nodo de origen como un punto separado
 source_feature = {
     "type": "Feature",
     "properties": {
         "node": source,
         "role": "source",
-        "marker-color": "#ff0000",  # Rojo para el origen
+        "marker-color": "#ff0000",
         "marker-symbol": "circle"
     },
     "geometry": json.loads(source_geom)
 }
 features.append(source_feature)
 
-# Agregar el nodo de destino como un punto separado
 target_feature = {
     "type": "Feature",
     "properties": {
         "node": target,
         "role": "target",
-        "marker-color": "#0000ff",  # Azul para el destino
+        "marker-color": "#0000ff",
         "marker-symbol": "circle"
     },
     "geometry": json.loads(target_geom)
 }
 features.append(target_feature)
 
-# Crear el resultado GeoJSON
 geojson_result = {
     "type": "FeatureCollection",
     "features": features
 }
 
-# Guardar el resultado en un archivo GeoJSON llamado 'dijkstra.geojson'
 with open("dijkstra.geojson", "w", encoding="utf-8") as geojson_file:
     json.dump(geojson_result, geojson_file, ensure_ascii=False, indent=4)
 
 print("Resultado exportado como 'dijkstra.geojson'")
 
-# Cerrar la conexión
 cur.close()
 conn.close()
