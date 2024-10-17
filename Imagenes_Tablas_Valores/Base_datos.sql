@@ -11,11 +11,13 @@ CREATE TABLE proyectoalgoritmos.infraestructura (
     type VARCHAR(50),       -- tipo de infraestructura (ej. residencial, terciaria)
     lanes INT,              -- número de carriles
     is_ciclovia BOOLEAN DEFAULT FALSE,  -- Indicar si es una ciclovía o no
+    oneway VARCHAR(3) DEFAULT 'no',  -- Indicar si el segmento es unidireccional ('yes' o 'no')
     source BIGINT,          -- Nodo inicial
     target BIGINT,          -- Nodo final
     cost DOUBLE PRECISION,  -- Costo del segmento (ej. longitud de la geometría en metros)
     geometry GEOMETRY(LineString, 4326)  -- Geometría de la infraestructura
 );
+
 
 CREATE TABLE proyectoalgoritmos.infraestructura_nodos (
     id SERIAL PRIMARY KEY, 

@@ -3,15 +3,16 @@ import json
 from dotenv import load_dotenv
 import os
 
+# Cargar las variables de entorno desde el archivo .env
 load_dotenv(dotenv_path='../.env')
-#84 (FACULTAD INGENIERIA UDP)
-#441 (MALL PLAZA EGAÑA)
 
+# Cargar variables de entorno
 host = os.getenv("DB_HOST")
 database = os.getenv("DB_NAME")
 user = os.getenv("DB_USER")
 password = os.getenv("DB_PASSWORD")
 
+# Conectar a la base de datos
 conn = psycopg2.connect(
     host=host,
     database=database,
@@ -32,28 +33,38 @@ cur.execute("""
     LIMIT 2;
 """)
 nodos = cur.fetchall()
+
+# Verificar si la consulta devolvió al menos dos nodos
+if len(nodos) < 2:
+    print("No se encontraron suficientes nodos para realizar la búsqueda.")
+    cur.close()
+    conn.close()
+    exit()
+
 source = nodos[0][0]
 target = nodos[1][0]
 
-# Obtener las geometrías de los nodos fijos desde la tabla 'infraestructura_nodos'
-cur.execute(f"SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = {source};")
+# Obtener las geometrías de los nodos fijos desde la tabla 'infraestructura_nodos' usando parámetros
+cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = %s;", (source,))
 source_geom = cur.fetchone()[1]  # Geometría del nodo de origen
 
-cur.execute(f"SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = {target};")
+cur.execute("SELECT id, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura_nodos WHERE id = %s;", (target,))
 target_geom = cur.fetchone()[1]  # Geometría del nodo de destino
 
 print(f"Source node: {source}, Target node: {target}")
 
-# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos usando el campo 'cost'
-cur.execute(f"""
+# Ejecutar pgr_dijkstra para encontrar la ruta más corta entre los nodos considerando 'oneway'
+cur.execute("""
     SELECT seq, node, edge, proyectoalgoritmos.infraestructura.cost, 
            ST_AsGeoJSON(proyectoalgoritmos.infraestructura.geometry) AS geometry
     FROM pgr_dijkstra(
-        'SELECT id, source, target, proyectoalgoritmos.infraestructura.cost FROM proyectoalgoritmos.infraestructura',
-        {source}, {target}, directed := false
+        'SELECT id, source, target, cost, 
+                CASE WHEN oneway = ''yes'' THEN -1 ELSE cost END AS reverse_cost
+         FROM proyectoalgoritmos.infraestructura',
+        %s, %s, directed := true
     )
     JOIN proyectoalgoritmos.infraestructura ON proyectoalgoritmos.infraestructura.id = edge;
-""")
+""", (source, target))
 
 ruta = cur.fetchall()
 
@@ -119,5 +130,6 @@ with open("dijkstra.geojson", "w", encoding="utf-8") as geojson_file:
 
 print("Resultado exportado como 'dijkstra.geojson'")
 
+# Cerrar la conexión
 cur.close()
 conn.close()

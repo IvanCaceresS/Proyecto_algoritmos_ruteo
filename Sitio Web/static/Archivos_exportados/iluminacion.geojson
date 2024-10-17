@@ -5785,7 +5785,7 @@
             "properties": {
                 "id": 139,
                 "geojson_id": 449283361,
-                "lit": "no"
+                "lit": "yes"
             },
             "geometry": {
                 "type": "LineString",

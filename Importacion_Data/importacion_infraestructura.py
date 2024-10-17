@@ -18,10 +18,14 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
-# Agregar la columna 'is_ciclovia' a la tabla infraestructura si no existe
+# Agregar la columna 'is_ciclovia' y 'oneway' a la tabla infraestructura si no existen
 cur.execute("""
     ALTER TABLE proyectoalgoritmos.infraestructura 
     ADD COLUMN IF NOT EXISTS is_ciclovia BOOLEAN DEFAULT FALSE;
+""")
+cur.execute("""
+    ALTER TABLE proyectoalgoritmos.infraestructura 
+    ADD COLUMN IF NOT EXISTS oneway VARCHAR(3) DEFAULT 'no';
 """)
 conn.commit()
 
@@ -37,8 +41,8 @@ insert_node_query = sql.SQL("""
 """)
 
 insert_line_query = sql.SQL("""
-    INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, source, target, geometry, cost, is_ciclovia)
-    VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s, %s)
+    INSERT INTO proyectoalgoritmos.infraestructura (id, name, type, lanes, source, target, geometry, cost, is_ciclovia, oneway)
+    VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s, %s, %s)
 """)
 
 # Crear una lista para todas las geometrías (líneas) del GeoJSON
@@ -72,9 +76,10 @@ for feature in geojson_data['features']:
         name = properties.get('name', 'Sin nombre')
         highway_type = properties.get('highway', 'unknown')
         lanes = int(properties.get('lanes', 1))
+        oneway = properties.get('oneway', 'no')  # Extraer la propiedad 'oneway'
         
         # Guardar las propiedades de la línea para luego usarlas en cada segmento
-        line_properties.append((line_id, name, highway_type, lanes))
+        line_properties.append((line_id, name, highway_type, lanes, oneway))
 
         # Insertar puntos de inicio y fin como nodos
         start_point = Point(geom.coords[0])
@@ -87,9 +92,9 @@ for feature in geojson_data['features']:
         # Calcular la longitud de la línea (distancia)
         cost = geom.length
 
-        # Insertar la línea original en la tabla (esto será eliminado después)
+        # Insertar la línea original en la tabla
         cur.execute(insert_line_query, (
-            line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost, False  # Ciclovía inicialmente como False
+            line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost, False, oneway  # Añadir 'oneway'
         ))
 
 # Confirmar la inserción de las líneas
@@ -112,7 +117,7 @@ def get_intersecting_nodes(line):
 new_line_id = 1
 for idx, line in enumerate(line_geometries):
     # Obtener las propiedades de la línea original
-    original_line_id, name, highway_type, lanes = line_properties[idx]
+    original_line_id, name, highway_type, lanes, oneway = line_properties[idx]  # Añadir 'oneway'
 
     # Obtener los nodos que tocan esta línea (consultamos en la tabla)
     intersecting_nodes = get_intersecting_nodes(line)
@@ -134,15 +139,15 @@ for idx, line in enumerate(line_geometries):
 
             # Insertar el segmento como una nueva línea en la tabla infraestructura
             cur.execute(insert_line_query, (
-                new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False  # Ciclovía inicialmente como False
+                new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False, oneway  # Añadir 'oneway'
             ))
 
             new_line_id += 1  # Incrementar el ID de la nueva línea
 
 # Confirmar la transacción
 conn.commit()
-print("Intersectando con ciclovías...")
-# Intersección con ciclovías
+
+# Actualizar las intersecciones con ciclovías
 cur.execute("""
     UPDATE proyectoalgoritmos.infraestructura
     SET is_ciclovia = TRUE

@@ -59,7 +59,7 @@ if response.status_code == 200:
                     coords.append((node['lon'], node['lat']))
             if coords:
                 geometry = LineString(coords)
-                desired_properties = ['highway', 'lanes', 'name']
+                desired_properties = ['highway', 'lanes', 'name', 'oneway']
                 tags = elem.get('tags', {})
                 properties = {key: tags.get(key) for key in desired_properties if key in tags}
                 properties['id'] = elem['id']

@@ -66,8 +66,13 @@ def export_to_geojson(table_name, geometry_column, output_file, extra_columns=No
 
     print(f"Exportación completada: {output_file}")
 
-# Exportar la tabla 'infraestructura' a un archivo GeoJSON
-export_to_geojson('infraestructura', 'geometry', './Archivos_exportados/infraestructura.geojson', extra_columns=['name', 'type', 'lanes', 'is_ciclovia', 'source', 'target'])
+# Exportar la tabla 'infraestructura' a un archivo GeoJSON, incluyendo la columna 'oneway'
+export_to_geojson(
+    'infraestructura', 
+    'geometry', 
+    './Archivos_exportados/infraestructura.geojson', 
+    extra_columns=['name', 'type', 'lanes', 'is_ciclovia', 'oneway', 'source', 'target']
+)
 
 # Exportar la tabla 'infraestructura_nodos' a un archivo GeoJSON
 export_to_geojson('infraestructura_nodos', 'geometry', './Archivos_exportados/infraestructura_nodos.geojson')
