@@ -1,0 +1,302 @@
+[
+    {
+        "id":7981159,
+        "name":"Irene Morales",
+        "coordenada":"-33.436905,-70.636868",
+        "road_closure":"No"
+    },
+    {
+        "id":7981313,
+        "name":"Teatinos",
+        "coordenada":"-33.432377,-70.655518",
+        "road_closure":"No"
+    },
+    {
+        "id":7981317,
+        "name":"San Antonio",
+        "coordenada":"-33.433092,-70.648721",
+        "road_closure":"No"
+    },
+    {
+        "id":7991807,
+        "name":"Ismael Valdés Vergara",
+        "coordenada":"-33.433083,-70.652118",
+        "road_closure":"No"
+    },
+    {
+        "id":8000035,
+        "name":"Purísima",
+        "coordenada":"-33.434982,-70.638862",
+        "road_closure":"No"
+    },
+    {
+        "id":8000232,
+        "name":"Diagonal Paraguay",
+        "coordenada":"-33.442262,-70.643907",
+        "road_closure":"No"
+    },
+    {
+        "id":8000667,
+        "name":"Avenida Presidente Balmaceda",
+        "coordenada":"-33.43278,-70.653648",
+        "road_closure":"No"
+    },
+    {
+        "id":8000866,
+        "name":"Loreto",
+        "coordenada":"-33.43346,-70.642477",
+        "road_closure":"No"
+    },
+    {
+        "id":11490172,
+        "name":"Santa Lucía",
+        "coordenada":"-33.437714,-70.64346",
+        "road_closure":"No"
+    },
+    {
+        "id":13858477,
+        "name":"José Miguel de la Barra",
+        "coordenada":"-33.437695,-70.643303",
+        "road_closure":"No"
+    },
+    {
+        "id":14584727,
+        "name":"Doctor Ramón Corvalán Melgarejo",
+        "coordenada":"-33.437499,-70.636569",
+        "road_closure":"No"
+    },
+    {
+        "id":20842373,
+        "name":"Purísima",
+        "coordenada":"-33.429623,-70.6379",
+        "road_closure":"No"
+    },
+    {
+        "id":20948281,
+        "name":"Avenida Perú",
+        "coordenada":"-33.427127,-70.640012",
+        "road_closure":"No"
+    },
+    {
+        "id":23321627,
+        "name":"Lira",
+        "coordenada":"-33.441371,-70.641774",
+        "road_closure":"No"
+    },
+    {
+        "id":23321634,
+        "name":"Carmen",
+        "coordenada":"-33.44236,-70.644217",
+        "road_closure":"No"
+    },
+    {
+        "id":23321898,
+        "name":"San Francisco",
+        "coordenada":"-33.44548,-70.64709",
+        "road_closure":"No"
+    },
+    {
+        "id":23389989,
+        "name":"Avenida Cardenal José María Caro",
+        "coordenada":"-33.436394,-70.635418",
+        "road_closure":"No"
+    },
+    {
+        "id":23393526,
+        "name":"Purísima",
+        "coordenada":"-33.434652,-70.638693",
+        "road_closure":"No"
+    },
+    {
+        "id":23400627,
+        "name":"Nataniel Cox",
+        "coordenada":"-33.444676,-70.654148",
+        "road_closure":"No"
+    },
+    {
+        "id":23486797,
+        "name":"Catedral",
+        "coordenada":"-33.438316,-70.660259",
+        "road_closure":"No"
+    },
+    {
+        "id":23635124,
+        "name":"Monjitas",
+        "coordenada":"-33.436846,-70.640192",
+        "road_closure":"No"
+    },
+    {
+        "id":24446001,
+        "name":"Avenida Presidente Balmaceda",
+        "coordenada":"-33.430765,-70.661111",
+        "road_closure":"No"
+    },
+    {
+        "id":24446022,
+        "name":"Avenida Independencia",
+        "coordenada":"-33.431999,-70.652904",
+        "road_closure":"No"
+    },
+    {
+        "id":24557209,
+        "name":"Presidente Aníbal Pinto",
+        "coordenada":"-33.428398,-70.66201",
+        "road_closure":"No"
+    },
+    {
+        "id":25003459,
+        "name":"Purísima",
+        "coordenada":"-33.434652,-70.638693",
+        "road_closure":"No"
+    },
+    {
+        "id":25003474,
+        "name":"Loreto",
+        "coordenada":"-33.434013,-70.642683",
+        "road_closure":"No"
+    },
+    {
+        "id":26103710,
+        "name":"Puente La Paz",
+        "coordenada":"-33.432392,-70.651676",
+        "road_closure":"No"
+    },
+    {
+        "id":26103717,
+        "name":"Bandera",
+        "coordenada":"-33.432099,-70.652937",
+        "road_closure":"No"
+    },
+    {
+        "id":26103749,
+        "name":"Purísima",
+        "coordenada":"-33.435373,-70.638983",
+        "road_closure":"No"
+    },
+    {
+        "id":26103751,
+        "name":"Purísima",
+        "coordenada":"-33.435404,-70.638867",
+        "road_closure":"No"
+    },
+    {
+        "id":26103755,
+        "name":"Purísima",
+        "coordenada":"-33.435007,-70.638748",
+        "road_closure":"No"
+    },
+    {
+        "id":26296696,
+        "name":"General Prieto",
+        "coordenada":"-33.428625,-70.66339",
+        "road_closure":"No"
+    },
+    {
+        "id":27989071,
+        "name":"Artesanos",
+        "coordenada":"-33.431651,-70.649568",
+        "road_closure":"No"
+    },
+    {
+        "id":27989110,
+        "name":"General Prieto",
+        "coordenada":"-33.430371,-70.656923",
+        "road_closure":"No"
+    },
+    {
+        "id":27989111,
+        "name":"General Prieto",
+        "coordenada":"-33.430161,-70.65704",
+        "road_closure":"No"
+    },
+    {
+        "id":27989112,
+        "name":"General Prieto",
+        "coordenada":"-33.429483,-70.659608",
+        "road_closure":"No"
+    },
+    {
+        "id":27989159,
+        "name":"General Prieto",
+        "coordenada":"-33.429263,-70.660173",
+        "road_closure":"No"
+    },
+    {
+        "id":27989186,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.432816,-70.660293",
+        "road_closure":"No"
+    },
+    {
+        "id":27989203,
+        "name":"Avenida Fermín Vivaceta",
+        "coordenada":"-33.428199,-70.660665",
+        "road_closure":"No"
+    },
+    {
+        "id":27989204,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.432756,-70.660962",
+        "road_closure":"No"
+    },
+    {
+        "id":27989205,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.431551,-70.660861",
+        "road_closure":"No"
+    },
+    {
+        "id":27989207,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.430271,-70.660952",
+        "road_closure":"No"
+    },
+    {
+        "id":27989208,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.42941,-70.660505",
+        "road_closure":"No"
+    },
+    {
+        "id":27989213,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.432145,-70.660515",
+        "road_closure":"No"
+    },
+    {
+        "id":27989214,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.430366,-70.660564",
+        "road_closure":"No"
+    },
+    {
+        "id":27989215,
+        "name":"Avenida Manuel Rodríguez Norte",
+        "coordenada":"-33.429892,-70.660422",
+        "road_closure":"No"
+    },
+    {
+        "id":27989222,
+        "name":"Avenida Fermín Vivaceta",
+        "coordenada":"-33.429451,-70.660325",
+        "road_closure":"No"
+    },
+    {
+        "id":27989224,
+        "name":"General Prieto",
+        "coordenada":"-33.42913,-70.660775",
+        "road_closure":"No"
+    },
+    {
+        "id":32865023,
+        "name":"Lira",
+        "coordenada":"-33.453429,-70.637762",
+        "road_closure":"No"
+    },
+    {
+        "id":33100732,
+        "name":"Agustinas",
+        "coordenada":"-33.441668,-70.660412",
+        "road_closure":"No"
+    }
+]

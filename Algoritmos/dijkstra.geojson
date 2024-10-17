@@ -1,0 +1,181 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 1,
+                "node": 129,
+                "edge": 77,
+                "cost": 0.0007826634014702271,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.643281,
+                        -33.442466
+                    ],
+                    [
+                        -70.642522,
+                        -33.442657
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 2,
+                "node": 130,
+                "edge": 258,
+                "cost": 0.00027280212609199833,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.642522,
+                        -33.442657
+                    ],
+                    [
+                        -70.642252,
+                        -33.442696
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 3,
+                "node": 12,
+                "edge": 260,
+                "cost": 0.0009592877566223984,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.642252,
+                        -33.442696
+                    ],
+                    [
+                        -70.641324,
+                        -33.442939
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 4,
+                "node": 283,
+                "edge": 257,
+                "cost": 0.00013829316685858934,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.641324,
+                        -33.442939
+                    ],
+                    [
+                        -70.641189,
+                        -33.442969
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 5,
+                "node": 256,
+                "edge": 201,
+                "cost": 0.0033716074801212114,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.641189,
+                        -33.442969
+                    ],
+                    [
+                        -70.637818,
+                        -33.443033
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "seq": 6,
+                "node": 257,
+                "edge": 237,
+                "cost": 0.0017657579109228358,
+                "stroke": "#0000FF",
+                "stroke-width": 3
+            },
+            "geometry": {
+                "type": "LineString",
+                "coordinates": [
+                    [
+                        -70.636888,
+                        -33.444534
+                    ],
+                    [
+                        -70.637818,
+                        -33.443033
+                    ]
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "node": 129,
+                "role": "source",
+                "marker-color": "#ff0000",
+                "marker-symbol": "circle"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.643281,
+                    -33.442466
+                ]
+            }
+        },
+        {
+            "type": "Feature",
+            "properties": {
+                "node": 271,
+                "role": "target",
+                "marker-color": "#0000ff",
+                "marker-symbol": "circle"
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.636888,
+                    -33.444534
+                ]
+            }
+        }
+    ]
+}
