@@ -1,0 +1,91 @@
+#titulo {
+    text-align: center;
+}
+#map { height: 85vh;
+       width: 100%;
+       position: relative; 
+}
+#simbologia {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    padding: 15px;
+    max-height: 85vh; /* Altura máxima para permitir scroll */
+    overflow-y: auto; /* Scroll si la simbología excede la altura */
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+    font-size: 0.85em;
+    width: 300px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Dos columnas para icono/colores y texto */
+    gap: 10px; /* Espacio entre elementos */
+}
+.simbologia-titulo {
+    grid-column: span 2; /* Título ocupa toda la fila */
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+#toggle-simbologia-btn {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 1100;
+    padding: 8px 15px;
+    background-color: #00c538; /* Color azul moderno */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s;
+}
+#toggle-simbologia-btn:hover {
+    background-color: #019d2d; /* Cambio de color al pasar el cursor */
+}
+.simbologia-item {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    padding: 5px;
+    border-radius: 5px;
+    grid-column: span 2; /* Cada elemento ocupa las dos columnas */
+}
+.simbologia-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.velocidades-container {
+    display: flex;
+    align-items: center;
+}
+.velocidad-item {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.poligono-irregular {
+    width: 30px;
+    height: 30px;
+    clip-path: polygon(10% 10%, 30% 5%, 60% 10%, 90% 20%, 85% 50%, 70% 80%, 40% 90%, 15% 70%, 5% 40%);
+    border: 2px solid #000; /* Borde negro para simular el contorno del área */
+}
+.simbologia-item span {
+    font-size: 0.9em;
+}
+.linea-general {
+    width: 20px;
+    height: 4px;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+.nodo-circulo {
+    width: 10px;
+    height: 10px;
+    background-color: black;
+    border-radius: 50%;
+    margin-right: 10px;
+}
