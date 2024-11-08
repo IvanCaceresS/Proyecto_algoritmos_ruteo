@@ -37,7 +37,6 @@ scripts_importacion = [
     "importacion_amenaza_seguridad.py",
     "importacion_amenaza_trafico_actual.py"
     ]
-scripts_algoritmos = ["dijkstra.py"]
 scripts_exportacion = [
     "exportacion_infraestructura.py",
     "exportacion_ciclovias.py",
@@ -80,12 +79,7 @@ print("Ejecutando scripts de exportación...")
 for script in scripts_exportacion:
     ejecutar_script(script, ruta_exportacion)
     
-# 7. Ejecución de scripts de 'Algoritmos'
-print("Ejecutando scripts de algoritmos...")
-for script in scripts_algoritmos:
-    ejecutar_script(script, ruta_algoritmos)    
-
-# 8. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
+# 7. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
 print("Ejecutando Leaflet en el puerto 8080...")
 ejecutar_script("app.py", ruta_sitio_web)
 

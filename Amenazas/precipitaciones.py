@@ -4,8 +4,8 @@ import json
 from dotenv import load_dotenv
 import os
 
+# Cargar variables de entorno
 load_dotenv(dotenv_path='../.env')
-
 api_key = os.getenv("WEATHER_API_KEY")
 
 def obtener_comunas_desde_geojson(archivo_geojson):
@@ -15,14 +15,15 @@ def obtener_comunas_desde_geojson(archivo_geojson):
     comunas = set()
     for feature in data['features']:
         properties = feature.get('properties', {})
-        comuna = properties.get('NOM_COMUNA', None)
+        comuna = properties.get('Comuna', None)  # Ajuste aquí según el nombre de la clave en 13.geojson
         if comuna:
             comunas.add(comuna)
     
     return list(comunas)
 
-archivo_inundaciones = '../Metadata/Archivos_descargados/inundaciones.geojson'
-comunas_rm = obtener_comunas_desde_geojson(archivo_inundaciones)
+# Cambiar el archivo a 13.geojson para obtener las comunas específicas
+archivo_geojson = '../Infraestructura/Archivos_descargados/13.geojson'
+comunas_rm = obtener_comunas_desde_geojson(archivo_geojson)
 
 def obtener_coordenadas(comuna):
     url = "https://nominatim.openstreetmap.org/search"
@@ -60,8 +61,9 @@ def obtener_precipitacion(lat, lon, api_key):
 
 resultados = []
 
-#for comuna in comunas_rm[:1]:  # Limitar a 1 para no exceder el límite de llamadas a la API
-for comuna in comunas_rm: # Se eliminó el límite de 1 para obtener todas las comunas
+# Procesar cada comuna extraída de 13.geojson
+for comuna in comunas_rm:
+    comuna = comuna.upper()
     print(f"Procesando comuna: {comuna}")
     lat, lon = obtener_coordenadas(comuna)
     if lat and lon:
@@ -78,8 +80,9 @@ for comuna in comunas_rm: # Se eliminó el límite de 1 para obtener todas las c
             print(f"No se pudo obtener la precipitación para {comuna}")
     else:
         print(f"No se pudieron obtener las coordenadas para {comuna}")
-    time.sleep(1)
+    time.sleep(1)  # Retraso para evitar saturación de la API
 
+# Guardar resultados en un archivo JSON
 with open('./Archivos_descargados/precipitacion_comunas_rm.json', 'w', encoding='utf-8') as jsonfile:
     json.dump(resultados, jsonfile, ensure_ascii=False, indent=4)
 

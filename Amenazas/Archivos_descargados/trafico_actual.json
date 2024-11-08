@@ -17,8 +17,8 @@
         "id": 7981317,
         "name": "San Antonio",
         "coordenada": "-33.433092,-70.648721",
-        "current_speed": 32,
-        "free_flow_speed": 32
+        "current_speed": 31,
+        "free_flow_speed": 31
     },
     {
         "id": 7991807,
@@ -28,39 +28,11 @@
         "free_flow_speed": 94
     },
     {
-        "id": 8000035,
-        "name": "Purísima",
-        "coordenada": "-33.434982,-70.638862",
-        "current_speed": 21,
-        "free_flow_speed": 21
-    },
-    {
-        "id": 8000089,
-        "name": "Avenida 5 de Abril",
-        "coordenada": "-33.510172,-70.743489",
-        "current_speed": 98,
-        "free_flow_speed": 98
-    },
-    {
         "id": 8000232,
         "name": "Diagonal Paraguay",
         "coordenada": "-33.442262,-70.643907",
-        "current_speed": 39,
-        "free_flow_speed": 40
-    },
-    {
-        "id": 8000309,
-        "name": "Rotonda Rodrigo de Araya",
-        "coordenada": "-33.473436,-70.588616",
-        "current_speed": 41,
-        "free_flow_speed": 41
-    },
-    {
-        "id": 8000322,
-        "name": "Avenida Providencia",
-        "coordenada": "-33.436766,-70.634758",
-        "current_speed": 13,
-        "free_flow_speed": 13
+        "current_speed": 50,
+        "free_flow_speed": 50
     },
     {
         "id": 8000329,
@@ -68,34 +40,6 @@
         "coordenada": "-33.452874,-70.656967",
         "current_speed": 41,
         "free_flow_speed": 41
-    },
-    {
-        "id": 8000366,
-        "name": "Avenida Andrés Bello",
-        "coordenada": "-33.414747,-70.605491",
-        "current_speed": 36,
-        "free_flow_speed": 36
-    },
-    {
-        "id": 8000397,
-        "name": "Avenida Alcalde Jorge Monckeberg",
-        "coordenada": "-33.472978,-70.587307",
-        "current_speed": 41,
-        "free_flow_speed": 41
-    },
-    {
-        "id": 8000423,
-        "name": "Avenida Campos de Deportes",
-        "coordenada": "-33.456423,-70.609339",
-        "current_speed": 29,
-        "free_flow_speed": 29
-    },
-    {
-        "id": 8000580,
-        "name": "Rodrigo de Araya",
-        "coordenada": "-33.473978,-70.586921",
-        "current_speed": 50,
-        "free_flow_speed": 50
     },
     {
         "id": 8000667,
@@ -112,25 +56,11 @@
         "free_flow_speed": 31
     },
     {
-        "id": 8000690,
-        "name": "Avenida General Bustamante",
-        "coordenada": "-33.452525,-70.628782",
-        "current_speed": 34,
-        "free_flow_speed": 34
-    },
-    {
         "id": 8000698,
         "name": "Avenida Diez de Julio Huamachuco",
         "coordenada": "-33.451888,-70.631026",
         "current_speed": 37,
         "free_flow_speed": 37
-    },
-    {
-        "id": 8000710,
-        "name": "Avenida Segunda Transversal",
-        "coordenada": "-33.498313,-70.744571",
-        "current_speed": 46,
-        "free_flow_speed": 46
     },
     {
         "id": 8000752,
@@ -140,95 +70,11 @@
         "free_flow_speed": 34
     },
     {
-        "id": 8000866,
-        "name": "Loreto",
-        "coordenada": "-33.43346,-70.642477",
-        "current_speed": 43,
-        "free_flow_speed": 43
-    },
-    {
-        "id": 8000881,
-        "name": "Avenida Campos de Deportes",
-        "coordenada": "-33.45671,-70.609417",
-        "current_speed": 29,
-        "free_flow_speed": 29
-    },
-    {
-        "id": 8000961,
-        "name": "Avenida Américo Vespucio Sur",
-        "coordenada": "-33.430942,-70.574445",
-        "current_speed": 37,
-        "free_flow_speed": 37
-    },
-    {
-        "id": 8000998,
-        "name": "Exposición",
-        "coordenada": "-33.45139,-70.677869",
-        "current_speed": 39,
-        "free_flow_speed": 40
-    },
-    {
-        "id": 8001052,
-        "name": "Avenida Alcalde Carlos Valdovinos",
-        "coordenada": "-33.487433,-70.619072",
-        "current_speed": 37,
-        "free_flow_speed": 37
-    },
-    {
-        "id": 8001054,
-        "name": "Avenida Grecia",
-        "coordenada": "-33.468822,-70.576925",
-        "current_speed": 34,
-        "free_flow_speed": 34
-    },
-    {
-        "id": 8001055,
-        "name": "Avenida General Bustamante",
-        "coordenada": "-33.444364,-70.631419",
-        "current_speed": 34,
-        "free_flow_speed": 34
-    },
-    {
-        "id": 8001064,
-        "name": "Diagonal Santa Elena",
-        "coordenada": "-33.479672,-70.630452",
-        "current_speed": 32,
-        "free_flow_speed": 32
-    },
-    {
-        "id": 8001066,
-        "name": "Avenida Grecia",
-        "coordenada": "-33.469676,-70.574569",
-        "current_speed": 34,
-        "free_flow_speed": 34
-    },
-    {
-        "id": 8269440,
-        "name": "Avenida La Paz",
-        "coordenada": "-33.605911,-70.847956",
-        "current_speed": 18,
-        "free_flow_speed": 18
-    },
-    {
-        "id": 8269598,
-        "name": "Rodrigo de Araya",
-        "coordenada": "-33.469728,-70.577482",
-        "current_speed": 50,
-        "free_flow_speed": 50
-    },
-    {
         "id": 8269844,
         "name": "Avenida Tupper",
         "coordenada": "-33.460367,-70.656593",
         "current_speed": 34,
         "free_flow_speed": 34
-    },
-    {
-        "id": 8270546,
-        "name": "Avenida Departamental",
-        "coordenada": "-33.511659,-70.567239",
-        "current_speed": 38,
-        "free_flow_speed": 38
     },
     {
         "id": 11490172,
@@ -266,39 +112,11 @@
         "free_flow_speed": 37
     },
     {
-        "id": 13895306,
-        "name": "Diagonal Rancagua",
-        "coordenada": "-33.439272,-70.621837",
-        "current_speed": 29,
-        "free_flow_speed": 29
-    },
-    {
-        "id": 13898503,
-        "name": "Avenida Francisco Bilbao",
-        "coordenada": "-33.428628,-70.539207",
-        "current_speed": 36,
-        "free_flow_speed": 36
-    },
-    {
         "id": 13920356,
         "name": "Santa Isabel",
         "coordenada": "-33.452552,-70.657988",
         "current_speed": 41,
         "free_flow_speed": 41
-    },
-    {
-        "id": 13923141,
-        "name": "Avenida Apoquindo",
-        "coordenada": "-33.418211,-70.601496",
-        "current_speed": 50,
-        "free_flow_speed": 50
-    },
-    {
-        "id": 14446224,
-        "name": "Alonso de Córdova",
-        "coordenada": "-33.400603,-70.599451",
-        "current_speed": 94,
-        "free_flow_speed": 94
     },
     {
         "id": 14584727,
@@ -308,45 +126,227 @@
         "free_flow_speed": 21
     },
     {
-        "id": 14810059,
-        "name": "Avenida Pedro de Valdivia",
-        "coordenada": "-33.421581,-70.614373",
-        "current_speed": 29,
-        "free_flow_speed": 29
+        "id": 15150854,
+        "name": "Avenida Santa Rosa",
+        "coordenada": "-33.475293,-70.642034",
+        "current_speed": 32,
+        "free_flow_speed": 32
     },
     {
-        "id": 14810061,
-        "name": "Puente Pedro de Valdivia",
-        "coordenada": "-33.421218,-70.614566",
-        "current_speed": 26,
-        "free_flow_speed": 26
+        "id": 15154792,
+        "name": "Avenida General Rondizzoni",
+        "coordenada": "-33.470611,-70.671669",
+        "current_speed": 33,
+        "free_flow_speed": 33
     },
     {
-        "id": 15089634,
-        "name": "Combarbalá",
-        "coordenada": "-33.528426,-70.60978",
-        "current_speed": 43,
-        "free_flow_speed": 43
+        "id": 15155553,
+        "name": "El Mirador",
+        "coordenada": "-33.466434,-70.671743",
+        "current_speed": 27,
+        "free_flow_speed": 27
     },
     {
-        "id": 15089636,
-        "name": "Santa Julia",
-        "coordenada": "-33.531345,-70.605113",
-        "current_speed": 42,
-        "free_flow_speed": 42
+        "id": 15239339,
+        "name": "El Mirador",
+        "coordenada": "-33.473511,-70.664868",
+        "current_speed": 31,
+        "free_flow_speed": 31
     },
     {
-        "id": 15089638,
-        "name": "María Elena",
-        "coordenada": "-33.56075,-70.585471",
+        "id": 15239340,
+        "name": "Abate Molina",
+        "coordenada": "-33.458201,-70.672154",
         "current_speed": 34,
         "free_flow_speed": 34
     },
     {
-        "id": 15089639,
-        "name": "Avenida Santa Raquel",
-        "coordenada": "-33.532611,-70.603262",
-        "current_speed": 42,
-        "free_flow_speed": 42
+        "id": 22698626,
+        "name": "Diagonal Vicuña Mackenna",
+        "coordenada": "-33.46902,-70.625957",
+        "current_speed": 37,
+        "free_flow_speed": 37
+    },
+    {
+        "id": 22698946,
+        "name": "San Diego",
+        "coordenada": "-33.476502,-70.648199",
+        "current_speed": 32,
+        "free_flow_speed": 32
+    },
+    {
+        "id": 23321627,
+        "name": "Lira",
+        "coordenada": "-33.441371,-70.641774",
+        "current_speed": 24,
+        "free_flow_speed": 24
+    },
+    {
+        "id": 23321634,
+        "name": "Carmen",
+        "coordenada": "-33.44236,-70.644217",
+        "current_speed": 50,
+        "free_flow_speed": 50
+    },
+    {
+        "id": 23321898,
+        "name": "San Francisco",
+        "coordenada": "-33.44548,-70.64709",
+        "current_speed": 17,
+        "free_flow_speed": 17
+    },
+    {
+        "id": 23389989,
+        "name": "Avenida Cardenal José María Caro",
+        "coordenada": "-33.436394,-70.635418",
+        "current_speed": 36,
+        "free_flow_speed": 36
+    },
+    {
+        "id": 23393662,
+        "name": "Avenida Brasil",
+        "coordenada": "-33.430512,-70.665164",
+        "current_speed": 37,
+        "free_flow_speed": 37
+    },
+    {
+        "id": 23393715,
+        "name": "Agustinas",
+        "coordenada": "-33.443881,-70.678462",
+        "current_speed": 28,
+        "free_flow_speed": 28
+    },
+    {
+        "id": 23393739,
+        "name": "Erasmo Escala",
+        "coordenada": "-33.446321,-70.678657",
+        "current_speed": 28,
+        "free_flow_speed": 28
+    },
+    {
+        "id": 23400434,
+        "name": "Vidaurre",
+        "coordenada": "-33.447934,-70.654999",
+        "current_speed": 50,
+        "free_flow_speed": 50
+    },
+    {
+        "id": 23400627,
+        "name": "Nataniel Cox",
+        "coordenada": "-33.444676,-70.654148",
+        "current_speed": 59,
+        "free_flow_speed": 59
+    },
+    {
+        "id": 23401951,
+        "name": "Ñuble",
+        "coordenada": "-33.46999,-70.656106",
+        "current_speed": 96,
+        "free_flow_speed": 96
+    },
+    {
+        "id": 23401952,
+        "name": "Avenida General Rondizzoni",
+        "coordenada": "-33.469993,-70.656582",
+        "current_speed": 41,
+        "free_flow_speed": 41
+    },
+    {
+        "id": 23401953,
+        "name": "Ñuble",
+        "coordenada": "-33.470093,-70.656574",
+        "current_speed": 41,
+        "free_flow_speed": 41
+    },
+    {
+        "id": 23402152,
+        "name": "Club Hípico",
+        "coordenada": "-33.45722,-70.665009",
+        "current_speed": 34,
+        "free_flow_speed": 34
+    },
+    {
+        "id": 23402309,
+        "name": "Plaza Ercilla",
+        "coordenada": "-33.458295,-70.659881",
+        "current_speed": 34,
+        "free_flow_speed": 34
+    },
+    {
+        "id": 23406236,
+        "name": "Avenida Ricardo Cumming",
+        "coordenada": "-33.429094,-70.669473",
+        "current_speed": 37,
+        "free_flow_speed": 37
+    },
+    {
+        "id": 23486797,
+        "name": "Catedral",
+        "coordenada": "-33.438316,-70.660259",
+        "current_speed": 41,
+        "free_flow_speed": 41
+    },
+    {
+        "id": 23635124,
+        "name": "Monjitas",
+        "coordenada": "-33.436846,-70.640192",
+        "current_speed": 36,
+        "free_flow_speed": 36
+    },
+    {
+        "id": 24445463,
+        "name": "Bio-Bio",
+        "coordenada": "-33.474513,-70.649431",
+        "current_speed": 32,
+        "free_flow_speed": 32
+    },
+    {
+        "id": 24446001,
+        "name": "Avenida Presidente Balmaceda",
+        "coordenada": "-33.430765,-70.661111",
+        "current_speed": 36,
+        "free_flow_speed": 36
+    },
+    {
+        "id": 24446022,
+        "name": "Avenida Independencia",
+        "coordenada": "-33.431999,-70.652904",
+        "current_speed": 14,
+        "free_flow_speed": 14
+    },
+    {
+        "id": 26103717,
+        "name": "Bandera",
+        "coordenada": "-33.432099,-70.652937",
+        "current_speed": 14,
+        "free_flow_speed": 14
+    },
+    {
+        "id": 26103749,
+        "name": "Purísima",
+        "coordenada": "-33.435373,-70.638983",
+        "current_speed": 21,
+        "free_flow_speed": 21
+    },
+    {
+        "id": 26103751,
+        "name": "Purísima",
+        "coordenada": "-33.435404,-70.638867",
+        "current_speed": 29,
+        "free_flow_speed": 29
+    },
+    {
+        "id": 27989186,
+        "name": "Avenida Manuel Rodríguez Norte",
+        "coordenada": "-33.432816,-70.660293",
+        "current_speed": 35,
+        "free_flow_speed": 35
+    },
+    {
+        "id": 27989202,
+        "name": "Mapocho",
+        "coordenada": "-33.432599,-70.676371",
+        "current_speed": 37,
+        "free_flow_speed": 37
     }
 ]

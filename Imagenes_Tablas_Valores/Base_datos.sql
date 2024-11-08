@@ -98,6 +98,21 @@ CREATE TABLE proyectoalgoritmos.trafico_actual (
     free_flow_speed INT                  -- Velocidad en condiciones de tráfico libre
 );
 
+CREATE TABLE IF NOT EXISTS proyectoalgoritmos.regiones_13 (
+    objectid BIGINT,
+    shape_leng DOUBLE PRECISION,
+    dis_elec INT,
+    cir_sena INT,
+    cod_comuna INT,
+    codregion INT,
+    st_area_sh DOUBLE PRECISION,
+    st_length_ DOUBLE PRECISION,
+    region VARCHAR(255),
+    comuna VARCHAR(255),
+    provincia VARCHAR(255),
+    geometry GEOMETRY(Polygon, 4326)
+);
+
 
 CREATE INDEX infraestructura_geometry_idx ON proyectoalgoritmos.infraestructura USING GIST (geometry);
 CREATE INDEX infraestructura_nodos_geometry_idx ON proyectoalgoritmos.infraestructura_nodos USING GIST (geometry);
