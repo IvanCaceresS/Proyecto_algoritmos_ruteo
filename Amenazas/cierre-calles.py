@@ -1,5 +1,5 @@
 import requests
-import geopandas as gpd
+import json
 import pandas as pd
 from dotenv import load_dotenv
 import os
@@ -9,17 +9,25 @@ load_dotenv(dotenv_path=r'../.env')
 API_KEY = os.getenv("TOMTOM_API_KEY")
 
 def cargar_coordenadas(geojson_path):
-    gdf = gpd.read_file(geojson_path)
+    # Cargar el archivo GeoJSON usando json en lugar de geopandas
+    with open(geojson_path, 'r', encoding='utf-8') as f:
+        geojson_data = json.load(f)
+    
     coordenadas = []
-    for _, feature in gdf.iterrows():
-        if feature.geometry.geom_type == 'LineString':
-            primera_coordenada = feature.geometry.coords[0]
+    for feature in geojson_data['features']:
+        geometry = feature.get('geometry', {})
+        properties = feature.get('properties', {})
+        
+        # Asegúrate de que la geometría es de tipo LineString
+        if geometry.get('type') == 'LineString':
+            primera_coordenada = geometry['coordinates'][0]
             coordenadas.append({
                 'coordenada': f"{primera_coordenada[1]},{primera_coordenada[0]}",
-                'id': feature['id'],
-                'name': feature.get('name', 'N/A')
+                'id': properties.get('id', 'N/A'),
+                'name': properties.get('name', 'N/A')
             })
-    return coordenadas[:50] # Limitar a 10 para no exceder el límite de llamadas a la API
+    
+    return coordenadas[:50]  # Limitar a 50 para no exceder el límite de llamadas a la API
 
 def obtener_cierres_calles(point, api_key):
     url = 'https://api.tomtom.com/traffic/services/4/flowSegmentData/relative0/10/json'
@@ -55,6 +63,8 @@ def procesar_cierres_calles(geojson_path, api_key):
     
     df.to_json(r'./Archivos_descargados/cierres_calles.json', orient='records', force_ascii=False, indent=4)
 
+# Ruta al archivo GeoJSON
 geojson_path = r'../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson'
 
+# Ejecutar el proceso
 procesar_cierres_calles(geojson_path, API_KEY)

@@ -35,7 +35,7 @@ url = "https://raw.githubusercontent.com/caracena/chile-geojson/refs/heads/maste
 #     "Talagante", "Tiltil", "Vitacura", "Ñuñoa"
 # ]
 
-comunas_deseadas = ["La Cisterna","San Miguel", "San Ramón"]
+comunas_deseadas = ["La Cisterna"]
 
 #Eliminar archivo si existe
 try:
@@ -78,15 +78,24 @@ with open('./Archivos_descargados/13.geojson', 'r', encoding='utf-8') as f:
 overpass_query = f"""
 [out:json][timeout:25];
 (
-  way["highway"="primary"]({bbox});
-  way["highway"="secondary"]({bbox});
-  way["highway"="tertiary"]({bbox});
-  way["highway"="residential"]({bbox});
+  way["highway"]({bbox});
 );
 out body;
 >;
 out skel qt;
 """
+# overpass_query = f"""
+# [out:json][timeout:25];
+# (
+#   way["highway"="primary"]({bbox});
+#   way["highway"="secondary"]({bbox});
+#   way["highway"="tertiary"]({bbox});
+#   way["highway"="residential"]({bbox});
+# );
+# out body;
+# >;
+# out skel qt;
+# """
 # Consulta a Overpass API pocas calles
 # overpass_query = f"""
 # [out:json][timeout:25];

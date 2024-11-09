@@ -1,5 +1,6 @@
 import os
 import subprocess
+from pathlib import Path
 
 ruta_metadata = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Metadata')
 ruta_amenazas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Amenazas')
@@ -10,11 +11,16 @@ ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exp
 ruta_fallas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Fallas')
 ruta_sitio_web = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Sitio Web')
 
+
+python_path = os.path.abspath(Path("virtual_env") / "Scripts" / "python")
+print("Python path:", python_path)  # Esto debería mostrar la ruta absoluta completa
+
 def ejecutar_script(script, ruta_carpeta):
     directorio_actual = os.getcwd()
     try:
         os.chdir(ruta_carpeta)
-        subprocess.run(["python", script], check=True)
+        # Usa el intérprete Python del entorno virtual
+        subprocess.run([str(python_path), script], check=True)
         print(f"{script} ejecutado con éxito en {ruta_carpeta}.")
     
     except subprocess.CalledProcessError as e:

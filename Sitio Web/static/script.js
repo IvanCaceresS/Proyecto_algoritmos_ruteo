@@ -122,6 +122,8 @@ function enableManualLocation() {
           console.log("Punto de inicio:", nearestNodeMarker.nodeId);
           console.log("Punto de fin:", nearestNodeMarkerEnd.nodeId);
           dijkstra();
+          cplex();
+          dijkstraComplete();
         }
       );
     }
@@ -154,58 +156,135 @@ function handleGeolocation(position) {
   );
 }
 // Función para cargar y mostrar la ruta en el mapa
-function loadRouteOnMap() {
-  fetch("../static/dijkstra.geojson")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error(
-          `Error al cargar dijkstra.geojson: ${response.statusText}`
-        );
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data.error) {
-        // Verifica si existe un error en el archivo GeoJSON
-        alert(data.error);
-        console.log("No se encontró una ruta entre los nodos especificados.");
-        return;
-      }
+function loadRouteOnMap(data, routeType = "dijkstra") {
+  if (!data) {
+    console.error("No se proporcionó ningún dato GeoJSON.");
+    return;
+  }
 
-      // Crear y añadir la capa de Dijkstra al mapa
-      dijkstraLayer = L.geoJSON(data, {
-        style: {
-          color: "#FF4500",
-          weight: 6,
-          opacity: 0.9,
-        },
-        pointToLayer: function (feature, latlng) {
-          if (feature.properties.role === "source") {
-            return L.marker(latlng, { icon: startIcon }).bindPopup(
-              "Inicio de la ruta"
-            );
-          } else if (feature.properties.role === "target") {
-            return L.marker(latlng, { icon: endIcon }).bindPopup(
-              "Final de la ruta"
-            );
-          }
-          return L.circleMarker(latlng, {
-            radius: 4,
-            color: "#FF4500",
-            fillOpacity: 0.8,
-          });
-        },
-      }).addTo(map);
+  if (!window.routeLayers) {
+    window.routeLayers = {};
+  }
 
-      // Agregar el evento al botón para alternar la visibilidad de la capa
-      document
-        .getElementById("toggle-dijkstra")
-        .addEventListener("click", function () {
-          toggleLayer(dijkstraLayer);
-        });
-    })
-    .catch((error) => console.error("Error cargando dijkstra.geojson:", error));
+  // Determinar el color basado en el tipo de ruta
+  const colorMap = {
+    dijkstra: "#FF4500",
+    cplex: "#0000FF",
+    dijkstra_complete: "#32CD32", // Color para Dijkstra Completa
+  };
+  const color = colorMap[routeType] || "#FF4500";
+
+  // Crear y añadir la capa de la ruta al mapa
+  window.routeLayers[routeType] = L.geoJSON(data, {
+    style: {
+      color: color,
+      weight: 6,
+      opacity: 0.9,
+    },
+    pointToLayer: function (feature, latlng) {
+      if (feature.properties.role === "source") {
+        return L.marker(latlng, { icon: startIcon }).bindPopup("Inicio de la ruta");
+      } else if (feature.properties.role === "target") {
+        return L.marker(latlng, { icon: endIcon }).bindPopup("Final de la ruta");
+      }
+      return L.circleMarker(latlng, {
+        radius: 4,
+        color: color,
+        fillOpacity: 0.8,
+      });
+    },
+  }).addTo(map);
+
+  // Agregar el evento al botón para alternar la visibilidad de la capa
+  const toggleButtonId = `toggle-${routeType}`;
+  document
+    .getElementById(toggleButtonId)
+    .addEventListener("click", function () {
+      toggleLayer(window.routeLayers[routeType]);
+    });
 }
+
+// Función para llamar al backend y calcular la ruta
+function dijkstra() {
+  var tiempoInicial = new Date().getTime();
+  console.log("Calculando la ruta Dijkstra...");
+  fetch("/dijkstra", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      start_id: nearestNodeMarker.nodeId,
+      end_id: nearestNodeMarkerEnd.nodeId,
+    }),
+  })
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((data) => {
+      if (data.success) {
+        var tiempoFinal = new Date().getTime();
+        var tiempoTotal = tiempoFinal - tiempoInicial;
+        document.getElementById("ruta-dijkstra").textContent =
+          "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
+        loadRouteOnMap(data.geojson, "dijkstra");
+      } else {
+        alert("No se pudo calcular la ruta.");
+      }
+    })
+    .catch((error) => console.error("Error al calcular la ruta Dijkstra:", error));
+}
+
+// Función para llamar al backend y calcular la ruta CPLEX
+function cplex() {
+  var tiempoInicial = new Date().getTime();
+  console.log("Calculando la ruta usando CPLEX...");
+  fetch("/cplex", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      start_id: nearestNodeMarker.nodeId,
+      end_id: nearestNodeMarkerEnd.nodeId,
+    }),
+  })
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((data) => {
+      if (data.success) {
+        var tiempoFinal = new Date().getTime();
+        var tiempoTotal = tiempoFinal - tiempoInicial;
+        document.getElementById("ruta-cplex").textContent =
+          "Ruta (CPLEX) - Tiempo total: " + tiempoTotal + " ms";
+        loadRouteOnMap(data.geojson, "cplex");
+      } else {
+        alert("No se pudo calcular la ruta usando CPLEX.");
+      }
+    })
+    .catch((error) => console.error("Error al calcular la ruta usando CPLEX:", error));
+}
+
+// Función para llamar al backend y calcular la ruta Dijkstra Completa
+function dijkstraComplete() {
+  var tiempoInicial = new Date().getTime();
+  console.log("Calculando la ruta Dijkstra Completa...");
+  fetch("/dijkstra_complete", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      start_id: nearestNodeMarker.nodeId,
+      end_id: nearestNodeMarkerEnd.nodeId,
+    }),
+  })
+    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((data) => {
+      if (data.success) {
+        var tiempoFinal = new Date().getTime();
+        var tiempoTotal = tiempoFinal - tiempoInicial;
+        document.getElementById("ruta-dijkstra-completa").textContent =
+          "Ruta (Dijkstra Completa) - Tiempo total: " + tiempoTotal + " ms";
+        loadRouteOnMap(data.geojson, "dijkstra_complete");
+      } else {
+        alert("No se pudo calcular la ruta Dijkstra Completa.");
+      }
+    })
+    .catch((error) => console.error("Error al calcular la ruta Dijkstra Completa:", error));
+}
+
 
 // Verificar si la geolocalización está disponible y establecer el nodo inicial automáticamente si es posible
 if (navigator.geolocation) {
@@ -219,36 +298,6 @@ if (navigator.geolocation) {
   selectingStart = true;
   enableManualLocation();
 }
-
-// Función para llamar al backend y calcular la ruta
-function dijkstra() {
-  var tiempoInicial = new Date().getTime();
-  console.log("Calculando la ruta...");
-  fetch("/dijkstra", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      start_id: nearestNodeMarker.nodeId,
-      end_id: nearestNodeMarkerEnd.nodeId,
-    }),
-  })
-    .then((response) =>
-      response.ok ? response.json() : Promise.reject(response.statusText)
-    )
-    .then((data) => {
-      if (data.success) {
-        var tiempoFinal = new Date().getTime();
-        var tiempoTotal = tiempoFinal - tiempoInicial;
-        document.getElementById("ruta-dijkstra").textContent =
-        "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
-        loadRouteOnMap();
-      } else {
-        alert("No se pudo calcular la ruta.");
-      }
-    })
-    .catch((error) => console.error("Error al calcular la ruta:", error));
-}
-
 
 // INFRAESTRUCTURA
 fetch("../static/Archivos_exportados/infraestructura.geojson")

@@ -1,3 +1,12 @@
+USAR PYTHON 3.9
+python -m venv virtual_env
+virtual_env\Scripts\activate
+cd "C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\python\3.9\x64_win64"
+pip install .
+cd "C:\Users\IVAN\Desktop\Codes\Proyecto_algoritmos_ruteo"
+pip install -r requirements.txt
+python main.py
+
 # Segundo Trabajo Grupal (Fase 2)
 
 Para el segundo trabajo grupal del curso (fase 2), deberá hacer una presentación (que deberá subir a Canvas) donde se detalle claramente el proceso y contenga enlaces a cada archivo (recuerde que se evaluará que el contenido esté en la presentación para poder evaluar por igual a todos).
