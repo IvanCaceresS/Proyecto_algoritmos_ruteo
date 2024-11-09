@@ -35,7 +35,7 @@ url = "https://raw.githubusercontent.com/caracena/chile-geojson/refs/heads/maste
 #     "Talagante", "Tiltil", "Vitacura", "Ñuñoa"
 # ]
 
-comunas_deseadas = ["Santiago"]
+comunas_deseadas = ["La Cisterna","San Miguel", "San Ramón"]
 
 #Eliminar archivo si existe
 try:
@@ -74,17 +74,30 @@ with open('./Archivos_descargados/13.geojson', 'r', encoding='utf-8') as f:
     region_data = geojson.load(f)
     region_polygons = [shape(feature["geometry"]) for feature in region_data["features"] if feature["geometry"]["type"] == "Polygon"]
 
-# Consulta a Overpass API
+# Consulta a Overpass API muchas calles
 overpass_query = f"""
 [out:json][timeout:25];
 (
   way["highway"="primary"]({bbox});
   way["highway"="secondary"]({bbox});
+  way["highway"="tertiary"]({bbox});
+  way["highway"="residential"]({bbox});
 );
 out body;
 >;
 out skel qt;
 """
+# Consulta a Overpass API pocas calles
+# overpass_query = f"""
+# [out:json][timeout:25];
+# (
+#     way["highway"="primary"]({bbox});
+#     way["highway"="secondary"]({bbox});
+# );
+# out body;
+# >;
+# out skel qt;
+# """
 
 overpass_url = "http://overpass-api.de/api/interpreter"
 response = requests.get(overpass_url, params={'data': overpass_query})

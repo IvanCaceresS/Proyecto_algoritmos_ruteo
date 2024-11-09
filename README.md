@@ -7,9 +7,9 @@ Para el segundo trabajo grupal del curso (fase 2), deberá hacer una presentaci�
 
 2.- Se deberá poder filtrar la información a consultar por comunas (para esto deberá utilizar el siguiente geojsonLinks to an external site.). [LISTO]
 
-3.- La interfaz web deberá poder recibir los parámetros de consulta del usuario (restricciones del usuario impuestas por su aplicación) y detectar su geolocalización de forma automática (de forma alternativa, el usuario en caso de no dar permisos para compartir la geolocalización, podrá indicar la dirección a utilizar como inicio).
+3.- La interfaz web deberá poder recibir los parámetros de consulta del usuario (restricciones del usuario impuestas por su aplicación) y detectar su geolocalización de forma automática (de forma alternativa, el usuario en caso de no dar permisos para compartir la geolocalización, podrá indicar la dirección a utilizar como inicio).[LISTO]
 
-4.- La interfaz deberá ser capaz de cargar todos los metadatos y amenazas detectados en las comunas filtradas (utilizar popups o algún otro mecanismo para desplegar la información que no se pueda visualizar como un polígono). Para habilitar o deshabilitar la información mostrada, puede utilizar un panel de control que posea checkboxes.
+4.- La interfaz deberá ser capaz de cargar todos los metadatos y amenazas detectados en las comunas filtradas (utilizar popups o algún otro mecanismo para desplegar la información que no se pueda visualizar como un polígono). Para habilitar o deshabilitar la información mostrada, puede utilizar un panel de control que posea checkboxes.[LISTO]
 
 5.- A partir de los datos obtenidos como amenaza, cada uno debe ser modelado como una probabilidad de falla en su sistema. Para esto, deberá crear un archivo que genere la probabilidad de fallo de cada enlace y nodo a partir de cada amenaza considerada en su trabajo.
 

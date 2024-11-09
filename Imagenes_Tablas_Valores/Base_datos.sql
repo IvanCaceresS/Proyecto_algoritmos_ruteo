@@ -98,7 +98,18 @@ CREATE TABLE proyectoalgoritmos.trafico_actual (
     free_flow_speed INT                  -- Velocidad en condiciones de tráfico libre
 );
 
-CREATE TABLE IF NOT EXISTS proyectoalgoritmos.regiones_13 (
+CREATE TABLE proyectoalgoritmos.probabilidad_falla (
+    id SERIAL PRIMARY KEY,                   -- Identificador único
+    id_infraestructura BIGINT,               -- Referencia al id en infraestructura
+    id_nodo BIGINT,                          -- Referencia al id en infraestructura_nodos
+    amenaza VARCHAR(50),                     -- Tipo de amenaza (cierre calle, precipitación, seguridad, tráfico)
+    probabilidad_falla DOUBLE PRECISION,     -- Probabilidad de falla asociada
+    FOREIGN KEY (id_infraestructura) REFERENCES proyectoalgoritmos.infraestructura(id),
+    FOREIGN KEY (id_nodo) REFERENCES proyectoalgoritmos.infraestructura_nodos(id)
+);
+
+
+CREATE TABLE proyectoalgoritmos.regiones_13 (
     objectid BIGINT,
     shape_leng DOUBLE PRECISION,
     dis_elec INT,

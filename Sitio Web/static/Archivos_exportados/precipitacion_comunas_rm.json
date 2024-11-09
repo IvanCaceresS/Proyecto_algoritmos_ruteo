@@ -1,8 +1,20 @@
 [
     {
-        "comuna": "SANTIAGO",
-        "latitud": "-33.4377756",
-        "longitud": "-70.6504502",
+        "comuna": "SAN RAMÓN",
+        "latitud": "-33.5428175",
+        "longitud": "-70.643812",
+        "precip_mm": 0.0
+    },
+    {
+        "comuna": "SAN MIGUEL",
+        "latitud": "-33.49757235",
+        "longitud": "-70.65220211103082",
+        "precip_mm": 0.0
+    },
+    {
+        "comuna": "LA CISTERNA",
+        "latitud": "-33.5346265",
+        "longitud": "-70.6644024",
         "precip_mm": 0.0
     }
 ]

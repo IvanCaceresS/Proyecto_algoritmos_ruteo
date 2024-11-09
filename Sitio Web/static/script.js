@@ -1,35 +1,31 @@
-// Inicializar el mapa con un centro y zoom predeterminados
 var map = L.map("map", {
-  center: [-33.454868, -70.644747], // Coordenadas iniciales
-  zoom: 13, // Zoom inicial
+  center: [-33.454868, -70.644747],
+  zoom: 13,
   zoomControl: true,
 }).whenReady(() => {
   console.log("Mapa cargado completamente.");
 });
 
-// Añadir el tile layer de OpenStreetMap
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution:
     '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
-// Definir los iconos de inicio y meta con rutas correctas
 var startIcon = L.icon({
-  iconUrl: "../static/Simbologia/inicio.png", // Verifica la ruta
+  iconUrl: "../static/Simbologia/inicio.png", 
   iconSize: [16, 16],
 });
 var endIcon = L.icon({
-  iconUrl: "../static/Simbologia/meta.png", // Verifica la ruta
+  iconUrl: "../static/Simbologia/meta.png",
   iconSize: [16, 16],
 });
 
-// CALCULO RUTA DIJKSTRA
 var userMarker = null;
 var nearestNodeMarker = null;
 var endMarker = null;
 var selectingStart = true;
-var autoStartSet = false; // Indicador de geolocalización para nodo inicial
+var autoStartSet = false; 
 
 // Función de cálculo de distancia entre dos puntos
 function calculateDistance(lat1, lng1, lat2, lng2) {
@@ -84,10 +80,12 @@ function findNearestNode(lat, lng, icon, popupText) {
 
 // Habilitar ubicación manual para el usuario
 function enableManualLocation() {
-  alert(
-    "Por favor, haz clic en el mapa para seleccionar tu ubicación inicial."
-  );
-
+  console.log("Función enableManualLocation activada.");
+  if (selectingStart) {
+    alert(
+      "Por favor, haz clic en el mapa para seleccionar tu ubicación inicial."
+    );
+  }
   map.on("click", function (e) {
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
@@ -123,7 +121,7 @@ function enableManualLocation() {
           );
           console.log("Punto de inicio:", nearestNodeMarker.nodeId);
           console.log("Punto de fin:", nearestNodeMarkerEnd.nodeId);
-          calculateRoute();
+          dijkstra();
         }
       );
     }
@@ -146,12 +144,12 @@ function handleGeolocation(position) {
   findNearestNode(lat, lng, startIcon, "Punto de inicio").then(
     (nearestNodeId) => {
       nearestNodeMarker = { nodeId: nearestNodeId };
-      autoStartSet = true; // Indica que el nodo de inicio está establecido automáticamente
+      autoStartSet = true;
       alert(
         "Ubicación de inicio definida automáticamente. Ahora selecciona el destino."
       );
       selectingStart = false;
-      enableManualLocation(); // Para permitir la selección manual del destino
+      enableManualLocation();
     }
   );
 }
@@ -213,18 +211,20 @@ function loadRouteOnMap() {
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(handleGeolocation, function (error) {
     console.log("Geolocalización no permitida o disponible:", error);
+    selectingStart = true;
     enableManualLocation();
   });
 } else {
   console.log("Geolocalización no soportada en este navegador.");
+  selectingStart = true;
   enableManualLocation();
 }
 
 // Función para llamar al backend y calcular la ruta
-function calculateRoute() {
+function dijkstra() {
   var tiempoInicial = new Date().getTime();
   console.log("Calculando la ruta...");
-  fetch("/calculate-route", {
+  fetch("/dijkstra", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -239,9 +239,8 @@ function calculateRoute() {
       if (data.success) {
         var tiempoFinal = new Date().getTime();
         var tiempoTotal = tiempoFinal - tiempoInicial;
-        console.log(
-          "Tiempo total del algoritmo Dijkstra: " + tiempoTotal + " ms"
-        );
+        document.getElementById("ruta-dijkstra").textContent =
+        "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
         loadRouteOnMap();
       } else {
         alert("No se pudo calcular la ruta.");
@@ -249,6 +248,7 @@ function calculateRoute() {
     })
     .catch((error) => console.error("Error al calcular la ruta:", error));
 }
+
 
 // INFRAESTRUCTURA
 fetch("../static/Archivos_exportados/infraestructura.geojson")

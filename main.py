@@ -7,6 +7,7 @@ ruta_importacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Imp
 ruta_infraestructura = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Infraestructura')
 ruta_algoritmos = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Algoritmos')
 ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exportacion_Data')
+ruta_fallas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Fallas')
 ruta_sitio_web = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Sitio Web')
 
 def ejecutar_script(script, ruta_carpeta):
@@ -50,6 +51,13 @@ scripts_exportacion = [
     "exportacion_amenaza_trafico_actual.py"
     ]
 
+scripts_fallas = [
+    "Probabilidad_Falla_Cierre_Calles.py",
+    "Probabilidad_Falla_Precipitaciones.py",
+    "Probabilidad_Falla_Seguridad.py",
+    "Probabilidad_Falla_Trafico_Actual.py",
+    ]
+
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
 print("Ejecutando scripts de creación de base de datos...")
 ejecutar_script("Creacion_base_datos.py", ruta_importacion)
@@ -78,8 +86,13 @@ for script in scripts_importacion:
 print("Ejecutando scripts de exportación...")
 for script in scripts_exportacion:
     ejecutar_script(script, ruta_exportacion)
+
+# 7. Ejecución de scripts de 'Fallas'
+print("Ejecutando scripts de fallas...")
+for script in scripts_fallas:
+    ejecutar_script(script, ruta_fallas)
     
-# 7. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
+# 8. Leaflet corriendo en el puerto 8080 ./Sitio Web/app.py
 print("Ejecutando Leaflet en el puerto 8080...")
 ejecutar_script("app.py", ruta_sitio_web)
 
