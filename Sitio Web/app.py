@@ -9,7 +9,7 @@ app = Flask(__name__)
 
 EXPORTACION_DATA_SRC = "../Exportacion_Data/Archivos_exportados"
 EXPORTACION_DATA_DEST = "./static/Archivos_exportados"
-ALGORITMOS_DEST = "./static/dijkstra.geojson"
+ALGORITMOS_DEST = ["./static/dijkstra.geojson","./static/cplex_route.geojson","./static/dijkstra_complete.geojson","./static/dijkstra_resiliencia.txt"]
 
 def preparar_archivos():
     if os.path.exists(EXPORTACION_DATA_DEST):
@@ -18,10 +18,14 @@ def preparar_archivos():
     shutil.copytree(EXPORTACION_DATA_SRC, EXPORTACION_DATA_DEST)
     print(f"Carpeta {EXPORTACION_DATA_DEST} copiada correctamente.")
 
-    if os.path.exists(ALGORITMOS_DEST):
-        os.remove(ALGORITMOS_DEST)
+    for archivo in ALGORITMOS_DEST:
+        if os.path.exists(archivo):
+            os.remove(archivo)
 
-    print(f"Archivo {ALGORITMOS_DEST} copiado correctamente.")
+
+    
+
+    print(f"Archivos {ALGORITMOS_DEST} eliminados correctamente.")
 
 @app.route('/')
 def index():
@@ -52,8 +56,9 @@ def calculate_route():
             check=True
         )
         print("Salida estándar:", result.stdout)  # Imprimir salida estándar para depuración
+        dijktra_path = "./static/dijkstra.geojson"
         # Cargar el archivo 'dijkstra.geojson' generado por el script
-        with open(ALGORITMOS_DEST, "r", encoding="utf-8") as geojson_file:
+        with open(dijktra_path, "r", encoding="utf-8") as geojson_file:
             geojson_data = json.load(geojson_file)
 
         return jsonify({"success": True, "geojson": geojson_data})
@@ -126,6 +131,46 @@ def calculate_dijkstra_complete_route():
         print("Salida estándar:", e.stdout)  # Imprimir salida estándar para depuración
         print("Error estándar:", e.stderr)  # Imprimir error estándar para depuración
         return jsonify({"success": False, "error": "Error al calcular la ruta Dijkstra Completa."}), 500
+    
+@app.route('/aco_route', methods=['POST'])
+def calculate_aco_route():
+    print("Calculando ruta ACO...")
+    data = request.json
+    start = data.get('start_id')
+    end = data.get('end_id')
+
+    if not start or not end:
+        print("Puntos de inicio y fin son requeridos.")
+        return jsonify({"success": False, "error": "Puntos de inicio y fin son requeridos."}), 400
+
+    try:
+        # Ejecutar el script ACO con los puntos de inicio y fin
+        result = subprocess.run(
+            [sys.executable, '../Algoritmos/aco_route.py', str(start), str(end)],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        print("Salida estándar del script:", result.stdout)  # Imprimir salida estándar para depuración
+
+        # Cargar el archivo 'aco_route.geojson' generado por el script
+        aco_geojson_path = "./static/aco_route.geojson"  # Ruta al archivo generado
+        if not os.path.exists(aco_geojson_path):
+            print("No se generó el archivo geojson; sin ruta válida.")
+            return jsonify({"success": False, "error": "No se pudo encontrar una ruta válida con ACO."})
+
+        with open(aco_geojson_path, "r", encoding="utf-8") as geojson_file:
+            geojson_data = json.load(geojson_file)
+            print("Archivo geojson cargado exitosamente.")
+
+        return jsonify({"success": True, "geojson": geojson_data})
+    except subprocess.CalledProcessError as e:
+        print("Error al ejecutar el script:", e)
+        print("Salida estándar:", e.stdout)  # Imprimir salida estándar para depuración
+        print("Error estándar:", e.stderr)  # Imprimir error estándar para depuración
+        return jsonify({"success": False, "error": "Error al calcular la ruta ACO."}), 500
+
+
 
 if __name__ == '__main__':
     preparar_archivos()

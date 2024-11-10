@@ -20,22 +20,22 @@ Para el segundo trabajo grupal del curso (fase 2), deberá hacer una presentaci�
 
 4.- La interfaz deberá ser capaz de cargar todos los metadatos y amenazas detectados en las comunas filtradas (utilizar popups o algún otro mecanismo para desplegar la información que no se pueda visualizar como un polígono). Para habilitar o deshabilitar la información mostrada, puede utilizar un panel de control que posea checkboxes.[LISTO]
 
-5.- A partir de los datos obtenidos como amenaza, cada uno debe ser modelado como una probabilidad de falla en su sistema. Para esto, deberá crear un archivo que genere la probabilidad de fallo de cada enlace y nodo a partir de cada amenaza considerada en su trabajo.
+5.- A partir de los datos obtenidos como amenaza, cada uno debe ser modelado como una probabilidad de falla en su sistema. Para esto, deberá crear un archivo que genere la probabilidad de fallo de cada enlace y nodo a partir de cada amenaza considerada en su trabajo. [LISTO]
 
 6.- Deberá mostrar como solución la mejor ruta que satisfaga su problemática, utilizando y detallando el funcionamiento de las siguientes técnicas:
 
-Pgr_dijkstra usando como peso solo la distancia en metros.
-Utilizando CPLEX, a partir del modelamiento formal de su problema de optimización, considere las variables de los metadatos y amenazas, y las condiciones del usuario como restricciones.
-Pgr_dijkstra utilizando el los parámetros y condiciones propuestas en el punto anterior.
-Una metaheurística que considere viable para solucionar su problemática.
+Pgr_dijkstra usando como peso solo la distancia en metros. [LISTO]
+Utilizando CPLEX, a partir del modelamiento formal de su problema de optimización, considere las variables de los metadatos y amenazas, y las condiciones del usuario como restricciones.[LISTO]
+Pgr_dijkstra utilizando el los parámetros y condiciones propuestas en el punto anterior.[LISTO]
+Una metaheurística que considere viable para solucionar su problemática.[LISTO]
 Las 4 rutas generadas deben ser posibles de habilitar o deshabilitar desde su página web.
 
 Deberá indicar el tiempo de cómputo en calcular cada ruta.
 
-7.- A partir de las probabilidades asignadas, deberá habilitar una opción que permita, a partir de números aleatorios entre 0 y 100, determinar si ocurrirá o no la falla (a partir de si supera o no el umbral de falla).
+7.- A partir de las probabilidades asignadas, deberá habilitar una opción que permita, a partir de números aleatorios entre 0 y 100, determinar si ocurrirá o no la falla (a partir de si supera o no el umbral de falla).[LISTO]
 
-8.- Deberá poder habilitar un checkbox que permita mostrar solo las amenazas que podrían ocurrir.
+8.- Deberá poder habilitar un checkbox que permita mostrar solo las amenazas que podrían ocurrir.[LISTO]
 
-9.- Utilizar una métrica de resiliencia para su servicio, para cada una de las técnicas de ruteo utilizadas e indicar cuál de ellas fue la más resiliente frente a las amenazas detectadas en su infraestructura. Este valor debe ser desplegado junto a la leyenda que indica el algoritmo y tiempo de cómputo de cada ruta.
+9.- Utilizar una métrica de resiliencia para su servicio, para cada una de las técnicas de ruteo utilizadas e indicar cuál de ellas fue la más resiliente frente a las amenazas detectadas en su infraestructura. Este valor debe ser desplegado junto a la leyenda que indica el algoritmo y tiempo de cómputo de cada ruta.[LISTO]
 
-10.- Realizar un ejemplo de caso en donde se pueda evidenciar que su su solución provee una ruta alternativa frente a una amenaza (mitigando lo más posible las amenazas), y que evidencie que se logra cumplir sus objetivos iniciales.
+10.- Realizar un ejemplo de caso en donde se pueda evidenciar que su solución provee una ruta alternativa frente a una amenaza (mitigando lo más posible las amenazas), y que evidencie que se logra cumplir sus objetivos iniciales.

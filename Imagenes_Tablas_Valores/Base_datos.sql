@@ -108,7 +108,6 @@ CREATE TABLE proyectoalgoritmos.probabilidad_falla (
     FOREIGN KEY (id_nodo) REFERENCES proyectoalgoritmos.infraestructura_nodos(id)
 );
 
-
 CREATE TABLE proyectoalgoritmos.regiones_13 (
     objectid BIGINT,
     shape_leng DOUBLE PRECISION,

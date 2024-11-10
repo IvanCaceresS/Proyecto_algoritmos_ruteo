@@ -11,6 +11,10 @@ ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exp
 ruta_fallas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Fallas')
 ruta_sitio_web = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Sitio Web')
 
+#Borrar archivos de la carpeta Fallas pero no borrar la carpeta
+for archivo in os.listdir("./Sitio Web/static/Fallas"):
+    if archivo != ".gitkeep":
+        os.remove(f"./Sitio Web/static/Fallas/{archivo}")
 
 python_path = os.path.abspath(Path("virtual_env") / "Scripts" / "python")
 print("Python path:", python_path)  # Esto debería mostrar la ruta absoluta completa
@@ -62,6 +66,8 @@ scripts_fallas = [
     "Probabilidad_Falla_Precipitaciones.py",
     "Probabilidad_Falla_Seguridad.py",
     "Probabilidad_Falla_Trafico_Actual.py",
+    "Falla.py",
+    "Fallas_geolocalizadas.py"
     ]
 
 # 1. Ejecución de la creación de la base de datos (Creacion_base_datos.py)
@@ -103,4 +109,3 @@ print("Ejecutando Leaflet en el puerto 8080...")
 ejecutar_script("app.py", ruta_sitio_web)
 
 print("Todos los scripts han sido ejecutados en el orden especificado.")
-

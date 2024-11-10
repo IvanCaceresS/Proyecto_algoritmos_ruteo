@@ -13,7 +13,7 @@ L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
 }).addTo(map);
 
 var startIcon = L.icon({
-  iconUrl: "../static/Simbologia/inicio.png", 
+  iconUrl: "../static/Simbologia/inicio.png",
   iconSize: [16, 16],
 });
 var endIcon = L.icon({
@@ -25,7 +25,7 @@ var userMarker = null;
 var nearestNodeMarker = null;
 var endMarker = null;
 var selectingStart = true;
-var autoStartSet = false; 
+var autoStartSet = false;
 
 // Función de cálculo de distancia entre dos puntos
 function calculateDistance(lat1, lng1, lat2, lng2) {
@@ -124,6 +124,7 @@ function enableManualLocation() {
           dijkstra();
           cplex();
           dijkstraComplete();
+          acoRoute();
         }
       );
     }
@@ -171,6 +172,7 @@ function loadRouteOnMap(data, routeType = "dijkstra") {
     dijkstra: "#FF4500",
     cplex: "#0000FF",
     dijkstra_complete: "#32CD32", // Color para Dijkstra Completa
+    aco: "#FFA500" // Color para ACO
   };
   const color = colorMap[routeType] || "#FF4500";
 
@@ -183,9 +185,13 @@ function loadRouteOnMap(data, routeType = "dijkstra") {
     },
     pointToLayer: function (feature, latlng) {
       if (feature.properties.role === "source") {
-        return L.marker(latlng, { icon: startIcon }).bindPopup("Inicio de la ruta");
+        return L.marker(latlng, { icon: startIcon }).bindPopup(
+          "Inicio de la ruta"
+        );
       } else if (feature.properties.role === "target") {
-        return L.marker(latlng, { icon: endIcon }).bindPopup("Final de la ruta");
+        return L.marker(latlng, { icon: endIcon }).bindPopup(
+          "Final de la ruta"
+        );
       }
       return L.circleMarker(latlng, {
         radius: 4,
@@ -216,19 +222,43 @@ function dijkstra() {
       end_id: nearestNodeMarkerEnd.nodeId,
     }),
   })
-    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response.statusText)
+    )
     .then((data) => {
-      if (data.success) {
+      if (data.success && data.geojson.features.length > 0) {
         var tiempoFinal = new Date().getTime();
         var tiempoTotal = tiempoFinal - tiempoInicial;
-        document.getElementById("ruta-dijkstra").textContent =
-          "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
-        loadRouteOnMap(data.geojson, "dijkstra");
+
+        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
+        fetch("./static/dijkstra_resiliencia.txt")
+          .then((response) => response.text())
+          .then((text) => {
+            // Combinar tiempo total y métricas de resiliencia en el texto
+            var resilienciaInfo = text.replace(/\n/g, "<br>"); // Reemplazar saltos de línea con <br> para HTML
+            document.getElementById("ruta-dijkstra").innerHTML =
+              "Ruta (Dijkstra) - Tiempo total: " +
+              tiempoTotal +
+              " ms<br>" +
+              resilienciaInfo;
+
+            // Cargar la ruta en el mapa
+            loadRouteOnMap(data.geojson, "dijkstra");
+          })
+          .catch((error) => {
+            console.error("Error al cargar métricas de resiliencia:", error);
+            document.getElementById("ruta-dijkstra").textContent =
+              "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
+          });
       } else {
         alert("No se pudo calcular la ruta.");
+        document.getElementById("ruta-dijkstra").textContent =
+          "Ruta (Dijkstra) - No pudo encontrar una solución.";
       }
     })
-    .catch((error) => console.error("Error al calcular la ruta Dijkstra:", error));
+    .catch((error) =>
+      console.error("Error al calcular la ruta Dijkstra:", error)
+    );
 }
 
 // Función para llamar al backend y calcular la ruta CPLEX
@@ -243,19 +273,42 @@ function cplex() {
       end_id: nearestNodeMarkerEnd.nodeId,
     }),
   })
-    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response.statusText)
+    )
     .then((data) => {
-      if (data.success) {
+      if (data.success && data.geojson.features.length > 0) {
         var tiempoFinal = new Date().getTime();
         var tiempoTotal = tiempoFinal - tiempoInicial;
-        document.getElementById("ruta-cplex").textContent =
-          "Ruta (CPLEX) - Tiempo total: " + tiempoTotal + " ms";
-        loadRouteOnMap(data.geojson, "cplex");
+
+        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
+        fetch("./static/cplex_resiliencia.txt")
+          .then((response) => response.text())
+          .then((text) => {
+            var resilienciaInfo = text.replace(/\n/g, "<br>");
+            document.getElementById("ruta-cplex").innerHTML =
+              "Ruta (CPLEX) - Tiempo total: " +
+              tiempoTotal +
+              " ms<br>" +
+              resilienciaInfo;
+
+            // Cargar la ruta en el mapa
+            loadRouteOnMap(data.geojson, "cplex");
+          })
+          .catch((error) => {
+            console.error("Error al cargar métricas de resiliencia:", error);
+            document.getElementById("ruta-cplex").textContent =
+              "Ruta (CPLEX) - Tiempo total: " + tiempoTotal + " ms";
+          });
       } else {
         alert("No se pudo calcular la ruta usando CPLEX.");
+        document.getElementById("ruta-cplex").textContent =
+          "Ruta (CPLEX) - No pudo encontrar una solución segura y óptima.";
       }
     })
-    .catch((error) => console.error("Error al calcular la ruta usando CPLEX:", error));
+    .catch((error) =>
+      console.error("Error al calcular la ruta usando CPLEX:", error)
+    );
 }
 
 // Función para llamar al backend y calcular la ruta Dijkstra Completa
@@ -270,19 +323,92 @@ function dijkstraComplete() {
       end_id: nearestNodeMarkerEnd.nodeId,
     }),
   })
-    .then((response) => (response.ok ? response.json() : Promise.reject(response.statusText)))
+    .then((response) =>
+      response.ok ? response.json() : Promise.reject(response.statusText)
+    )
     .then((data) => {
-      if (data.success) {
+      if (data.success && data.geojson.features.length > 0) {
         var tiempoFinal = new Date().getTime();
         var tiempoTotal = tiempoFinal - tiempoInicial;
-        document.getElementById("ruta-dijkstra-completa").textContent =
-          "Ruta (Dijkstra Completa) - Tiempo total: " + tiempoTotal + " ms";
-        loadRouteOnMap(data.geojson, "dijkstra_complete");
+
+        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
+        fetch("./static/dijkstra_complete_resiliencia.txt")
+          .then((response) => response.text())
+          .then((text) => {
+            var resilienciaInfo = text.replace(/\n/g, "<br>");
+            document.getElementById("ruta-dijkstra-completa").innerHTML =
+              "Ruta (Dijkstra Completa) - Tiempo total: " +
+              tiempoTotal +
+              " ms<br>" +
+              resilienciaInfo;
+
+            // Cargar la ruta en el mapa
+            loadRouteOnMap(data.geojson, "dijkstra_complete");
+          })
+          .catch((error) => {
+            console.error("Error al cargar métricas de resiliencia:", error);
+            document.getElementById("ruta-dijkstra-completa").textContent =
+              "Ruta (Dijkstra Completa) - Tiempo total: " + tiempoTotal + " ms";
+          });
       } else {
         alert("No se pudo calcular la ruta Dijkstra Completa.");
+        document.getElementById("ruta-dijkstra-completa").textContent =
+          "Ruta (Dijkstra Completa) - No pudo encontrar una solución segura y óptima.";
       }
     })
-    .catch((error) => console.error("Error al calcular la ruta Dijkstra Completa:", error));
+    .catch((error) =>
+      console.error("Error al calcular la ruta Dijkstra Completa:", error)
+    );
+}
+
+// Función para llamar al backend y calcular la ruta ACO
+function acoRoute() {
+  var tiempoInicial = new Date().getTime();
+  console.log("Calculando la ruta ACO...");
+  fetch("/aco_route", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      start_id: nearestNodeMarker.nodeId,
+      end_id: nearestNodeMarkerEnd.nodeId,
+    }),
+  })
+    .then((response) => response.ok ? response.json() : Promise.reject(response.statusText))
+    .then((data) => {
+      if (data.success && data.geojson && data.geojson.features.length > 0) {
+        var tiempoFinal = new Date().getTime();
+        var tiempoTotal = tiempoFinal - tiempoInicial;
+
+        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
+        fetch("./static/aco_resiliencia.txt")
+          .then((response) => response.text())
+          .then((text) => {
+            var resilienciaInfo = text.replace(/\n/g, "<br>");
+            document.getElementById("ruta-aco").innerHTML =
+              "Ruta (ACO) - Tiempo total: " +
+              tiempoTotal +
+              " ms<br>" +
+              resilienciaInfo;
+
+            // Cargar la ruta en el mapa
+            loadRouteOnMap(data.geojson, "aco");
+          })
+          .catch((error) => {
+            console.error("Error al cargar métricas de resiliencia:", error);
+            document.getElementById("ruta-aco").textContent =
+              "Ruta (ACO) - Tiempo total: " + tiempoTotal + " ms";
+          });
+      } else {
+        console.log("No se pudo calcular la ruta ACO o el archivo geojson está vacío.");
+        document.getElementById("ruta-aco").textContent =
+          "Ruta (ACO) - No pudo encontrar una solución segura y óptima.";
+      }
+    })
+    .catch((error) => {
+      console.error("Error al calcular la ruta ACO:", error);
+      document.getElementById("ruta-aco").textContent =
+        "Ruta (ACO) - Error en el cálculo.";
+    });
 }
 
 
@@ -319,6 +445,95 @@ fetch("../static/Archivos_exportados/infraestructura.geojson")
   .catch((error) =>
     console.error("Error cargando infraestructura.geojson:", error)
   );
+
+// AMENAZAS - Cargar el archivo GeoJSON y filtrar por tipo de amenaza
+fetch("../static/Fallas/amenazas_geolocalizadas.geojson")
+  .then((response) => response.json())
+  .then((data) => {
+    // Función para crear una capa de amenazas según el tipo
+    const crearCapaAmenaza = (amenazaTipo, color) => {
+      return L.geoJSON(data, {
+        filter: (feature) => feature.properties.amenaza === amenazaTipo,
+        style: (feature) => {
+          const sucedeFalla = feature.properties.sucede_falla === true || feature.properties.sucede_falla === "True";
+          const colorAmenaza = sucedeFalla ? color : "#FFA500"; // Asignar color específico de amenaza si sucede_falla es True
+          
+          if (feature.geometry.type === "LineString") {
+            return {
+              color: colorAmenaza,
+              weight: 3,
+              opacity: 0.8,
+            };
+          } else if (feature.geometry.type === "Point") {
+            return {
+              color: "#000",
+              weight: 1,
+              radius: 5,
+              opacity: 0.8,
+              fillColor: colorAmenaza,
+              fillOpacity: 0.8,
+            };
+          }
+        },
+        pointToLayer: (feature, latlng) => {
+          const sucedeFalla = feature.properties.sucede_falla === true || feature.properties.sucede_falla === "True";
+          const colorAmenaza = sucedeFalla ? color : "#FFA500"; // Asignar color específico de amenaza si sucede_falla es True
+          
+          if (feature.geometry.type === "Point") {
+            return L.circleMarker(latlng, {
+              radius: 5,
+              fillColor: colorAmenaza,
+              color: "#000",
+              weight: 1,
+              opacity: 1,
+              fillOpacity: 0.8,
+            });
+          }
+        },
+        onEachFeature: function (feature, layer) {
+          layer.bindPopup(
+            `<b>Amenaza:</b> ${feature.properties.amenaza}<br>` +
+            `<b>Probabilidad de Falla:</b> ${feature.properties.probabilidad_falla}<br>` +
+            `<b>Sucede Falla:</b> ${feature.properties.sucede_falla === true || feature.properties.sucede_falla === "True" ? "Sí" : "No"}`
+          );
+        },
+      });
+    };
+
+    // Crear capas individuales para cada tipo de amenaza con su color específico
+    const cierreCalleLayer = crearCapaAmenaza("cierre_calle", "#FF4500");           // Rojo oscuro
+    const precipitacionInundacionLayer = crearCapaAmenaza("precipitacion_inundacion", "#1E90FF"); // Azul
+    const seguridadLayer = crearCapaAmenaza("seguridad", "#32CD32");                 // Verde
+    const traficoLayer = crearCapaAmenaza("trafico", "#FFD700");                     // Amarillo
+
+    // Añadir eventos de alternancia de visibilidad
+    document.getElementById("toggle-cierre-calle-ocurriendo").addEventListener("click", function () {
+      toggleLayer(cierreCalleLayer);
+    });
+
+    document.getElementById("toggle-precipitacion-inundacion-ocurriendo").addEventListener("click", function () {
+      toggleLayer(precipitacionInundacionLayer);
+    });
+
+    document.getElementById("toggle-seguridad-ocurriendo").addEventListener("click", function () {
+      toggleLayer(seguridadLayer);
+    });
+
+    document.getElementById("toggle-trafico-ocurriendo").addEventListener("click", function () {
+      toggleLayer(traficoLayer);
+    });
+  })
+  .catch((error) => console.error("Error cargando amenazas_geolocalizadas.geojson:", error));
+
+
+// Función para alternar la visibilidad de una capa en el mapa
+function toggleLayer(layer) {
+  if (map.hasLayer(layer)) {
+    map.removeLayer(layer);
+  } else {
+    map.addLayer(layer);
+  }
+}
 
 // CICLOVÍAS
 fetch("../static/Archivos_exportados/ciclovias.geojson")

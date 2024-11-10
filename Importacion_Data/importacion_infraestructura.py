@@ -6,8 +6,10 @@ import os
 from shapely.geometry import shape, Point, LineString
 from shapely import wkt
 
+# Cargar variables de entorno
 load_dotenv('../.env')
 
+# Conexión a la base de datos
 conn = psycopg2.connect(
     host=os.getenv("DB_HOST"),
     database=os.getenv("DB_NAME"),
@@ -16,6 +18,7 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
+# Asegurar que las columnas adicionales existen
 cur.execute("""
     ALTER TABLE proyectoalgoritmos.infraestructura 
     ADD COLUMN IF NOT EXISTS is_ciclovia BOOLEAN DEFAULT FALSE;
@@ -26,6 +29,7 @@ cur.execute("""
 """)
 conn.commit()
 
+# Cargar datos GeoJSON
 with open('../Infraestructura/Archivos_descargados/calles_primarias_secundarias_santiago.geojson', 'r', encoding='utf-8') as f:
     geojson_data = json.load(f)
 
@@ -40,23 +44,28 @@ insert_line_query = sql.SQL("""
     VALUES (%s, %s, %s, %s, %s, %s, ST_GeomFromText(%s, 4326), %s, %s, %s)
 """)
 
-
 line_geometries = []
-all_nodes = []
 line_properties = []
 
+# Función para ajustar el valor de oneway
+def ajustar_oneway(valor):
+    return valor if valor in ("yes", "no") else "no"  # Valor predeterminado para casos no válidos
+
+# Obtener todos los nodos de infraestructura y almacenar sus geometrías
+cur.execute("SELECT id, ST_AsText(geometry) FROM proyectoalgoritmos.infraestructura_nodos")
+all_nodes_in_db = {wkt.loads(geom_wkt): node_id for node_id, geom_wkt in cur.fetchall()}
+
+# Función para insertar o recuperar un nodo
 def insert_node_if_not_exists(point_geom):
-    cur.execute("SELECT id FROM proyectoalgoritmos.infraestructura_nodos WHERE ST_Equals(geometry, ST_GeomFromText(%s, 4326))", (point_geom.wkt,))
-    result = cur.fetchone()
-    
-    if result:
-        return result[0]
+    if point_geom in all_nodes_in_db:
+        return all_nodes_in_db[point_geom]
     else:
         cur.execute(insert_node_query, (point_geom.wkt,))
         node_id = cur.fetchone()[0]
-        all_nodes.append(point_geom)
+        all_nodes_in_db[point_geom] = node_id
         return node_id
 
+# Procesar las líneas del archivo GeoJSON
 for feature in geojson_data['features']:
     geom = shape(feature['geometry'])
     if isinstance(geom, LineString):
@@ -67,7 +76,7 @@ for feature in geojson_data['features']:
         name = properties.get('name', 'Sin nombre')
         highway_type = properties.get('highway', 'unknown')
         lanes = int(properties.get('lanes', 1))
-        oneway = properties.get('oneway', 'no')
+        oneway = ajustar_oneway(properties.get('oneway', 'no'))
         
         line_properties.append((line_id, name, highway_type, lanes, oneway))
 
@@ -78,32 +87,20 @@ for feature in geojson_data['features']:
         target_node_id = insert_node_if_not_exists(end_point)
 
         cost = geom.length
-        if(len(oneway) > 3):
-            oneway = 'no'
         cur.execute(insert_line_query, (
             line_id, name, highway_type, lanes, source_node_id, target_node_id, geom.wkt, cost, False, oneway
         ))
 
 conn.commit()
 
-def get_intersecting_nodes(line):
-    intersecting_nodes = []
-    cur.execute("SELECT id, ST_AsText(geometry) FROM proyectoalgoritmos.infraestructura_nodos")
-    all_nodes_in_db = cur.fetchall()
-
-    for node_id, node_geom_wkt in all_nodes_in_db:
-        point = wkt.loads(node_geom_wkt)
-        if line.distance(point) < 1e-8:
-            intersecting_nodes.append((node_id, point))
-    
-    return intersecting_nodes
-
+# Dividir líneas en segmentos entre nodos de intersección
 new_line_id = 1
 for idx, line in enumerate(line_geometries):
     original_line_id, name, highway_type, lanes, oneway = line_properties[idx]
 
-    intersecting_nodes = get_intersecting_nodes(line)
-
+    intersecting_nodes = [
+        (node_id, point) for point, node_id in all_nodes_in_db.items() if line.distance(point) < 1e-8
+    ]
     intersecting_nodes = sorted(intersecting_nodes, key=lambda p: line.project(p[1]))
 
     if len(intersecting_nodes) > 1:
@@ -114,8 +111,6 @@ for idx, line in enumerate(line_geometries):
             target_node_id = intersecting_nodes[i + 1][0]
 
             cost = segment.length
-            if(len(oneway) > 3):
-                oneway = 'no'
             cur.execute(insert_line_query, (
                 new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False, oneway 
             ))
@@ -124,6 +119,7 @@ for idx, line in enumerate(line_geometries):
 
 conn.commit()
 
+# Actualizar intersección con ciclovías en bloque
 cur.execute("""
     UPDATE proyectoalgoritmos.infraestructura
     SET is_ciclovia = TRUE

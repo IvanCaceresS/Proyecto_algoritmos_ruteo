@@ -2,6 +2,10 @@ import os
 import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
+import warnings
+
+# Suprimir warnings específicos de pandas
+warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy")
 
 load_dotenv(dotenv_path='../.env')
 
@@ -58,21 +62,24 @@ def calcular_probabilidad_falla_por_precipitacion_inundacion(riesgo_comunas, inf
             precip_mm = comuna_riesgo.iloc[0]['precip_mm']
             ind_riesgo_inundacion = comuna_riesgo.iloc[0]['ind_riesgo_inundaciones_t10_delta']
 
-            if precip_mm > 50:
-                probabilidad_precipitacion = 0.8
-            elif precip_mm >= 20:
-                probabilidad_precipitacion = 0.5
+            if precip_mm == 0:
+                probabilidad_falla = 0  # Probabilidad de falla es 0 si precipitación es 0
             else:
-                probabilidad_precipitacion = 0.2
+                if precip_mm > 50:
+                    probabilidad_precipitacion = 0.8
+                elif precip_mm >= 20:
+                    probabilidad_precipitacion = 0.5
+                else:
+                    probabilidad_precipitacion = 0.2
 
-            if ind_riesgo_inundacion > 5:
-                probabilidad_inundacion = 0.8
-            elif ind_riesgo_inundacion >= 2:
-                probabilidad_inundacion = 0.5
-            else:
-                probabilidad_inundacion = 0.2
+                if ind_riesgo_inundacion > 5:
+                    probabilidad_inundacion = 0.8
+                elif ind_riesgo_inundacion >= 2:
+                    probabilidad_inundacion = 0.5
+                else:
+                    probabilidad_inundacion = 0.2
 
-            probabilidad_falla = (probabilidad_precipitacion + probabilidad_inundacion) / 2
+                probabilidad_falla = (probabilidad_precipitacion + probabilidad_inundacion) / 2
 
             resultados.append({
                 'id_infraestructura': row['infraestructura_id'],
@@ -88,21 +95,24 @@ def calcular_probabilidad_falla_por_precipitacion_inundacion(riesgo_comunas, inf
             precip_mm = comuna_riesgo.iloc[0]['precip_mm']
             ind_riesgo_inundacion = comuna_riesgo.iloc[0]['ind_riesgo_inundaciones_t10_delta']
 
-            if precip_mm > 50:
-                probabilidad_precipitacion = 0.8
-            elif precip_mm >= 20:
-                probabilidad_precipitacion = 0.5
+            if precip_mm == 0:
+                probabilidad_falla = 0  # Probabilidad de falla es 0 si precipitación es 0
             else:
-                probabilidad_precipitacion = 0.2
+                if precip_mm > 50:
+                    probabilidad_precipitacion = 0.8
+                elif precip_mm >= 20:
+                    probabilidad_precipitacion = 0.5
+                else:
+                    probabilidad_precipitacion = 0.2
 
-            if ind_riesgo_inundacion > 5:
-                probabilidad_inundacion = 0.8
-            elif ind_riesgo_inundacion >= 2:
-                probabilidad_inundacion = 0.5
-            else:
-                probabilidad_inundacion = 0.2
+                if ind_riesgo_inundacion > 5:
+                    probabilidad_inundacion = 0.8
+                elif ind_riesgo_inundacion >= 2:
+                    probabilidad_inundacion = 0.5
+                else:
+                    probabilidad_inundacion = 0.2
 
-            probabilidad_falla = (probabilidad_precipitacion + probabilidad_inundacion) / 2
+                probabilidad_falla = (probabilidad_precipitacion + probabilidad_inundacion) / 2
 
             resultados.append({
                 'id_infraestructura': None,

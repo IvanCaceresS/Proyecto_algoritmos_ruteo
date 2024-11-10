@@ -2,6 +2,10 @@ import os
 import pandas as pd
 import psycopg2
 from dotenv import load_dotenv
+import warnings
+
+# Suprimir warnings específicos de pandas
+warnings.filterwarnings("ignore", message="pandas only supports SQLAlchemy")
 
 load_dotenv(dotenv_path='../.env')
 
@@ -73,6 +77,5 @@ for result in resultados:
 
 conn.commit()
 print("Probabilidades de falla basadas en tráfico almacenadas en la tabla probabilidad_falla.")
-
 cur.close()
 conn.close()
