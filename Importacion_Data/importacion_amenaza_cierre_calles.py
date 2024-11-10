@@ -18,7 +18,10 @@ conn = psycopg2.connect(
     password=password
 )
 cur = conn.cursor()
-
+#vERIFICAR SI JSON EXISTE
+if not os.path.exists('../Amenazas/Archivos_descargados/cierres_calles.json'):
+    print("No se encontró el archivo 'cierres_calles.json'. Por favor, descargue el archivo y vuelva a ejecutar el script.")
+    exit()
 with open('../Amenazas/Archivos_descargados/cierres_calles.json', 'r', encoding='utf-8') as f:
     calles_data = json.load(f)
 

@@ -66,7 +66,7 @@ def calcular_probabilidad_falla_por_seguridad_normalizada(infra_seguridad, nodos
     resultados = []
 
     for _, row in infra_seguridad.iterrows():
-        probabilidad_falla = row['indice_delitos_normalizado'] * 0.5  # Limitar al 70%
+        probabilidad_falla = row['indice_delitos_normalizado'] * 0.1  # Limitar al 70%
         resultados.append({
             'id_infraestructura': row['infraestructura_id'],
             'id_nodo': None,
@@ -75,7 +75,7 @@ def calcular_probabilidad_falla_por_seguridad_normalizada(infra_seguridad, nodos
         })
 
     for _, row in nodos_seguridad.iterrows():
-        probabilidad_falla = row['indice_delitos_normalizado'] * 0.5  # Limitar al 70%
+        probabilidad_falla = row['indice_delitos_normalizado'] * 0.1  # Limitar al 70%
         resultados.append({
             'id_infraestructura': None,
             'id_nodo': row['nodo_id'],

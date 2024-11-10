@@ -98,14 +98,20 @@ new_line_id = 1
 for idx, line in enumerate(line_geometries):
     original_line_id, name, highway_type, lanes, oneway = line_properties[idx]
 
+    # Filtrar nodos que estén lo suficientemente cerca y ordenar si line no está vacío
     intersecting_nodes = [
-        (node_id, point) for point, node_id in all_nodes_in_db.items() if line.distance(point) < 1e-8
+        (node_id, point) for point, node_id in all_nodes_in_db.items() if line.distance(point) < 1e-6
     ]
-    intersecting_nodes = sorted(intersecting_nodes, key=lambda p: line.project(p[1]))
+    if not line.is_empty:
+        intersecting_nodes = sorted(intersecting_nodes, key=lambda p: line.project(p[1]))
 
+    # Crear segmentos entre nodos de intersección
     if len(intersecting_nodes) > 1:
         for i in range(len(intersecting_nodes) - 1):
             segment = LineString([intersecting_nodes[i][1], intersecting_nodes[i + 1][1]])
+
+            if segment.is_empty or not segment.is_valid:
+                continue  # Omitir segmentos vacíos o no válidos
 
             source_node_id = intersecting_nodes[i][0]
             target_node_id = intersecting_nodes[i + 1][0]
@@ -115,7 +121,8 @@ for idx, line in enumerate(line_geometries):
                 new_line_id, name, highway_type, lanes, source_node_id, target_node_id, segment.wkt, cost, False, oneway 
             ))
 
-            new_line_id += 1 
+            new_line_id += 1
+
 
 conn.commit()
 

@@ -26,8 +26,10 @@ with open('../Infraestructura/Archivos_descargados/13.geojson', 'r', encoding='u
 overpass_query = f"""
 [out:json][timeout:25];
 (
-  way["highway"="primary"]({bbox});
-  way["highway"="secondary"]({bbox});
+    way["highway"="primary"]({bbox});
+    way["highway"="secondary"]({bbox});
+    way["highway"="tertiary"]({bbox});
+    way["highway"="residential"]({bbox});
 );
 out body;
 >;

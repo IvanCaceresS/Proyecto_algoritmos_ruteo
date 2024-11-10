@@ -31,27 +31,62 @@ target_id = int(sys.argv[2])
 
 # Cargar los datos de amenazas activas
 fallas_df = pd.read_csv('./static/Fallas/amenazas_ocurriendo.csv')
+tipos_amenazas = dict(zip(fallas_df['id_infraestructura'].dropna().astype(int), fallas_df['amenaza']))
+
+multiplicadores_amenazas = {
+    'cierre_calle': 3,
+    'seguridad': 2,
+    'trafico': 1.5,
+    'precipitacion_inundacion': 2.5
+}
+
+# Filtrar calles cerradas
 fallas_infra_cierre = fallas_df[(fallas_df['amenaza'] == 'cierre_calle') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
+
+# Cargar iluminación y estacionamientos de bicicletas
+with open('./static/Archivos_exportados/iluminacion.geojson', 'r', encoding='utf-8') as f:
+    iluminacion_data = json.load(f)
+calles_iluminadas = {feature['properties']['geojson_id'] for feature in iluminacion_data['features'] if feature['properties']['lit'] == "yes"}
+
+with open('./static/Archivos_exportados/estacionamientos.geojson', 'r', encoding='utf-8') as f:
+    estacionamientos_data = json.load(f)
+nodos_estacionamiento = {int(feature['properties']['geojson_id'].split('/')[-1]) for feature in estacionamientos_data['features'] if feature['properties']['amenity'] == "bicycle_parking"}
 
 print(f"Calculando ruta desde el nodo {source_id} hasta el nodo {target_id}")
 
-# Construir el grafo usando NetworkX
+# Construir el grafo usando NetworkX con priorización y penalización en el costo de las aristas
 G = nx.DiGraph()
-cur.execute("SELECT id, source, target, cost, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura")
+cur.execute("SELECT id, source, target, cost, is_ciclovia, ST_AsGeoJSON(geometry) FROM proyectoalgoritmos.infraestructura")
 edges = cur.fetchall()
 for edge in edges:
-    edge_id, u, v, cost, geometry = edge
+    edge_id, u, v, cost, is_ciclovia, geometry = edge
     if edge_id in fallas_infra_cierre:
         continue  # Ignorar los bordes afectados por cierre de calle
+    
+    # Ajuste de costos según prioridades y amenazas
+    if is_ciclovia:
+        cost *= 0.5  # Priorizar ciclovías
+    if edge_id in calles_iluminadas:
+        cost *= 0.7  # Priorizar calles iluminadas
+    if u in nodos_estacionamiento or v in nodos_estacionamiento:
+        cost *= 0.8  # Priorizar calles cercanas a estacionamientos de bicicletas
+
+    # Penalización según tipo de amenaza
+    tipo_amenaza = tipos_amenazas.get(edge_id)
+    if tipo_amenaza:
+        multiplicador = multiplicadores_amenazas.get(tipo_amenaza, 1)
+        cost *= multiplicador
+    
+    # Agregar la arista al grafo
     G.add_edge(u, v, id=edge_id, cost=cost, geometry=json.loads(geometry))
 
 # Parámetros de ACO
-NUM_HORMIGAS = 100  # Incrementado para más exploración
-ITERACIONES = 200  # Incrementado para más exploración
-EVAPORACION = 0.4
+NUM_HORMIGAS = 500
+ITERACIONES = 300
+EVAPORACION = 0.3
 INTENSIDAD_FEROMONA = 100
-ALPHA = 1  # Peso de la feromona
-BETA = 2.5  # Peso de la heurística incrementado
+ALPHA = 1
+BETA = 1.5
 
 # Inicializar feromonas
 for u, v in G.edges():
@@ -126,12 +161,21 @@ if mejor_ruta is None or len(mejor_ruta) < 2:
 print("Mejor ruta:", mejor_ruta)
 print("Costo de la mejor ruta:", mejor_costo)
 
+# Calcular la distancia total de la ruta en grados y convertir a kilómetros
+distancia_total_grados = 0
+for i in range(len(mejor_ruta) - 1):
+    u, v = mejor_ruta[i], mejor_ruta[i + 1]
+    distancia_total_grados += G[u][v]["cost"]
+
+distancia_total_km = distancia_total_grados * 111.32  # Conversión de grados a kilómetros
+print("Distancia total de la ruta en kilómetros:", distancia_total_km)
+
 # Preparar datos para calcular la resiliencia
 ruta_data = [(G[u][v]["id"], G[u][v]["cost"]) for u, v in zip(mejor_ruta[:-1], mejor_ruta[1:])]
-fallas_infra = fallas_infra_cierre  # Considera las infraestructuras afectadas
+fallas_infra = fallas_infra_cierre
 
 # Calcular resiliencia
-resiliencia = calcular_resiliencia(ruta_data, fallas_infra)
+resiliencia = calcular_resiliencia(ruta_data, fallas_infra, tipos_amenazas, multiplicadores_amenazas)
 resiliencia_costo = resiliencia["resiliencia_costo"]
 resiliencia_impacto = resiliencia["resiliencia_impacto"]
 
@@ -164,12 +208,17 @@ with open(geojson_path, "w", encoding="utf-8") as geojson_file:
     json.dump(geojson_result, geojson_file, ensure_ascii=False, indent=4)
 print(f"Resultado exportado como '{geojson_path}'")
 
+#Eliminar txt si existe
+if os.path.exists("./static/aco_resiliencia.txt"):
+    os.remove("./static/aco_resiliencia.txt")
+
 # Exportar las métricas de resiliencia
 resiliencia_path = "./static/aco_resiliencia.txt"
 with open(resiliencia_path, "w", encoding="utf-8") as txt_file:
     txt_file.write("Métricas de resiliencia de la ruta frente a amenazas:\n")
     txt_file.write(f" - Resiliencia en costo (relativa): {resiliencia_costo:.2f}\n")
     txt_file.write(f" - Resiliencia en impacto (elementos no afectados): {resiliencia_impacto:.2f}\n")
+    txt_file.write(f" - Distancia total de la ruta (km): {distancia_total_km:.2f}\n")
 
 print(f"Métricas de resiliencia exportadas como '{resiliencia_path}'")
 

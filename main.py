@@ -11,10 +11,25 @@ ruta_exportacion = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Exp
 ruta_fallas = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Fallas')
 ruta_sitio_web = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'Sitio Web')
 
-#Borrar archivos de la carpeta Fallas pero no borrar la carpeta
-for archivo in os.listdir("./Sitio Web/static/Fallas"):
-    if archivo != ".gitkeep":
-        os.remove(f"./Sitio Web/static/Fallas/{archivo}")
+carpetas_y_extensiones = {
+    "./Fallas": [".csv", ".geojson"],
+    "./Sitio Web/static": [".geojson", ".txt"],
+    "./Sitio Web/static/Archivos_exportados": [".geojson", ".json"],
+    "./Metadata/Archivos_descargados": [".geojson"],
+    "./Infraestructura/Archivos_descargados": [".geojson"],
+    "./Amenazas/Archivos_descargados": [".json"],
+    "./Exportacion_Data/Archivos_exportados": [".json", ".geojson"]
+}
+
+for carpeta, extensiones in carpetas_y_extensiones.items():
+    carpeta_path = Path(carpeta)
+    if carpeta_path.exists() and carpeta_path.is_dir():
+        for archivo in carpeta_path.iterdir():
+            if archivo.suffix in extensiones:
+                archivo.unlink()
+                print(f"Eliminado: {archivo}")
+    else:
+        print(f"La carpeta {carpeta} no existe o no es un directorio.")
 
 python_path = os.path.abspath(Path("virtual_env") / "Scripts" / "python")
 print("Python path:", python_path)  # Esto debería mostrar la ruta absoluta completa
@@ -23,7 +38,6 @@ def ejecutar_script(script, ruta_carpeta):
     directorio_actual = os.getcwd()
     try:
         os.chdir(ruta_carpeta)
-        # Usa el intérprete Python del entorno virtual
         subprocess.run([str(python_path), script], check=True)
         print(f"{script} ejecutado con éxito en {ruta_carpeta}.")
     

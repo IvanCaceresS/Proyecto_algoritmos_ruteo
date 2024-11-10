@@ -27,26 +27,59 @@ cur = conn.cursor()
 source_id = int(sys.argv[1])
 target_id = int(sys.argv[2])
 
-# Cargar los datos de amenazas activas
+# Cargar los datos de amenazas activas y geolocalizadas
 fallas_df = pd.read_csv('./static/Fallas/amenazas_ocurriendo.csv')
 
-# Filtrar IDs para "cierre de calle" (exclusión total) y otras amenazas (incremento de peso)
-fallas_infra_cierre = fallas_df[(fallas_df['amenaza'] == 'cierre_calle') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
-fallas_nodos_cierre = fallas_df[(fallas_df['amenaza'] == 'cierre_calle') & fallas_df['id_nodo'].notna()]['id_nodo'].astype(int).tolist()
+# Cargar el archivo de iluminación y extraer IDs de calles iluminadas
+with open('./static/Archivos_exportados/iluminacion.geojson', 'r') as f:
+    iluminacion_data = json.load(f)
 
-# Filtrar IDs para las demás amenazas
-fallas_infra_seguridad = fallas_df[(fallas_df['amenaza'] == 'seguridad') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
-fallas_infra_trafico = fallas_df[(fallas_df['amenaza'] == 'trafico') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
-fallas_infra_precipitacion = fallas_df[(fallas_df['amenaza'] == 'precipitacion_inundacion') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
+calles_iluminadas = [feature['properties']['geojson_id'] for feature in iluminacion_data['features'] if feature['properties']['lit'] == "yes"]
+
+# Cargar el archivo de estacionamientos y extraer IDs de nodos cercanos a estacionamientos de bicicletas
+with open('./static/Archivos_exportados/estacionamientos.geojson', 'r') as f:
+    estacionamientos_data = json.load(f)
+
+nodos_estacionamiento = [int(feature['properties']['geojson_id'].split('/')[-1]) for feature in estacionamientos_data['features'] if feature['properties']['amenity'] == "bicycle_parking"]
+
+# Abrir el archivo de amenazas geolocalizadas con codificación UTF-8
+with open('./static/Fallas/amenazas_geolocalizadas.geojson', 'r', encoding='utf-8') as f:
+    amenazas_geo = json.load(f)
+
+
+# Filtrar los IDs de infraestructuras afectadas por tipo de geometría
+infraestructuras_amenazadas_lineas = [
+    feature['properties']['id'] 
+    for feature in amenazas_geo['features'] 
+    if feature['properties']['sucede_falla'] and feature['geometry']['type'] == 'LineString'
+]
+nodos_amenazados_puntos = [
+    feature['properties']['id']
+    for feature in amenazas_geo['features']
+    if feature['properties']['sucede_falla'] and feature['geometry']['type'] == 'Point'
+]
+
+# Construir diccionarios de tipos de amenaza y multiplicadores
+tipos_amenazas = {feature['properties']['id']: feature['properties']['amenaza'] for feature in amenazas_geo['features']}
+multiplicadores_amenazas = {
+    'cierre_calle': 3,
+    'seguridad': 2,
+    'trafico': 1.5,
+    'precipitacion_inundacion': 2.5
+}
 
 print(f"Calculando ruta desde el nodo {source_id} hasta el nodo {target_id}")
 
-# Construir condiciones condicionales para exclusión de cierres de calle
-infra_cierre_cond = f"i.id NOT IN ({', '.join(map(str, fallas_infra_cierre))})" if fallas_infra_cierre else "TRUE"
-nodos_cierre_cond = f"i.source NOT IN ({', '.join(map(str, fallas_nodos_cierre))}) AND i.target NOT IN ({', '.join(map(str, fallas_nodos_cierre))})" if fallas_nodos_cierre else "TRUE"
+# Configurar condiciones para excluir las infraestructuras amenazadas y nodos afectados
+infra_amenazada_cond = f"i.id NOT IN ({', '.join(map(str, infraestructuras_amenazadas_lineas))})" if infraestructuras_amenazadas_lineas else "TRUE"
+nodos_amenazados_cond = f"i.source NOT IN ({', '.join(map(str, nodos_amenazados_puntos))}) AND i.target NOT IN ({', '.join(map(str, nodos_amenazados_puntos))})" if nodos_amenazados_puntos else "TRUE"
 
-# Ajustar costos solo si existen IDs en las listas correspondientes
+# Ajustar costos de acuerdo a cada tipo de amenaza, ciclovías, iluminación y cercanía a estacionamientos
 adjusted_cost_conditions = []
+fallas_infra_seguridad = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'seguridad']
+fallas_infra_trafico = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'trafico']
+fallas_infra_precipitacion = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'precipitacion_inundacion']
+
 if fallas_infra_seguridad:
     adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_seguridad))}) THEN i.cost * 1.5")
 if fallas_infra_trafico:
@@ -54,10 +87,22 @@ if fallas_infra_trafico:
 if fallas_infra_precipitacion:
     adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_precipitacion))}) THEN i.cost * 1.1")
 
-# Crear la consulta de CASE para adjusted_cost
-adjusted_cost_case = "CASE " + " ".join(adjusted_cost_conditions) + " ELSE i.cost END AS adjusted_cost"
+# Reducir el costo para ciclovías, iluminación y cercanía a estacionamientos
+adjusted_cost_case = """
+    CASE 
+        WHEN i.is_ciclovia THEN i.cost * 0.5
+        WHEN i.id IN ({iluminadas}) THEN i.cost * 0.7
+        WHEN i.source IN ({nodos_est}) OR i.target IN ({nodos_est}) THEN i.cost * 0.8
+        {amenaza_conditions}
+        ELSE i.cost 
+    END AS adjusted_cost
+""".format(
+    iluminadas=", ".join(map(str, calles_iluminadas)),
+    nodos_est=", ".join(map(str, nodos_estacionamiento)),
+    amenaza_conditions=" ".join(adjusted_cost_conditions)
+)
 
-# Crear una vista temporal ajustada que tenga en cuenta amenazas activas y metadatos
+# Crear una vista temporal con los costos ajustados y excluyendo infraestructuras y nodos amenazados
 cur.execute(f"""
     CREATE OR REPLACE VIEW proyectoalgoritmos.infraestructura_ajustada AS
     SELECT 
@@ -69,18 +114,10 @@ cur.execute(f"""
         i.geometry
     FROM 
         proyectoalgoritmos.infraestructura AS i
-    LEFT JOIN proyectoalgoritmos.velocidades_maximas AS v 
-        ON i.id = v.geojson_id::BIGINT
-    LEFT JOIN proyectoalgoritmos.estacionamientos AS e 
-        ON i.id = REGEXP_REPLACE(e.geojson_id, '^node/', '')::BIGINT
-    LEFT JOIN proyectoalgoritmos.iluminacion AS il 
-        ON i.id = il.geojson_id
-    LEFT JOIN proyectoalgoritmos.inundaciones AS inf 
-        ON ST_Intersects(i.geometry, inf.geometry)
-    WHERE {infra_cierre_cond} AND {nodos_cierre_cond};
+    WHERE {infra_amenazada_cond} AND {nodos_amenazados_cond};
 """)
 
-# Ejecutar `pgr_dijkstra` utilizando la vista con costos ajustados
+# Ejecutar pgr_dijkstra utilizando la vista con los costos ajustados
 cur.execute("""
     SELECT 
         seq, node, edge, cost, 
@@ -99,12 +136,16 @@ cur.execute("""
 ruta = cur.fetchall()
 print("Ruta encontrada con", len(ruta), "elementos.")
 
+# Calcular la distancia total de la ruta en grados y convertir a kilómetros
+distancia_total_grados = sum(row[3] for row in ruta)
+distancia_total_km = distancia_total_grados * 111.32  # Conversión de grados a kilómetros
+print("Distancia total de la ruta en kilómetros:", distancia_total_km)
+
 # Preparar los datos de la ruta para el cálculo de resiliencia
 ruta_data = [(row[2], row[3]) for row in ruta]  # [(edge_id, cost)]
 
 # Calcular resiliencia usando la función importada
-fallas_infra = fallas_infra_seguridad + fallas_infra_trafico + fallas_infra_precipitacion
-resiliencia = calcular_resiliencia(ruta_data, fallas_infra)
+resiliencia = calcular_resiliencia(ruta_data, infraestructuras_amenazadas_lineas + nodos_amenazados_puntos, tipos_amenazas, multiplicadores_amenazas)
 
 # Extraer métricas de resiliencia
 resiliencia_costo = resiliencia["resiliencia_costo"]
@@ -113,19 +154,9 @@ elementos_afectados = resiliencia["elementos_afectados"]
 
 # Crear la estructura de GeoJSON
 features = []
-
-if len(ruta) == 0:
-    print("No existe una ruta que conecte los nodos seleccionados.")
-    cur.close()
-    conn.close()
-    with open("./static/dijkstra_complete.geojson", "w") as f:
-        f.write('{"type": "FeatureCollection", "features": []}')
-    sys.exit(0)
-
-# Continuar si se encontró la ruta
 for row in ruta:
     geometry = row[4]
-    afectado = row[2] in fallas_infra
+    afectado = row[2] in (infraestructuras_amenazadas_lineas + nodos_amenazados_puntos)
     geojson_feature = {
         "type": "Feature",
         "properties": {
@@ -141,7 +172,6 @@ for row in ruta:
     }
     features.append(geojson_feature)
 
-# Exportar la ruta con los detalles de resiliencia
 geojson_result = {
     "type": "FeatureCollection",
     "features": features
@@ -155,6 +185,13 @@ with open(geojson_path, "w", encoding="utf-8") as geojson_file:
     json.dump(geojson_result, geojson_file, ensure_ascii=False, indent=4)
 print(f"Resultado exportado como '{geojson_path}'")
 
+#Eliminar txt si existe
+if os.path.exists("./static/dijkstra_complete_resiliencia.txt"):
+    os.remove("./static/dijkstra_complete_resiliencia.txt")
+    print("Archivo eliminado")
+else:
+    print("No existe el archivo")
+
 # Exportar las métricas de resiliencia a un archivo de texto
 resiliencia_path = "./static/dijkstra_complete_resiliencia.txt"
 if os.path.exists(resiliencia_path):
@@ -164,6 +201,7 @@ with open(resiliencia_path, "w", encoding="utf-8") as txt_file:
     txt_file.write("Métricas de resiliencia de la ruta frente a amenazas:\n")
     txt_file.write(f" - Resiliencia en costo (relativa): {resiliencia_costo:.2f}\n")
     txt_file.write(f" - Resiliencia en impacto (elementos no afectados): {resiliencia_impacto:.2f}\n")
+    txt_file.write(f" - Distancia total de la ruta: {distancia_total_km:.2f} km\n")
 
 print(f"Métricas de resiliencia exportadas como '{resiliencia_path}'")
 

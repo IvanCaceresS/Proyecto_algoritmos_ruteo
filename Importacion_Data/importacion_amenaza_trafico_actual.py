@@ -18,6 +18,10 @@ conn = psycopg2.connect(
 )
 cur = conn.cursor()
 
+#Verificicar si archivo existe
+if not os.path.exists('../Amenazas/Archivos_descargados/trafico_actual.json'):
+    print("No se encontró el archivo 'trafico_actual.json'.")
+    exit()
 with open('../Amenazas/Archivos_descargados/trafico_actual.json', 'r', encoding='utf-8') as f:
     trafico_data = json.load(f)
 

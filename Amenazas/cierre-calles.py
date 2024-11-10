@@ -4,6 +4,7 @@ import pandas as pd
 import time
 from dotenv import load_dotenv
 import os
+import sys
 
 # Cargar variables de entorno
 load_dotenv(dotenv_path=r'../.env')
@@ -57,7 +58,7 @@ def obtener_cierre_y_trafico(point, api_key, cache):
         time.sleep(60)  # Pausa de 1 minuto
         response = requests.get(url, params=params)
 
-    # Manejar error 403 indicando al usuario que verifique el acceso a la API
+    # Manejar error 403 indicando al usuario que verifique el acceso a la API Y terminar correctamente el programa
     if response.status_code == 403:
         print(f"Acceso denegado para la coordenada {point['coordenada']}. Verifica tu API_KEY y límite de peticiones.")
         return None
@@ -93,7 +94,9 @@ def procesar_cierres_calles_y_trafico(geojson_path, api_key, limit=100):
         resultado = obtener_cierre_y_trafico(point, api_key, cache)
         if resultado:
             resultados.append(resultado)
-        
+        else:
+            sys.exit(0)  # Terminar el programa si hay un error
+
         # Pausa de 0.5 segundos entre cada solicitud
         #time.sleep(0.5)
 

@@ -7,6 +7,7 @@ import pandas as pd
 import sys
 from calculo_resiliencia import calcular_resiliencia
 
+# Cargar las variables de entorno
 load_dotenv(dotenv_path='../.env')
 
 # Configurar la ruta de CPLEX en la variable de entorno
@@ -27,25 +28,56 @@ target_id = int(sys.argv[2])
 # Cargar los datos de amenazas activas
 fallas_df = pd.read_csv('./static/Fallas/amenazas_ocurriendo.csv')
 
-# Filtrar IDs para cada tipo de amenaza
+# Crear diccionarios de tipos de amenaza y multiplicadores
+tipos_amenazas = dict(zip(fallas_df['id_infraestructura'].dropna().astype(int), fallas_df['amenaza']))
+multiplicadores_amenazas = {
+    'cierre_calle': 3,
+    'seguridad': 2,
+    'trafico': 1.5,
+    'precipitacion_inundacion': 2.5
+}
+
+# Filtrar IDs de infraestructuras afectadas por tipo de amenaza
 fallas_infra_cierre = fallas_df[(fallas_df['amenaza'] == 'cierre_calle') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
 fallas_infra_seguridad = fallas_df[(fallas_df['amenaza'] == 'seguridad') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
 fallas_infra_trafico = fallas_df[(fallas_df['amenaza'] == 'trafico') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
 fallas_infra_precipitacion = fallas_df[(fallas_df['amenaza'] == 'precipitacion_inundacion') & fallas_df['id_infraestructura'].notna()]['id_infraestructura'].astype(int).tolist()
 
-# Crear condiciones ajustadas para cada amenaza si las listas no están vacías
-conditions = []
+# Cargar calles iluminadas
+with open('./static/Archivos_exportados/iluminacion.geojson', 'r') as f:
+    iluminacion_data = json.load(f)
+calles_iluminadas = [feature['properties']['geojson_id'] for feature in iluminacion_data['features'] if feature['properties']['lit'] == "yes"]
+
+# Cargar estacionamientos de bicicletas
+with open('./static/Archivos_exportados/estacionamientos.geojson', 'r') as f:
+    estacionamientos_data = json.load(f)
+nodos_estacionamiento = [int(feature['properties']['geojson_id'].split('/')[-1]) for feature in estacionamientos_data['features'] if feature['properties']['amenity'] == "bicycle_parking"]
+
+# Crear condiciones para ajustar el costo de acuerdo a amenazas, ciclovías, iluminación y estacionamientos
+adjusted_cost_conditions = []
 if fallas_infra_seguridad:
-    conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_seguridad))}) THEN i.cost * 1.5")
+    adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_seguridad))}) THEN i.cost * 1.5")
 if fallas_infra_trafico:
-    conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_trafico))}) THEN i.cost * 1.2")
+    adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_trafico))}) THEN i.cost * 1.2")
 if fallas_infra_precipitacion:
-    conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_precipitacion))}) THEN i.cost * 1.1")
+    adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_precipitacion))}) THEN i.cost * 1.1")
 
-# Construir el CASE con condiciones o un valor predeterminado si están vacías
-adjusted_cost_case = "CASE " + " ".join(conditions) + " ELSE i.cost END AS adjusted_cost"
+# Crear la consulta de CASE para adjusted_cost con priorización y penalización
+adjusted_cost_case = """
+    CASE 
+        WHEN i.is_ciclovia THEN i.cost * 0.5
+        WHEN i.id IN ({iluminadas}) THEN i.cost * 0.7
+        WHEN i.source IN ({nodos_est}) OR i.target IN ({nodos_est}) THEN i.cost * 0.8
+        {amenaza_conditions}
+        ELSE i.cost 
+    END AS adjusted_cost
+""".format(
+    iluminadas=", ".join(map(str, calles_iluminadas)),
+    nodos_est=", ".join(map(str, nodos_estacionamiento)),
+    amenaza_conditions=" ".join(adjusted_cost_conditions)
+)
 
-# Condición para excluir calles cerradas, o "TRUE" si la lista está vacía
+# Condición para excluir calles cerradas
 infra_cierre_cond = f"i.id NOT IN ({', '.join(map(str, fallas_infra_cierre))})" if fallas_infra_cierre else "TRUE"
 
 # Consulta para obtener la infraestructura con los costos ajustados
@@ -54,14 +86,10 @@ cur.execute(f"""
            {adjusted_cost_case},
            i.is_ciclovia
     FROM proyectoalgoritmos.infraestructura AS i
-    LEFT JOIN proyectoalgoritmos.velocidades_maximas AS v ON i.id = v.geojson_id::BIGINT
-    LEFT JOIN proyectoalgoritmos.estacionamientos AS e ON i.id = REGEXP_REPLACE(e.geojson_id, '^node/', '')::BIGINT
-    LEFT JOIN proyectoalgoritmos.iluminacion AS il ON i.id = il.geojson_id
-    LEFT JOIN proyectoalgoritmos.inundaciones AS inf ON ST_Intersects(i.geometry, inf.geometry)
     WHERE {infra_cierre_cond};
 """)
 
-# Guardar los resultados de la consulta en un diccionario para la optimización
+# Guardar los resultados en un diccionario para la optimización
 edges = {}
 for row in cur.fetchall():
     edge_id, source, target, adjusted_cost, is_ciclovia = row
@@ -99,19 +127,28 @@ if solution:
     print("Solución encontrada.")
     route_edges = [e for e in edges if edge_vars[e].solution_value > 0.5]
 
-    # Preparar los datos de la ruta para el cálculo de resiliencia
-    ruta = [(edge_id, edges[edge_id]["adjusted_cost"]) for edge_id in route_edges]
+    # Calcular distancia total en kilómetros
+    distancia_total_grados = sum(edges[edge_id]["adjusted_cost"] for edge_id in route_edges)
+    distancia_total_km = distancia_total_grados * 111.32  # Conversión de grados a kilómetros
+    print("Distancia total de la ruta en kilómetros:", distancia_total_km)
 
-    # Calcular resiliencia usando la función importada
+    # Preparar datos para calcular la resiliencia
+    ruta = [(edge_id, edges[edge_id]["adjusted_cost"]) for edge_id in route_edges]
     fallas_infra = fallas_infra_seguridad + fallas_infra_trafico + fallas_infra_precipitacion
-    resiliencia = calcular_resiliencia(ruta, fallas_infra)
+
+    # Calcular resiliencia
+    resiliencia = calcular_resiliencia(ruta, fallas_infra, tipos_amenazas, multiplicadores_amenazas)
 
     # Extraer métricas de resiliencia
     resiliencia_costo = resiliencia["resiliencia_costo"]
     resiliencia_impacto = resiliencia["resiliencia_impacto"]
     elementos_afectados = resiliencia["elementos_afectados"]
 
-    # Exportar las métricas de resiliencia a un archivo de texto
+    #Eliminar txt si existe
+    if os.path.exists("./static/cplex_resiliencia.txt"):
+        os.remove("./static/cplex_resiliencia.txt")
+
+    # Exportar métricas de resiliencia a un archivo de texto
     resiliencia_path = "./static/cplex_resiliencia.txt"
     if os.path.exists(resiliencia_path):
         os.remove(resiliencia_path)
@@ -120,6 +157,7 @@ if solution:
         txt_file.write("Métricas de resiliencia de la ruta frente a amenazas:\n")
         txt_file.write(f" - Resiliencia en costo (relativa): {resiliencia_costo:.2f}\n")
         txt_file.write(f" - Resiliencia en impacto (elementos no afectados): {resiliencia_impacto:.2f}\n")
+        txt_file.write(f" - Distancia total de la ruta: {distancia_total_km:.2f} km\n")
 
     print(f"Métricas de resiliencia exportadas como '{resiliencia_path}'")
 

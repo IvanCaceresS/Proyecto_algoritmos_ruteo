@@ -1,31 +1,10 @@
 import os
-import shutil
 import subprocess
 import sys
 import json
 from flask import Flask, send_from_directory, render_template, request, jsonify
 
 app = Flask(__name__)
-
-EXPORTACION_DATA_SRC = "../Exportacion_Data/Archivos_exportados"
-EXPORTACION_DATA_DEST = "./static/Archivos_exportados"
-ALGORITMOS_DEST = ["./static/dijkstra.geojson","./static/cplex_route.geojson","./static/dijkstra_complete.geojson","./static/dijkstra_resiliencia.txt"]
-
-def preparar_archivos():
-    if os.path.exists(EXPORTACION_DATA_DEST):
-        shutil.rmtree(EXPORTACION_DATA_DEST)
-
-    shutil.copytree(EXPORTACION_DATA_SRC, EXPORTACION_DATA_DEST)
-    print(f"Carpeta {EXPORTACION_DATA_DEST} copiada correctamente.")
-
-    for archivo in ALGORITMOS_DEST:
-        if os.path.exists(archivo):
-            os.remove(archivo)
-
-
-    
-
-    print(f"Archivos {ALGORITMOS_DEST} eliminados correctamente.")
 
 @app.route('/')
 def index():
@@ -173,6 +152,5 @@ def calculate_aco_route():
 
 
 if __name__ == '__main__':
-    preparar_archivos()
 
     app.run(port=8080)

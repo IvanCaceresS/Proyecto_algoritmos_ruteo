@@ -1,308 +1,331 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Algoritmos de Ruteo</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
-      crossorigin=""
-    />
-    <script
-      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
-      crossorigin=""
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="/static/style.css" />
-  </head>
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE-edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Algoritmos de Ruteo</title>
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+  integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+  crossorigin=""
+/>
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+  integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+  crossorigin=""
+></script>
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.css"
+/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.awesome-markers/2.0.4/leaflet.awesome-markers.js"></script>
+<link rel="stylesheet" href="/static/style.css" />
+</head>
 
-  <body>
-    <div id="titulo">
-      <h1>Rutas más eficientes y seguras en ciclovías en Santiago</h1>
+<body>
+<div id="titulo">
+  <h1>Rutas más eficientes y seguras en ciclovías en Santiago</h1>
+</div>
+
+<div id="map"></div>
+
+<div id="toggle-simbologia-btn">Alternar Simbología</div>
+
+<div id="simbologia" style="display: none">
+  <h2>Simbología (haz clic para mostrar/ocultar)</h2>
+  <!-- Titulo de categoria infraestructura-->
+  <div class="simbologia-item">
+    <span>------------------------------------INFRAESTRUCTURA------------------------------------</span>
+  </div>
+  <!-- Infraestructura -->
+  <div class="simbologia-item" id="toggle-infraestructura">
+    <div class="linea-general" style="background-color: #505050"></div>
+    <span>Enlaces</span>
+  </div>
+  <!-- Ciclovías -->
+  <div class="simbologia-item" id="toggle-ciclovias">
+    <div class="linea-general" style="background-color: #A90DBA"></div>
+    <span>Ciclovías</span>
+  </div>
+  <!-- Nodos de Infraestructura -->
+  <div class="simbologia-item" id="toggle-infraestructura-nodos">
+    <div class="nodo-circulo"></div>
+    <span>Nodos</span>
+  </div>
+  <!-- Titulo de categorias Rutas Generadas-->
+  <div class="simbologia-item">
+    <span>------------------------------------RUTAS GENERADAS------------------------------------</span>
+  </div>
+  <!--Ruta dijkstra calculada-->
+  <div class="simbologia-item" id="toggle-dijkstra">
+    <div
+      class="linea-general"
+      style="
+        width: 20px;
+        background-color: #FF4500;
+        border-radius: 3px;
+        margin-right: 10px;
+      "
+    ></div>
+    <span id="ruta-dijkstra">Ruta (Dijkstra)</span>
+  </div>
+  <!--Ruta CPLEX calculada-->
+  <div class="simbologia-item" id="toggle-cplex">
+    <div
+      class="linea-general"
+      style="
+        width: 20px;
+        background-color: #0000FF;
+        border-radius: 3px;
+        margin-right: 10px;
+      "
+    ></div>
+    <span id="ruta-cplex">Ruta (Cplex)</span>
+  </div>
+  <!-- Ruta Dijkstra Completa -->
+  <div class="simbologia-item" id="toggle-dijkstra_complete">
+    <div
+      class="linea-general"
+      style="width: 20px; background-color: #32CD32; border-radius: 3px; margin-right: 10px;">
     </div>
+    <span id="ruta-dijkstra-completa">Ruta (Dijkstra Completa)</span>
+  </div>
 
-    <div id="map"></div>
-
-    <div id="toggle-simbologia-btn">Alternar Simbología</div>
-
-    <div id="simbologia" style="display: none">
-      <h2>Simbología (haz clic para mostrar/ocultar)</h2>
-      <!-- Infraestructura -->
-      <div class="simbologia-item" id="toggle-infraestructura">
-        <div class="linea-general" style="background-color: #505050"></div>
-        <span>Enlaces</span>
-      </div>
-      <!-- Ciclovías -->
-      <div class="simbologia-item" id="toggle-ciclovias">
-        <div class="linea-general" style="background-color: #A90DBA"></div>
-        <span>Ciclovías</span>
-      </div>
-      <!-- Nodos de Infraestructura -->
-      <div class="simbologia-item" id="toggle-infraestructura-nodos">
-        <div class="nodo-circulo"></div>
-        <span>Nodos</span>
-      </div>
-      <!--Ruta dijkstra calculada-->
-      <div class="simbologia-item" id="toggle-dijkstra">
-        <div
-          class="linea-general"
-          style="
-            width: 20px;
-            background-color: #FF4500;
-            border-radius: 3px;
-            margin-right: 10px;
-          "
-        ></div>
-        <span id="ruta-dijkstra">Ruta (Dijkstra)</span>
-      </div>
-      <!--Ruta CPLEX calculada-->
-      <div class="simbologia-item" id="toggle-cplex">
-        <div
-          class="linea-general"
-          style="
-            width: 20px;
-            background-color: #0000FF;
-            border-radius: 3px;
-            margin-right: 10px;
-          "
-        ></div>
-        <span id="ruta-cplex">Ruta (Cplex)</span>
-      </div>
-      <!-- Ruta Dijkstra Completa -->
-      <div class="simbologia-item" id="toggle-dijkstra_complete">
-        <div
-          class="linea-general"
-          style="width: 20px; background-color: #32CD32; border-radius: 3px; margin-right: 10px;">
-        </div>
-        <span id="ruta-dijkstra-completa">Ruta (Dijkstra Completa)</span>
-      </div>
-
-      <!-- Ruta ACO -->
-      <div class="simbologia-item" id="toggle-aco">
-        <div
-          class="linea-general"
-          style="width: 20px; background-color: #FFA500; border-radius: 3px; margin-right: 10px;">
-        </div>
-        <span id="ruta-aco">Ruta (ACO)</span>
-      </div>
-
-    <!-- Amenazas por tipo -->
-    <div class="simbologia-item" id="toggle-cierre-calle-ocurriendo">
-      <div class="linea-general" style="width: 20px; height: 20px; background-color: #FF4500; border-radius: 3px; margin-right: 10px;"></div>
-      <span>Cierre de Calle</span>
+  <!-- Ruta ACO -->
+  <div class="simbologia-item" id="toggle-aco">
+    <div
+      class="linea-general"
+      style="width: 20px; background-color: #FFA500; border-radius: 3px; margin-right: 10px;">
     </div>
-    <div class="simbologia-item" id="toggle-precipitacion-inundacion-ocurriendo">
-      <div class="linea-general" style="width: 20px; height: 20px; background-color: #1E90FF; border-radius: 3px; margin-right: 10px;"></div>
-      <span>Precipitación/Inundación</span>
-    </div>
-    <div class="simbologia-item" id="toggle-seguridad-ocurriendo">
-      <div class="linea-general" style="width: 20px; height: 20px; background-color: #32CD32; border-radius: 3px; margin-right: 10px;"></div>
-      <span>Seguridad</span>
-    </div>
-    <div class="simbologia-item" id="toggle-trafico-ocurriendo">
-      <div class="linea-general" style="width: 20px; height: 20px; background-color: #FFD700; border-radius: 3px; margin-right: 10px;"></div>
-      <span>Tráfico</span>
-    </div>
+    <span id="ruta-aco">Ruta (ACO)</span>
+  </div>
+
+  <!-- Mejor ruta -->
+  <span id="mejor-ruta">Mejor Ruta</span>
 
 
-      <!-- Iluminación -->
-      <div class="simbologia-item" id="toggle-iluminacion">
-        <div class="linea-general" style="background-color: yellow"></div>
-        <span>Iluminación</span>
-      </div>
-      <!-- Estacionamientos para bicicletas -->
-      <div class="simbologia-item" id="toggle-estacionamientos">
-        <svg
-          class="estacionamiento-icono"
-          width="24"
-          height="24"
-          viewBox="0 0 64 64"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <!-- Ícono detallado de bicicleta -->
-          <g
-            fill="none"
-            stroke="green"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <circle cx="18" cy="46" r="12" />
-            <circle cx="46" cy="46" r="12" />
-            <path d="M18 46h28l-8-16h-12l4 8h-4" />
-            <path d="M36 30l-6-10h-8" />
-            <circle cx="26" cy="20" r="2" />
-          </g>
-        </svg>
-        <span>Estacionamientos para bicicletas</span>
-      </div>
-      <!-- Velocidades Máximas -->
-      <div class="simbologia-item" id="toggle-velocidades">
-        <span>Velocidades máximas:</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: gray"></div>
-            <span>Sin datos</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: blue"></div>
-            <span>40 km/h</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: red"></div>
-            <span>50 km/h</span>
-          </div>
-        </div>
-      </div>
-      <!--Inundaciones-->
-      <div class="simbologia-item" id="toggle-inundaciones">
-        <span>Riesgo de Inundaciones:</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: gray"
-            ></div>
-            <span>Sin datos</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #9ACD32"
-            ></div>
-            <span>Bajo</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: red"
-            ></div>
-            <span>Alto</span>
-          </div>
-        </div>
-      </div>
-      <!-- Simbología Precipitación -->
-      <div class="simbologia-item" id="toggle-precipitacion">
-        <span>Precipitación (mm):</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: gray"
-            ></div>
-            <span>Sin datos</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #add8e6"
-            ></div>
-            <span>0 mm</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #00008b"
-            ></div>
-            <span>10 mm</span>
-          </div>
-        </div>
-      </div>
-      <!-- Seguridad -->
-      <div class="simbologia-item" id="toggle-seguridad">
-        <span>Seguridad:</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: gray"
-            ></div>
-            <span>Sin datos</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #ff0000"
-            ></div>
-            <span>Baja</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #ff8c00"
-            ></div>
-            <span>Media</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #ffd700"
-            ></div>
-            <span>Alta</span>
-          </div>
-          <div class="velocidad-item">
-            <div
-              class="color-box poligono-irregular"
-              style="background-color: #00ff00"
-            ></div>
-            <span>Muy Alta</span>
-          </div>
-        </div>
-      </div>
-      <!-- Cierre de calles -->
-      <div class="simbologia-item" id="toggle-cierres">
-        <span>Cierre de Calles:</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: gray"></div>
-            <span>Sin datos</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #00ff00"></div>
-            <span>Abierta</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #ff0000"></div>
-            <span>Cerrada</span>
-          </div>
-        </div>
-      </div>
-      <!-- Tráfico Actual -->
-      <div class="simbologia-item" id="toggle-trafico">
-        <span>Tráfico Actual:</span>
-        <div class="velocidades-container">
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #ff0000"></div>
-            <span>Muy alta congestión (0-20)km/h</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #ffa500"></div>
-            <span>Alta congestión (20-30)km/h</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #ffff00"></div>
-            <span>Tráfico moderado (30-40)km/h</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #00ff00"></div>
-            <span>Sin congestión (&gt;40)km/h</span>
-          </div>
-          <div class="velocidad-item">
-            <div class="linea-general" style="background-color: #505050"></div>
-            <span>Sin datos</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>
+<!-- Titulo de categoria amenazas aleatorizadas -->
+<div class="simbologia-item">
+  <span>------------------------------------AMENAZAS ALEATORIZADAS-----------------------</span>
+</div>
+<!-- Amenazas por tipo -->
+<div class="simbologia-item" id="toggle-cierre-calle-ocurriendo">
+  <div class="linea-general" style="width: 20px; height: 20px; background-color: #FF4500; border-radius: 3px; margin-right: 10px;"></div>
+  <span>Cierre de Calle</span>
+</div>
+<div class="simbologia-item" id="toggle-precipitacion-inundacion-ocurriendo">
+  <div class="linea-general" style="width: 20px; height: 20px; background-color: #1E90FF; border-radius: 3px; margin-right: 10px;"></div>
+  <span>Precipitación/Inundación</span>
+</div>
+<div class="simbologia-item" id="toggle-seguridad-ocurriendo">
+  <div class="linea-general" style="width: 20px; height: 20px; background-color: #32CD32; border-radius: 3px; margin-right: 10px;"></div>
+  <span>Seguridad</span>
+</div>
+<div class="simbologia-item" id="toggle-trafico-ocurriendo">
+  <div class="linea-general" style="width: 20px; height: 20px; background-color: #FFD700; border-radius: 3px; margin-right: 10px;"></div>
+  <span>Tráfico</span>
+</div>
 
-  <script src="./static/script.js"></script>
+<!-- Titulo de categoria Metadata -->
+<div class="simbologia-item">
+  <span>------------------------------------METADATA---------------------------------------------------</span>
+</div>
+<!-- Iluminación -->
+<div class="simbologia-item" id="toggle-iluminacion">
+  <div class="linea-general" style="background-color: yellow"></div>
+  <span>Iluminación</span>
+</div>
+<!-- Estacionamientos para bicicletas -->
+<div class="simbologia-item" id="toggle-estacionamientos">
+  <svg
+    class="estacionamiento-icono"
+    width="24"
+    height="24"
+    viewBox="0 0 64 64"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <!-- Ícono detallado de bicicleta -->
+    <g
+      fill="none"
+      stroke="green"
+      stroke-width="4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <circle cx="18" cy="46" r="12" />
+      <circle cx="46" cy="46" r="12" />
+      <path d="M18 46h28l-8-16h-12l4 8h-4" />
+      <path d="M36 30l-6-10h-8" />
+      <circle cx="26" cy="20" r="2" />
+    </g>
+  </svg>
+  <span>Estacionamientos para bicicletas</span>
+</div>
+<!-- Velocidades Máximas -->
+<div class="simbologia-item" id="toggle-velocidades">
+  <span>Velocidades máximas:</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: gray"></div>
+      <span>Sin datos</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: blue"></div>
+      <span>40 km/h</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: red"></div>
+      <span>50 km/h</span>
+    </div>
+  </div>
+</div>
+<!--Inundaciones-->
+<div class="simbologia-item" id="toggle-inundaciones">
+  <span>Riesgo de Inundaciones:</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: gray"
+      ></div>
+      <span>Sin datos</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #9ACD32"
+      ></div>
+      <span>Bajo</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: red"
+      ></div>
+      <span>Alto</span>
+    </div>
+  </div>
+</div>
+<!--Titulo categoria Amenazas -->
+<div class="simbologia-item">
+  <span>------------------------------------AMENAZAS--------------------------------------------------</span>
+</div>
+<!-- Simbología Precipitación -->
+<div class="simbologia-item" id="toggle-precipitacion">
+  <span>Precipitación (mm):</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: gray"
+      ></div>
+      <span>Sin datos</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #add8e6"
+      ></div>
+      <span>0 mm</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #00008b"
+      ></div>
+      <span>10 mm</span>
+    </div>
+  </div>
+</div>
+<!-- Seguridad -->
+<div class="simbologia-item" id="toggle-seguridad">
+  <span>Seguridad:</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: gray"
+      ></div>
+      <span>Sin datos</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #ff0000"
+      ></div>
+      <span>Baja</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #ff8c00"
+      ></div>
+      <span>Media</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #ffd700"
+      ></div>
+      <span>Alta</span>
+    </div>
+    <div class="velocidad-item">
+      <div
+        class="color-box poligono-irregular"
+        style="background-color: #00ff00"
+      ></div>
+      <span>Muy Alta</span>
+    </div>
+  </div>
+</div>
+<!-- Cierre de calles -->
+<div class="simbologia-item" id="toggle-cierres">
+  <span>Cierre de Calles:</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: gray"></div>
+      <span>Sin datos</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #00ff00"></div>
+      <span>Abierta</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #ff0000"></div>
+      <span>Cerrada</span>
+    </div>
+  </div>
+</div>
+<!-- Tráfico Actual -->
+<div class="simbologia-item" id="toggle-trafico">
+  <span>Tráfico Actual:</span>
+  <div class="velocidades-container">
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #ff0000"></div>
+      <span>Muy alta congestión (0-20)km/h</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #ffa500"></div>
+      <span>Alta congestión (20-30)km/h</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #ffff00"></div>
+      <span>Tráfico moderado (30-40)km/h</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #00ff00"></div>
+      <span>Sin congestión (&gt;40)km/h</span>
+    </div>
+    <div class="velocidad-item">
+      <div class="linea-general" style="background-color: #505050"></div>
+      <span>Sin datos</span>
+    </div>
+  </div>
+</div>
+</div>
+</body>
+
+<script src="./static/script.js"></script>
 </html>

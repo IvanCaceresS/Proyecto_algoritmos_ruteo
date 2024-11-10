@@ -29,7 +29,20 @@ target_id = int(sys.argv[2])
 
 # Cargar los datos de amenazas activas
 fallas_df = pd.read_csv('./static/Fallas/amenazas_ocurriendo.csv')
-fallas_infra = fallas_df['id_infraestructura'].dropna().astype(int).tolist()
+
+# Crear diccionario de tipos de amenazas por infraestructura
+tipos_amenazas = dict(zip(fallas_df['id_infraestructura'].dropna().astype(int), fallas_df['amenaza']))
+
+# Definir los multiplicadores para cada tipo de amenaza
+multiplicadores_amenazas = {
+    'cierre_calle': 3,
+    'seguridad': 2,
+    'trafico': 1.5,
+    'precipitacion_inundacion': 2.5
+}
+
+# Filtrar solo los IDs de infraestructuras afectadas
+fallas_infra = list(tipos_amenazas.keys())
 
 print(f"Calculando ruta desde el nodo {source_id} hasta el nodo {target_id}")
 
@@ -50,11 +63,16 @@ cur.execute("""
 ruta = cur.fetchall()
 print("Ruta encontrada con", len(ruta), "elementos.")
 
+# Calcular la distancia total de la ruta en grados y convertir a kilómetros
+distancia_total_grados = sum(row[3] for row in ruta)
+distancia_total_km = distancia_total_grados * 111.32  # Conversión de grados a kilómetros
+print("Distancia total de la ruta en kilómetros:", distancia_total_km)
+
 # Preparar los datos de la ruta para el cálculo de resiliencia
 ruta_data = [(row[2], row[3]) for row in ruta]  # [(edge_id, cost)]
 
 # Calcular resiliencia usando la función importada
-resiliencia = calcular_resiliencia(ruta_data, fallas_infra)
+resiliencia = calcular_resiliencia(ruta_data, fallas_infra, tipos_amenazas, multiplicadores_amenazas)
 
 # Extraer métricas de resiliencia
 resiliencia_costo = resiliencia["resiliencia_costo"]
@@ -81,7 +99,6 @@ for row in ruta:
     }
     features.append(geojson_feature)
 
-# Exportar la ruta con los detalles de resiliencia
 geojson_result = {
     "type": "FeatureCollection",
     "features": features
@@ -92,6 +109,10 @@ with open(geojson_path, "w", encoding="utf-8") as geojson_file:
     json.dump(geojson_result, geojson_file, ensure_ascii=False, indent=4)
 print(f"Resultado exportado como '{geojson_path}'")
 
+#Eliminar txt si existe
+if os.path.exists("./static/dijkstra_resiliencia.txt"):
+    os.remove("./static/dijkstra_resiliencia.txt")
+
 # Exportar las métricas de resiliencia a un archivo de texto
 resiliencia_path = "./static/dijkstra_resiliencia.txt"
 if os.path.exists(resiliencia_path):
@@ -101,6 +122,7 @@ with open(resiliencia_path, "w", encoding="utf-8") as txt_file:
     txt_file.write("Métricas de resiliencia de la ruta frente a amenazas:\n")
     txt_file.write(f" - Resiliencia en costo (relativa): {resiliencia_costo:.2f}\n")
     txt_file.write(f" - Resiliencia en impacto (elementos no afectados): {resiliencia_impacto:.2f}\n")
+    txt_file.write(f" - Distancia total de la ruta: {distancia_total_km:.2f} km\n")
 
 print(f"Métricas de resiliencia exportadas como '{resiliencia_path}'")
 

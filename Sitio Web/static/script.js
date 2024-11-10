@@ -241,7 +241,7 @@ function dijkstra() {
               tiempoTotal +
               " ms<br>" +
               resilienciaInfo;
-
+              bestRoute();
             // Cargar la ruta en el mapa
             loadRouteOnMap(data.geojson, "dijkstra");
           })
@@ -253,7 +253,7 @@ function dijkstra() {
       } else {
         alert("No se pudo calcular la ruta.");
         document.getElementById("ruta-dijkstra").textContent =
-          "Ruta (Dijkstra) - No pudo encontrar una solución.";
+          "Ruta (Dijkstra) - No pudo encontrar una solución segura y óptima.";
       }
     })
     .catch((error) =>
@@ -291,7 +291,7 @@ function cplex() {
               tiempoTotal +
               " ms<br>" +
               resilienciaInfo;
-
+            bestRoute();
             // Cargar la ruta en el mapa
             loadRouteOnMap(data.geojson, "cplex");
           })
@@ -341,7 +341,7 @@ function dijkstraComplete() {
               tiempoTotal +
               " ms<br>" +
               resilienciaInfo;
-
+            bestRoute();
             // Cargar la ruta en el mapa
             loadRouteOnMap(data.geojson, "dijkstra_complete");
           })
@@ -389,7 +389,7 @@ function acoRoute() {
               tiempoTotal +
               " ms<br>" +
               resilienciaInfo;
-
+            bestRoute();
             // Cargar la ruta en el mapa
             loadRouteOnMap(data.geojson, "aco");
           })
@@ -407,11 +407,67 @@ function acoRoute() {
     .catch((error) => {
       console.error("Error al calcular la ruta ACO:", error);
       document.getElementById("ruta-aco").textContent =
-        "Ruta (ACO) - Error en el cálculo.";
+        "Ruta (ACO) - No pudo encontrar una solución segura y óptima.";
     });
 }
 
+async function fetchMetrics(filePath) {
+  try {
+    const response = await fetch(filePath);
+    
+    if (!response.ok) throw new Error("File not found");
 
+    const text = await response.text();
+    
+    // Extraer valores de resiliencia y distancia del contenido del archivo
+    const resilienciaCosto = parseFloat(text.match(/Resiliencia en costo \(relativa\): ([\d.]+)/)[1]);
+    const resilienciaImpacto = parseFloat(text.match(/Resiliencia en impacto \(elementos no afectados\): ([\d.]+)/)[1]);
+    const distancia = parseFloat(text.match(/Distancia total de la ruta: ([\d.]+) km/)[1]);
+
+    // Ignorar rutas con distancia 0.00 km
+    if (distancia === 0) return null;
+
+    return { filePath, resilienciaCosto, resilienciaImpacto, distancia };
+  } catch (error) {
+    console.error(`Error reading file ${filePath}: ${error.message}`);
+    return null; // Ignorar archivos que no existen o con datos no válidos
+  }
+}
+
+async function bestRoute() {
+  const files = [
+    './static/aco_resiliencia.txt',
+    './static/cplex_resiliencia.txt',
+    './static/dijkstra_resiliencia.txt',
+    './static/dijkstra_complete_resiliencia.txt'
+  ];
+  
+  // Leer todos los archivos y filtrar los resultados válidos
+  const metrics = (await Promise.all(files.map(fetchMetrics))).filter(Boolean);
+  
+  if (metrics.length === 0) {
+    document.getElementById("mejor-ruta").innerText = "No se encontró ninguna ruta válida.";
+    return;
+  }
+
+  // Determinar la mejor ruta según los criterios de resiliencia y distancia
+  const best = metrics.reduce((bestRoute, current) => {
+    if (!bestRoute) return current;
+
+    // Comparar resiliencia en costo, luego resiliencia en impacto, luego distancia
+    if (
+      current.resilienciaCosto > bestRoute.resilienciaCosto ||
+      (current.resilienciaCosto === bestRoute.resilienciaCosto && current.resilienciaImpacto > bestRoute.resilienciaImpacto) ||
+      (current.resilienciaCosto === bestRoute.resilienciaCosto && current.resilienciaImpacto === bestRoute.resilienciaImpacto && current.distancia < bestRoute.distancia)
+    ) {
+      return current;
+    }
+    return bestRoute;
+  }, null);
+  
+  // Mostrar el resultado en la página
+  document.getElementById("mejor-ruta").innerText = `Mejor Ruta: ${best.filePath.replace('./static/', '').replace('_resiliencia.txt', '')} con resiliencia en costo: ${best.resilienciaCosto.toFixed(2)}, resiliencia en impacto: ${best.resilienciaImpacto.toFixed(2)}, y distancia: ${best.distancia.toFixed(2)} km.`;
+}
 // Verificar si la geolocalización está disponible y establecer el nodo inicial automáticamente si es posible
 if (navigator.geolocation) {
   navigator.geolocation.getCurrentPosition(handleGeolocation, function (error) {
