@@ -11,7 +11,7 @@ python -m venv virtual_env
 virtual_env\Scripts\activate
 python -m venv virtual_env
 virtual_env\Scripts\activate
-cd "C:\Program Files\IBM\ILOG\CPLEX_Studio_Community2211\cplex\python\3.9\x64_win64"
+cd "C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\python\3.9\x64_win64"
 pip install .
 cd "C:\Users\Ivaaan\Desktop\git\Proyecto_algoritmos_ruteo"
 pip install -r requirements.txt
