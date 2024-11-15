@@ -1,5 +1,6 @@
-USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM
-python -m venv virtual_env
+USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM 
+
+python -m venv virtual_env\\
 virtual_env\Scripts\activate
 cd "C:\Program Files\IBM\ILOG\CPLEX_Studio_Community2211\cplex\python\3.9\x64_win64"
 pip install .
