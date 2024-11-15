@@ -14,7 +14,7 @@ virtual_env\Scripts\activate
 ### 2. Instalar CPLEX desde la carpeta de instalación
 
 ```bash
-cd "C:\Program Files\IBM\ILOG\CPLEX_Studio_Community2211\cplex\python\3.9\x64_win64"
+cd "C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\python\3.9\x64_win64"
 pip install .
 ```
 
