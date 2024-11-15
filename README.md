@@ -9,12 +9,23 @@ Sigue estos pasos para configurar el entorno virtual, instalar dependencias y ej
 ```bash
 python -m venv virtual_env
 virtual_env\Scripts\activate
-python -m venv virtual_env
-virtual_env\Scripts\activate
+```
+
+### 2. Instalar CPLEX desde la carpeta de instalación
+
+```bash
 cd "C:\Program Files\IBM\ILOG\CPLEX_Studio_Community2211\cplex\python\3.9\x64_win64"
 pip install .
+```
+
+### 3. Instalar Dependencias del Proyecto
+```bash
 cd "C:\Users\Ivaaan\Desktop\git\Proyecto_algoritmos_ruteo"
 pip install -r requirements.txt
+```
+
+### 4. Ejecutar el proyecto
+```bash
 python main.py
 ```
 
