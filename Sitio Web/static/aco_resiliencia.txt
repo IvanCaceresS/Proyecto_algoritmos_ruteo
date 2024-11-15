@@ -1,4 +1,0 @@
-Métricas de resiliencia de la ruta frente a amenazas:
- - Resiliencia en costo (relativa): 1.00
- - Resiliencia en impacto (elementos no afectados): 1.00
- - Distancia total de la ruta: 1.91 km

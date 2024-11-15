@@ -18,7 +18,7 @@ cd "C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\python\3.9\x64_win64"
 pip install .
 ```
 
-### 3. Instalar Dependencias del Proyecto
+### 3. Instalar dependencias del proyecto
 ```bash
 cd "C:\Users\Ivaaan\Desktop\git\Proyecto_algoritmos_ruteo"
 pip install -r requirements.txt

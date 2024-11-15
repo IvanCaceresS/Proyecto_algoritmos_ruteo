@@ -4,15 +4,15 @@
         "name": "Irene Morales",
         "coordenada": "-33.436905,-70.636868",
         "road_closure": "No",
-        "current_speed": 21,
-        "free_flow_speed": 21
+        "current_speed": 15,
+        "free_flow_speed": 20
     },
     "-33.432377,-70.655518": {
         "id": 7981313,
         "name": "Teatinos",
         "coordenada": "-33.432377,-70.655518",
         "road_closure": "No",
-        "current_speed": 41,
+        "current_speed": 34,
         "free_flow_speed": 41
     },
     "-33.433092,-70.648721": {
@@ -20,7 +20,7 @@
         "name": "San Antonio",
         "coordenada": "-33.433092,-70.648721",
         "road_closure": "No",
-        "current_speed": 31,
+        "current_speed": 21,
         "free_flow_speed": 31
     },
     "-33.442375,-70.644909": {
@@ -28,7 +28,7 @@
         "name": "Miraflores",
         "coordenada": "-33.442375,-70.644909",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.433083,-70.652118": {
@@ -36,15 +36,15 @@
         "name": "Ismael Valdés Vergara",
         "coordenada": "-33.433083,-70.652118",
         "road_closure": "No",
-        "current_speed": 94,
-        "free_flow_speed": 94
+        "current_speed": 70,
+        "free_flow_speed": 93
     },
     "-33.471644,-70.651976": {
         "id": 8000030,
         "name": "Lord Cochrane",
         "coordenada": "-33.471644,-70.651976",
         "road_closure": "No",
-        "current_speed": 32,
+        "current_speed": 24,
         "free_flow_speed": 32
     },
     "-33.444608,-70.652903": {
@@ -52,7 +52,7 @@
         "name": "Morandé",
         "coordenada": "-33.444608,-70.652903",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.434982,-70.638862": {
@@ -60,7 +60,7 @@
         "name": "Purísima",
         "coordenada": "-33.434982,-70.638862",
         "road_closure": "No",
-        "current_speed": 21,
+        "current_speed": 16,
         "free_flow_speed": 21
     },
     "-33.442262,-70.643907": {
@@ -68,7 +68,7 @@
         "name": "Diagonal Paraguay",
         "coordenada": "-33.442262,-70.643907",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.436766,-70.634758": {
@@ -84,7 +84,7 @@
         "name": "Santa Isabel",
         "coordenada": "-33.452874,-70.656967",
         "road_closure": "No",
-        "current_speed": 39,
+        "current_speed": 33,
         "free_flow_speed": 42
     },
     "-33.456309,-70.656237": {
@@ -92,7 +92,7 @@
         "name": "Dieciocho",
         "coordenada": "-33.456309,-70.656237",
         "road_closure": "No",
-        "current_speed": 39,
+        "current_speed": 33,
         "free_flow_speed": 42
     },
     "-33.43278,-70.653648": {
@@ -100,7 +100,7 @@
         "name": "Avenida Presidente Balmaceda",
         "coordenada": "-33.43278,-70.653648",
         "road_closure": "No",
-        "current_speed": 41,
+        "current_speed": 34,
         "free_flow_speed": 41
     },
     "-33.473426,-70.663317": {
@@ -108,7 +108,7 @@
         "name": "Avenida Beaucheff",
         "coordenada": "-33.473426,-70.663317",
         "road_closure": "No",
-        "current_speed": 27,
+        "current_speed": 31,
         "free_flow_speed": 31
     },
     "-33.451888,-70.631026": {
@@ -116,15 +116,15 @@
         "name": "Avenida Diez de Julio Huamachuco",
         "coordenada": "-33.451888,-70.631026",
         "road_closure": "No",
-        "current_speed": 37,
-        "free_flow_speed": 37
+        "current_speed": 26,
+        "free_flow_speed": 36
     },
     "-33.437204,-70.638901": {
         "id": 8000738,
         "name": "Estados Unidos",
         "coordenada": "-33.437204,-70.638901",
         "road_closure": "No",
-        "current_speed": 21,
+        "current_speed": 16,
         "free_flow_speed": 21
     },
     "-33.458466,-70.67215": {
@@ -132,15 +132,15 @@
         "name": "Avenida Almirante Blanco Encalada",
         "coordenada": "-33.458466,-70.67215",
         "road_closure": "No",
-        "current_speed": 34,
-        "free_flow_speed": 34
+        "current_speed": 27,
+        "free_flow_speed": 35
     },
     "-33.457311,-70.666498": {
         "id": 8000806,
         "name": "República",
         "coordenada": "-33.457311,-70.666498",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 26,
         "free_flow_speed": 34
     },
     "-33.451585,-70.659321": {
@@ -148,7 +148,7 @@
         "name": "Gorbea",
         "coordenada": "-33.451585,-70.659321",
         "road_closure": "No",
-        "current_speed": 41,
+        "current_speed": 34,
         "free_flow_speed": 41
     },
     "-33.456728,-70.67824": {
@@ -156,7 +156,7 @@
         "name": "Toesca",
         "coordenada": "-33.456728,-70.67824",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 26,
         "free_flow_speed": 34
     },
     "-33.457238,-70.666063": {
@@ -164,7 +164,7 @@
         "name": "Echaurren",
         "coordenada": "-33.457238,-70.666063",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 26,
         "free_flow_speed": 34
     },
     "-33.436016,-70.643211": {
@@ -172,15 +172,15 @@
         "name": "Ismael Valdés Vergara",
         "coordenada": "-33.436016,-70.643211",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.44621,-70.661756": {
         "id": 8000986,
         "name": "Ejército Libertador",
         "coordenada": "-33.44621,-70.661756",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.436917,-70.639698": {
@@ -188,7 +188,7 @@
         "name": "Paulino Alfonso",
         "coordenada": "-33.436917,-70.639698",
         "road_closure": "No",
-        "current_speed": 36,
+        "current_speed": 25,
         "free_flow_speed": 36
     },
     "-33.45139,-70.677869": {
@@ -196,7 +196,7 @@
         "name": "Exposición",
         "coordenada": "-33.45139,-70.677869",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.438719,-70.636122": {
@@ -204,7 +204,7 @@
         "name": "Carabineros de Chile",
         "coordenada": "-33.438719,-70.636122",
         "road_closure": "No",
-        "current_speed": 21,
+        "current_speed": 16,
         "free_flow_speed": 21
     },
     "-33.460367,-70.656593": {
@@ -212,7 +212,7 @@
         "name": "Avenida Tupper",
         "coordenada": "-33.460367,-70.656593",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 26,
         "free_flow_speed": 34
     },
     "-33.437714,-70.64346": {
@@ -220,7 +220,7 @@
         "name": "Santa Lucía",
         "coordenada": "-33.437714,-70.64346",
         "road_closure": "No",
-        "current_speed": 30,
+        "current_speed": 23,
         "free_flow_speed": 34
     },
     "-33.440205,-70.640684": {
@@ -228,7 +228,7 @@
         "name": "José Victorino Lastarria",
         "coordenada": "-33.440205,-70.640684",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.451612,-70.634442": {
@@ -236,8 +236,8 @@
         "name": "Avenida Portugal",
         "coordenada": "-33.451612,-70.634442",
         "road_closure": "No",
-        "current_speed": 28,
-        "free_flow_speed": 28
+        "current_speed": 13,
+        "free_flow_speed": 27
     },
     "-33.446323,-70.645295": {
         "id": 13858411,
@@ -252,31 +252,31 @@
         "name": "Padre Luis de Valdivia",
         "coordenada": "-33.439528,-70.642296",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.437903,-70.641057": {
         "id": 13858436,
         "name": "Rosal",
         "coordenada": "-33.437903,-70.641057",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.438064,-70.641812": {
         "id": 13858437,
         "name": "Rosal",
         "coordenada": "-33.438064,-70.641812",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.438144,-70.639218": {
         "id": 13858447,
         "name": "Villavicencio",
         "coordenada": "-33.438144,-70.639218",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.437695,-70.643303": {
@@ -284,15 +284,15 @@
         "name": "José Miguel de la Barra",
         "coordenada": "-33.437695,-70.643303",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.440107,-70.634478": {
         "id": 13876890,
         "name": "Avenida Vicuña Mackenna",
         "coordenada": "-33.440107,-70.634478",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 27,
         "free_flow_speed": 37
     },
     "-33.452552,-70.657988": {
@@ -300,7 +300,7 @@
         "name": "Santa Isabel",
         "coordenada": "-33.452552,-70.657988",
         "road_closure": "No",
-        "current_speed": 39,
+        "current_speed": 33,
         "free_flow_speed": 42
     },
     "-33.457024,-70.662511": {
@@ -308,15 +308,15 @@
         "name": "José Miguel Carrera",
         "coordenada": "-33.457024,-70.662511",
         "road_closure": "No",
-        "current_speed": 34,
-        "free_flow_speed": 34
+        "current_speed": 27,
+        "free_flow_speed": 35
     },
     "-33.447616,-70.66597": {
         "id": 14421613,
         "name": "Abdón Cifuentes",
         "coordenada": "-33.447616,-70.66597",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.456636,-70.666067": {
@@ -324,7 +324,7 @@
         "name": "Domeyko",
         "coordenada": "-33.456636,-70.666067",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 25,
         "free_flow_speed": 34
     },
     "-33.454539,-70.678083": {
@@ -332,7 +332,7 @@
         "name": "Grajales",
         "coordenada": "-33.454539,-70.678083",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.456541,-70.657567": {
@@ -340,7 +340,7 @@
         "name": "Almirante Blanco Encalada",
         "coordenada": "-33.456541,-70.657567",
         "road_closure": "No",
-        "current_speed": 96,
+        "current_speed": 85,
         "free_flow_speed": 96
     },
     "-33.437499,-70.636569": {
@@ -348,7 +348,7 @@
         "name": "Doctor Ramón Corvalán Melgarejo",
         "coordenada": "-33.437499,-70.636569",
         "road_closure": "No",
-        "current_speed": 21,
+        "current_speed": 16,
         "free_flow_speed": 21
     },
     "-33.437765,-70.638965": {
@@ -356,7 +356,7 @@
         "name": "Namur",
         "coordenada": "-33.437765,-70.638965",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.475293,-70.642034": {
@@ -364,7 +364,7 @@
         "name": "Avenida Santa Rosa",
         "coordenada": "-33.475293,-70.642034",
         "road_closure": "No",
-        "current_speed": 32,
+        "current_speed": 23,
         "free_flow_speed": 32
     },
     "-33.470611,-70.671669": {
@@ -372,23 +372,23 @@
         "name": "Avenida General Rondizzoni",
         "coordenada": "-33.470611,-70.671669",
         "road_closure": "No",
-        "current_speed": 33,
-        "free_flow_speed": 33
+        "current_speed": 27,
+        "free_flow_speed": 34
     },
     "-33.466434,-70.671743": {
         "id": 15155553,
         "name": "El Mirador",
         "coordenada": "-33.466434,-70.671743",
         "road_closure": "No",
-        "current_speed": 22,
-        "free_flow_speed": 29
+        "current_speed": 24,
+        "free_flow_speed": 28
     },
     "-33.473511,-70.664868": {
         "id": 15239339,
         "name": "El Mirador",
         "coordenada": "-33.473511,-70.664868",
         "road_closure": "No",
-        "current_speed": 27,
+        "current_speed": 31,
         "free_flow_speed": 31
     },
     "-33.458201,-70.672154": {
@@ -396,7 +396,7 @@
         "name": "Abate Molina",
         "coordenada": "-33.458201,-70.672154",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 25,
         "free_flow_speed": 34
     },
     "-33.445949,-70.640172": {
@@ -404,7 +404,7 @@
         "name": "General Jofré",
         "coordenada": "-33.445949,-70.640172",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.45607,-70.632108": {
@@ -412,15 +412,15 @@
         "name": "Fray Camilo Henríquez",
         "coordenada": "-33.45607,-70.632108",
         "road_closure": "No",
-        "current_speed": 34,
-        "free_flow_speed": 34
+        "current_speed": 27,
+        "free_flow_speed": 35
     },
     "-33.438659,-70.634838": {
         "id": 20838821,
         "name": "Arturo Burhle",
         "coordenada": "-33.438659,-70.634838",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 27,
         "free_flow_speed": 34
     },
     "-33.438687,-70.63304": {
@@ -428,7 +428,7 @@
         "name": "Almirante Simpson",
         "coordenada": "-33.438687,-70.63304",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 27,
         "free_flow_speed": 34
     },
     "-33.44403,-70.645897": {
@@ -444,7 +444,7 @@
         "name": "Marcoleta",
         "coordenada": "-33.441813,-70.638893",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.443023,-70.643271": {
@@ -452,7 +452,7 @@
         "name": "Guayaquil",
         "coordenada": "-33.443023,-70.643271",
         "road_closure": "No",
-        "current_speed": 30,
+        "current_speed": 23,
         "free_flow_speed": 35
     },
     "-33.442808,-70.641857": {
@@ -460,7 +460,7 @@
         "name": "Quito",
         "coordenada": "-33.442808,-70.641857",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.446148,-70.644061": {
@@ -468,7 +468,7 @@
         "name": "San Isidro",
         "coordenada": "-33.446148,-70.644061",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.445106,-70.64284": {
@@ -476,7 +476,7 @@
         "name": "Blas Cañas",
         "coordenada": "-33.445106,-70.64284",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.46902,-70.625957": {
@@ -484,7 +484,7 @@
         "name": "Diagonal Vicuña Mackenna",
         "coordenada": "-33.46902,-70.625957",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 27,
         "free_flow_speed": 37
     },
     "-33.476502,-70.648199": {
@@ -492,7 +492,7 @@
         "name": "San Diego",
         "coordenada": "-33.476502,-70.648199",
         "road_closure": "No",
-        "current_speed": 32,
+        "current_speed": 23,
         "free_flow_speed": 32
     },
     "-33.450408,-70.676755": {
@@ -500,7 +500,7 @@
         "name": "San Alfonso",
         "coordenada": "-33.450408,-70.676755",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.456581,-70.677499": {
@@ -508,7 +508,7 @@
         "name": "San Vicente",
         "coordenada": "-33.456581,-70.677499",
         "road_closure": "No",
-        "current_speed": 34,
+        "current_speed": 25,
         "free_flow_speed": 34
     },
     "-33.449739,-70.674284": {
@@ -516,7 +516,7 @@
         "name": "Unión Americana",
         "coordenada": "-33.449739,-70.674284",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.441371,-70.641774": {
@@ -524,15 +524,15 @@
         "name": "Lira",
         "coordenada": "-33.441371,-70.641774",
         "road_closure": "No",
-        "current_speed": 24,
-        "free_flow_speed": 24
+        "current_speed": 14,
+        "free_flow_speed": 26
     },
     "-33.44236,-70.644217": {
         "id": 23321634,
         "name": "Carmen",
         "coordenada": "-33.44236,-70.644217",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.44548,-70.64709": {
@@ -548,7 +548,7 @@
         "name": "Sara del Campo",
         "coordenada": "-33.444416,-70.642991",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.441378,-70.638234": {
@@ -556,7 +556,7 @@
         "name": "Jaime Eyzaguirre",
         "coordenada": "-33.441378,-70.638234",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.449508,-70.640348": {
@@ -564,7 +564,7 @@
         "name": "Manuel Antonio Tocornal",
         "coordenada": "-33.449508,-70.640348",
         "road_closure": "No",
-        "current_speed": 28,
+        "current_speed": 15,
         "free_flow_speed": 28
     },
     "-33.446106,-70.640887": {
@@ -572,7 +572,7 @@
         "name": "Vichuquén",
         "coordenada": "-33.446106,-70.640887",
         "road_closure": "No",
-        "current_speed": 29,
+        "current_speed": 23,
         "free_flow_speed": 29
     },
     "-33.447174,-70.635564": {
@@ -580,7 +580,7 @@
         "name": "Santa Victoria",
         "coordenada": "-33.447174,-70.635564",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 27,
         "free_flow_speed": 37
     },
     "-33.447521,-70.637072": {
@@ -588,7 +588,7 @@
         "name": "Raulí",
         "coordenada": "-33.447521,-70.637072",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 27,
         "free_flow_speed": 37
     },
     "-33.448589,-70.636704": {
@@ -596,7 +596,7 @@
         "name": "Raulí",
         "coordenada": "-33.448589,-70.636704",
         "road_closure": "No",
-        "current_speed": 28,
+        "current_speed": 15,
         "free_flow_speed": 28
     },
     "-33.436394,-70.635418": {
@@ -604,7 +604,7 @@
         "name": "Avenida Cardenal José María Caro",
         "coordenada": "-33.436394,-70.635418",
         "road_closure": "No",
-        "current_speed": 32,
+        "current_speed": 25,
         "free_flow_speed": 36
     },
     "-33.433901,-70.645438": {
@@ -612,15 +612,15 @@
         "name": "Puente Patronato",
         "coordenada": "-33.433901,-70.645438",
         "road_closure": "No",
-        "current_speed": 41,
-        "free_flow_speed": 41
+        "current_speed": 34,
+        "free_flow_speed": 42
     },
     "-33.430512,-70.665164": {
         "id": 23393662,
         "name": "Avenida Brasil",
         "coordenada": "-33.430512,-70.665164",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 28,
         "free_flow_speed": 37
     },
     "-33.446141,-70.661475": {
@@ -628,7 +628,7 @@
         "name": "Almirante Barroso",
         "coordenada": "-33.446141,-70.661475",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.433377,-70.664998": {
@@ -636,7 +636,7 @@
         "name": "General Mackenna",
         "coordenada": "-33.433377,-70.664998",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 28,
         "free_flow_speed": 37
     },
     "-33.435875,-70.659887": {
@@ -644,8 +644,8 @@
         "name": "Rosas",
         "coordenada": "-33.435875,-70.659887",
         "road_closure": "No",
-        "current_speed": 35,
-        "free_flow_speed": 35
+        "current_speed": 25,
+        "free_flow_speed": 36
     },
     "-33.429066,-70.674392": {
         "id": 23393706,
@@ -660,7 +660,7 @@
         "name": "Portales",
         "coordenada": "-33.442837,-70.672225",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.443881,-70.678462": {
@@ -668,7 +668,7 @@
         "name": "Agustinas",
         "coordenada": "-33.443881,-70.678462",
         "road_closure": "No",
-        "current_speed": 28,
+        "current_speed": 19,
         "free_flow_speed": 28
     },
     "-33.444387,-70.672074": {
@@ -676,7 +676,7 @@
         "name": "Cueto",
         "coordenada": "-33.444387,-70.672074",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.432305,-70.672303": {
@@ -684,7 +684,7 @@
         "name": "García Reyes",
         "coordenada": "-33.432305,-70.672303",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 28,
         "free_flow_speed": 37
     },
     "-33.442911,-70.660648": {
@@ -692,15 +692,15 @@
         "name": "Moneda",
         "coordenada": "-33.442911,-70.660648",
         "road_closure": "No",
-        "current_speed": 41,
-        "free_flow_speed": 41
+        "current_speed": 34,
+        "free_flow_speed": 42
     },
     "-33.426803,-70.676925": {
         "id": 23393728,
         "name": "Esperanza",
         "coordenada": "-33.426803,-70.676925",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 28,
         "free_flow_speed": 37
     },
     "-33.446312,-70.678272": {
@@ -708,7 +708,7 @@
         "name": "Chacabuco",
         "coordenada": "-33.446312,-70.678272",
         "road_closure": "No",
-        "current_speed": 28,
+        "current_speed": 19,
         "free_flow_speed": 28
     },
     "-33.432803,-70.678394": {
@@ -716,7 +716,7 @@
         "name": "Herrera",
         "coordenada": "-33.432803,-70.678394",
         "road_closure": "No",
-        "current_speed": 37,
+        "current_speed": 28,
         "free_flow_speed": 37
     },
     "-33.446321,-70.678657": {
@@ -724,7 +724,7 @@
         "name": "Erasmo Escala",
         "coordenada": "-33.446321,-70.678657",
         "road_closure": "No",
-        "current_speed": 28,
+        "current_speed": 19,
         "free_flow_speed": 28
     },
     "-33.446031,-70.666367": {
@@ -732,7 +732,7 @@
         "name": "Romero",
         "coordenada": "-33.446031,-70.666367",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.476556,-70.654034": {
@@ -748,7 +748,7 @@
         "name": "Vidaurre",
         "coordenada": "-33.447934,-70.654999",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.446838,-70.655167": {
@@ -756,7 +756,7 @@
         "name": "Alonso de Ovalle",
         "coordenada": "-33.446838,-70.655167",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.444676,-70.654148": {
@@ -764,7 +764,7 @@
         "name": "Nataniel Cox",
         "coordenada": "-33.444676,-70.654148",
         "road_closure": "No",
-        "current_speed": 59,
+        "current_speed": 53,
         "free_flow_speed": 59
     },
     "-33.45058,-70.656462": {
@@ -772,7 +772,7 @@
         "name": "Rosales",
         "coordenada": "-33.45058,-70.656462",
         "road_closure": "No",
-        "current_speed": 39,
+        "current_speed": 33,
         "free_flow_speed": 42
     },
     "-33.448091,-70.656206": {
@@ -780,7 +780,7 @@
         "name": "Corte Suprema",
         "coordenada": "-33.448091,-70.656206",
         "road_closure": "No",
-        "current_speed": 50,
+        "current_speed": 42,
         "free_flow_speed": 50
     },
     "-33.45111,-70.654486": {
