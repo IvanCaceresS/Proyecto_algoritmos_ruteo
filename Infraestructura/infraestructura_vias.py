@@ -127,7 +127,7 @@ bbox = obtener_bbox()
 #     "Talagante", "Tiltil", "Vitacura", "Ñuñoa"
 # ]
 
-comunas_deseadas = ["La Cisterna"]
+comunas_deseadas = ["Santiago"]
 
 # Comunas noreste
 #comunas_deseadas = ["Lo Barnechea", "Vitacura", "Las Condes", "Providencia", "Ñuñoa", "La Reina"]

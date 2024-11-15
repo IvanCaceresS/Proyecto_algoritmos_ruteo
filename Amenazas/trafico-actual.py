@@ -9,10 +9,13 @@ CACHE_FILE = './Archivos_descargados/api_responses.json'
 def cargar_datos_de_cache():
     if os.path.exists(CACHE_FILE):
         with open(CACHE_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
+            data = json.load(f)
+            # Convertir el diccionario en una lista de diccionarios
+            return list(data.values())
     else:
         print("No se encontraron datos en caché. Ejecuta cierre-calles.py para obtenerlos.")
         return []
+
 
 def procesar_trafico(geojson_path):
     datos = cargar_datos_de_cache()

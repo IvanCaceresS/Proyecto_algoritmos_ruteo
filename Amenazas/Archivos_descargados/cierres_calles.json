@@ -1,602 +1,602 @@
 [
     {
-        "id":15715318,
+        "id":7981159,
+        "name":"Irene Morales",
+        "coordenada":"-33.436905,-70.636868",
+        "road_closure":"No"
+    },
+    {
+        "id":7981313,
+        "name":"Teatinos",
+        "coordenada":"-33.432377,-70.655518",
+        "road_closure":"No"
+    },
+    {
+        "id":7981317,
+        "name":"San Antonio",
+        "coordenada":"-33.433092,-70.648721",
+        "road_closure":"No"
+    },
+    {
+        "id":7981319,
+        "name":"Miraflores",
+        "coordenada":"-33.442375,-70.644909",
+        "road_closure":"No"
+    },
+    {
+        "id":7991807,
+        "name":"Ismael Valdés Vergara",
+        "coordenada":"-33.433083,-70.652118",
+        "road_closure":"No"
+    },
+    {
+        "id":8000030,
+        "name":"Lord Cochrane",
+        "coordenada":"-33.471644,-70.651976",
+        "road_closure":"No"
+    },
+    {
+        "id":8000033,
+        "name":"Morandé",
+        "coordenada":"-33.444608,-70.652903",
+        "road_closure":"No"
+    },
+    {
+        "id":8000035,
+        "name":"Purísima",
+        "coordenada":"-33.434982,-70.638862",
+        "road_closure":"No"
+    },
+    {
+        "id":8000232,
+        "name":"Diagonal Paraguay",
+        "coordenada":"-33.442262,-70.643907",
+        "road_closure":"No"
+    },
+    {
+        "id":8000322,
+        "name":"Avenida Providencia",
+        "coordenada":"-33.436766,-70.634758",
+        "road_closure":"No"
+    },
+    {
+        "id":8000329,
+        "name":"Santa Isabel",
+        "coordenada":"-33.452874,-70.656967",
+        "road_closure":"No"
+    },
+    {
+        "id":8000492,
+        "name":"Dieciocho",
+        "coordenada":"-33.456309,-70.656237",
+        "road_closure":"No"
+    },
+    {
+        "id":8000667,
+        "name":"Avenida Presidente Balmaceda",
+        "coordenada":"-33.43278,-70.653648",
+        "road_closure":"No"
+    },
+    {
+        "id":8000688,
+        "name":"Avenida Beaucheff",
+        "coordenada":"-33.473426,-70.663317",
+        "road_closure":"No"
+    },
+    {
+        "id":8000698,
+        "name":"Avenida Diez de Julio Huamachuco",
+        "coordenada":"-33.451888,-70.631026",
+        "road_closure":"No"
+    },
+    {
+        "id":8000738,
+        "name":"Estados Unidos",
+        "coordenada":"-33.437204,-70.638901",
+        "road_closure":"No"
+    },
+    {
+        "id":8000752,
+        "name":"Avenida Almirante Blanco Encalada",
+        "coordenada":"-33.458466,-70.67215",
+        "road_closure":"No"
+    },
+    {
+        "id":8000806,
+        "name":"República",
+        "coordenada":"-33.457311,-70.666498",
+        "road_closure":"No"
+    },
+    {
+        "id":8000909,
+        "name":"Gorbea",
+        "coordenada":"-33.451585,-70.659321",
+        "road_closure":"No"
+    },
+    {
+        "id":8000957,
+        "name":"Toesca",
+        "coordenada":"-33.456728,-70.67824",
+        "road_closure":"No"
+    },
+    {
+        "id":8000969,
+        "name":"Echaurren",
+        "coordenada":"-33.457238,-70.666063",
+        "road_closure":"No"
+    },
+    {
+        "id":8000985,
+        "name":"Ismael Valdés Vergara",
+        "coordenada":"-33.436016,-70.643211",
+        "road_closure":"No"
+    },
+    {
+        "id":8000986,
+        "name":"Ejército Libertador",
+        "coordenada":"-33.44621,-70.661756",
+        "road_closure":"No"
+    },
+    {
+        "id":8000987,
+        "name":"Paulino Alfonso",
+        "coordenada":"-33.436917,-70.639698",
+        "road_closure":"No"
+    },
+    {
+        "id":8000998,
+        "name":"Exposición",
+        "coordenada":"-33.45139,-70.677869",
+        "road_closure":"No"
+    },
+    {
+        "id":8001098,
+        "name":"Carabineros de Chile",
+        "coordenada":"-33.438719,-70.636122",
+        "road_closure":"No"
+    },
+    {
+        "id":8269844,
+        "name":"Avenida Tupper",
+        "coordenada":"-33.460367,-70.656593",
+        "road_closure":"No"
+    },
+    {
+        "id":11490172,
+        "name":"Santa Lucía",
+        "coordenada":"-33.437714,-70.64346",
+        "road_closure":"No"
+    },
+    {
+        "id":13858321,
+        "name":"José Victorino Lastarria",
+        "coordenada":"-33.440205,-70.640684",
+        "road_closure":"No"
+    },
+    {
+        "id":13858323,
+        "name":"Avenida Portugal",
+        "coordenada":"-33.451612,-70.634442",
+        "road_closure":"No"
+    },
+    {
+        "id":13858411,
+        "name":"Tarapacá",
+        "coordenada":"-33.446323,-70.645295",
+        "road_closure":"No"
+    },
+    {
+        "id":13858434,
+        "name":"Padre Luis de Valdivia",
+        "coordenada":"-33.439528,-70.642296",
+        "road_closure":"No"
+    },
+    {
+        "id":13858436,
+        "name":"Rosal",
+        "coordenada":"-33.437903,-70.641057",
+        "road_closure":"No"
+    },
+    {
+        "id":13858437,
+        "name":"Rosal",
+        "coordenada":"-33.438064,-70.641812",
+        "road_closure":"No"
+    },
+    {
+        "id":13858447,
+        "name":"Villavicencio",
+        "coordenada":"-33.438144,-70.639218",
+        "road_closure":"No"
+    },
+    {
+        "id":13858477,
+        "name":"José Miguel de la Barra",
+        "coordenada":"-33.437695,-70.643303",
+        "road_closure":"No"
+    },
+    {
+        "id":13876890,
+        "name":"Avenida Vicuña Mackenna",
+        "coordenada":"-33.440107,-70.634478",
+        "road_closure":"No"
+    },
+    {
+        "id":13920356,
+        "name":"Santa Isabel",
+        "coordenada":"-33.452552,-70.657988",
+        "road_closure":"No"
+    },
+    {
+        "id":14421611,
+        "name":"José Miguel Carrera",
+        "coordenada":"-33.457024,-70.662511",
+        "road_closure":"No"
+    },
+    {
+        "id":14421613,
+        "name":"Abdón Cifuentes",
+        "coordenada":"-33.447616,-70.66597",
+        "road_closure":"No"
+    },
+    {
+        "id":14421616,
+        "name":"Domeyko",
+        "coordenada":"-33.456636,-70.666067",
+        "road_closure":"No"
+    },
+    {
+        "id":14421619,
+        "name":"Grajales",
+        "coordenada":"-33.454539,-70.678083",
+        "road_closure":"No"
+    },
+    {
+        "id":14421621,
+        "name":"Almirante Blanco Encalada",
+        "coordenada":"-33.456541,-70.657567",
+        "road_closure":"No"
+    },
+    {
+        "id":14584727,
+        "name":"Doctor Ramón Corvalán Melgarejo",
+        "coordenada":"-33.437499,-70.636569",
+        "road_closure":"No"
+    },
+    {
+        "id":14585078,
+        "name":"Namur",
+        "coordenada":"-33.437765,-70.638965",
+        "road_closure":"No"
+    },
+    {
+        "id":15150854,
+        "name":"Avenida Santa Rosa",
+        "coordenada":"-33.475293,-70.642034",
+        "road_closure":"No"
+    },
+    {
+        "id":15154792,
+        "name":"Avenida General Rondizzoni",
+        "coordenada":"-33.470611,-70.671669",
+        "road_closure":"No"
+    },
+    {
+        "id":15155553,
+        "name":"El Mirador",
+        "coordenada":"-33.466434,-70.671743",
+        "road_closure":"No"
+    },
+    {
+        "id":15239339,
+        "name":"El Mirador",
+        "coordenada":"-33.473511,-70.664868",
+        "road_closure":"No"
+    },
+    {
+        "id":15239340,
+        "name":"Abate Molina",
+        "coordenada":"-33.458201,-70.672154",
+        "road_closure":"No"
+    },
+    {
+        "id":20837121,
+        "name":"General Jofré",
+        "coordenada":"-33.445949,-70.640172",
+        "road_closure":"No"
+    },
+    {
+        "id":20837123,
+        "name":"Fray Camilo Henríquez",
+        "coordenada":"-33.45607,-70.632108",
+        "road_closure":"No"
+    },
+    {
+        "id":20838821,
+        "name":"Arturo Burhle",
+        "coordenada":"-33.438659,-70.634838",
+        "road_closure":"No"
+    },
+    {
+        "id":20838826,
+        "name":"Almirante Simpson",
+        "coordenada":"-33.438687,-70.63304",
+        "road_closure":"No"
+    },
+    {
+        "id":20891186,
+        "name":"Marcoleta",
+        "coordenada":"-33.44403,-70.645897",
+        "road_closure":"No"
+    },
+    {
+        "id":20891188,
+        "name":"Marcoleta",
+        "coordenada":"-33.441813,-70.638893",
+        "road_closure":"No"
+    },
+    {
+        "id":20891191,
+        "name":"Guayaquil",
+        "coordenada":"-33.443023,-70.643271",
+        "road_closure":"No"
+    },
+    {
+        "id":20891192,
+        "name":"Quito",
+        "coordenada":"-33.442808,-70.641857",
+        "road_closure":"No"
+    },
+    {
+        "id":20891194,
+        "name":"San Isidro",
+        "coordenada":"-33.446148,-70.644061",
+        "road_closure":"No"
+    },
+    {
+        "id":20891196,
+        "name":"Blas Cañas",
+        "coordenada":"-33.445106,-70.64284",
+        "road_closure":"No"
+    },
+    {
+        "id":22698626,
+        "name":"Diagonal Vicuña Mackenna",
+        "coordenada":"-33.46902,-70.625957",
+        "road_closure":"No"
+    },
+    {
+        "id":22698946,
+        "name":"San Diego",
+        "coordenada":"-33.476502,-70.648199",
+        "road_closure":"No"
+    },
+    {
+        "id":23200790,
+        "name":"San Alfonso",
+        "coordenada":"-33.450408,-70.676755",
+        "road_closure":"No"
+    },
+    {
+        "id":23200792,
+        "name":"San Vicente",
+        "coordenada":"-33.456581,-70.677499",
+        "road_closure":"No"
+    },
+    {
+        "id":23200801,
+        "name":"Unión Americana",
+        "coordenada":"-33.449739,-70.674284",
+        "road_closure":"No"
+    },
+    {
+        "id":23321627,
+        "name":"Lira",
+        "coordenada":"-33.441371,-70.641774",
+        "road_closure":"No"
+    },
+    {
+        "id":23321634,
+        "name":"Carmen",
+        "coordenada":"-33.44236,-70.644217",
+        "road_closure":"No"
+    },
+    {
+        "id":23321898,
         "name":"San Francisco",
-        "coordenada":"-33.51736,-70.644626",
+        "coordenada":"-33.44548,-70.64709",
         "road_closure":"No"
     },
     {
-        "id":15715320,
-        "name":"La Granja",
-        "coordenada":"-33.538519,-70.6508",
+        "id":23321901,
+        "name":"Sara del Campo",
+        "coordenada":"-33.444416,-70.642991",
         "road_closure":"No"
     },
     {
-        "id":15731424,
-        "name":"Cerro Negro",
-        "coordenada":"-33.544889,-70.652127",
+        "id":23321902,
+        "name":"Jaime Eyzaguirre",
+        "coordenada":"-33.441378,-70.638234",
         "road_closure":"No"
     },
     {
-        "id":24755186,
-        "name":"Lucerna",
-        "coordenada":"-33.519177,-70.670417",
+        "id":23322354,
+        "name":"Manuel Antonio Tocornal",
+        "coordenada":"-33.449508,-70.640348",
         "road_closure":"No"
     },
     {
-        "id":24755736,
-        "name":"General Freire",
-        "coordenada":"-33.520619,-70.65971",
+        "id":23322355,
+        "name":"Vichuquén",
+        "coordenada":"-33.446106,-70.640887",
         "road_closure":"No"
     },
     {
-        "id":24755740,
-        "name":"General Freire",
-        "coordenada":"-33.518523,-70.670162",
+        "id":23322356,
+        "name":"Santa Victoria",
+        "coordenada":"-33.447174,-70.635564",
         "road_closure":"No"
     },
     {
-        "id":24755186,
-        "name":"Lucerna",
-        "coordenada":"-33.519177,-70.670417",
+        "id":23322357,
+        "name":"Raulí",
+        "coordenada":"-33.447521,-70.637072",
         "road_closure":"No"
     },
     {
-        "id":24755747,
-        "name":"San Luis",
-        "coordenada":"-33.52442,-70.667289",
+        "id":23322361,
+        "name":"Raulí",
+        "coordenada":"-33.448589,-70.636704",
         "road_closure":"No"
     },
     {
-        "id":24756490,
-        "name":"Quinta Transversal",
-        "coordenada":"-33.500796,-70.664794",
+        "id":23389989,
+        "name":"Avenida Cardenal José María Caro",
+        "coordenada":"-33.436394,-70.635418",
         "road_closure":"No"
     },
     {
-        "id":24760851,
-        "name":"Baquedano",
-        "coordenada":"-33.555559,-70.666411",
+        "id":23393550,
+        "name":"Puente Patronato",
+        "coordenada":"-33.433901,-70.645438",
         "road_closure":"No"
     },
     {
-        "id":24760855,
-        "name":"Arturo Prat",
-        "coordenada":"-33.546404,-70.658762",
+        "id":23393662,
+        "name":"Avenida Brasil",
+        "coordenada":"-33.430512,-70.665164",
         "road_closure":"No"
     },
     {
-        "id":24760898,
-        "name":"Carlos Condell",
-        "coordenada":"-33.543912,-70.666069",
+        "id":23393699,
+        "name":"Almirante Barroso",
+        "coordenada":"-33.446141,-70.661475",
         "road_closure":"No"
     },
     {
-        "id":24760913,
-        "name":"Nueva Poniente",
-        "coordenada":"-33.548671,-70.654078",
+        "id":23393703,
+        "name":"General Mackenna",
+        "coordenada":"-33.433377,-70.664998",
         "road_closure":"No"
     },
     {
-        "id":24760914,
-        "name":"Aníbal Pinto",
-        "coordenada":"-33.551212,-70.655399",
+        "id":23393704,
+        "name":"Rosas",
+        "coordenada":"-33.435875,-70.659887",
         "road_closure":"No"
     },
     {
-        "id":24760915,
-        "name":"Almirante Latorre",
-        "coordenada":"-33.5483,-70.656309",
+        "id":23393706,
+        "name":"Rafael Sotomayor",
+        "coordenada":"-33.429066,-70.674392",
         "road_closure":"No"
     },
     {
-        "id":24760916,
-        "name":"Pasaje Covadonga",
-        "coordenada":"-33.54781,-70.658078",
+        "id":23393710,
+        "name":"Portales",
+        "coordenada":"-33.442837,-70.672225",
         "road_closure":"No"
     },
     {
-        "id":24760920,
-        "name":"Manuel Bulnes",
-        "coordenada":"-33.548766,-70.6535",
+        "id":23393715,
+        "name":"Agustinas",
+        "coordenada":"-33.443881,-70.678462",
         "road_closure":"No"
     },
     {
-        "id":24760924,
-        "name":"Pedro Lagos",
-        "coordenada":"-33.546369,-70.65283",
+        "id":23393716,
+        "name":"Cueto",
+        "coordenada":"-33.444387,-70.672074",
         "road_closure":"No"
     },
     {
-        "id":24760925,
-        "name":"Capitán Thompson",
-        "coordenada":"-33.551125,-70.655935",
+        "id":23393724,
+        "name":"García Reyes",
+        "coordenada":"-33.432305,-70.672303",
         "road_closure":"No"
     },
     {
-        "id":24760926,
-        "name":"Torreblanca",
-        "coordenada":"-33.547012,-70.656508",
+        "id":23393727,
+        "name":"Moneda",
+        "coordenada":"-33.442911,-70.660648",
         "road_closure":"No"
     },
     {
-        "id":25421854,
-        "name":"Garibaldi",
-        "coordenada":"-33.543101,-70.662928",
+        "id":23393728,
+        "name":"Esperanza",
+        "coordenada":"-33.426803,-70.676925",
         "road_closure":"No"
     },
     {
-        "id":25421855,
-        "name":"Concha",
-        "coordenada":"-33.54074,-70.661929",
+        "id":23393730,
+        "name":"Chacabuco",
+        "coordenada":"-33.446312,-70.678272",
         "road_closure":"No"
     },
     {
-        "id":25421859,
-        "name":"Esmeralda",
-        "coordenada":"-33.537654,-70.662533",
+        "id":23393731,
+        "name":"Herrera",
+        "coordenada":"-33.432803,-70.678394",
         "road_closure":"No"
     },
     {
-        "id":25421861,
-        "name":"Alfredo Mackenney",
-        "coordenada":"-33.53623,-70.663949",
+        "id":23393739,
+        "name":"Erasmo Escala",
+        "coordenada":"-33.446321,-70.678657",
         "road_closure":"No"
     },
     {
-        "id":25421863,
-        "name":"Dos Oriente",
-        "coordenada":"-33.538553,-70.65825",
+        "id":23393740,
+        "name":"Romero",
+        "coordenada":"-33.446031,-70.666367",
         "road_closure":"No"
     },
     {
-        "id":25421869,
-        "name":"Madame Adriana Bolland",
-        "coordenada":"-33.53573,-70.657448",
+        "id":23400363,
+        "name":"San Ignacio",
+        "coordenada":"-33.476556,-70.654034",
         "road_closure":"No"
     },
     {
-        "id":25421873,
-        "name":"José Asenjo",
-        "coordenada":"-33.523477,-70.652847",
+        "id":23400434,
+        "name":"Vidaurre",
+        "coordenada":"-33.447934,-70.654999",
         "road_closure":"No"
     },
     {
-        "id":25421876,
-        "name":"Pasaje Santa Maria",
-        "coordenada":"-33.533859,-70.656055",
+        "id":23400436,
+        "name":"Alonso de Ovalle",
+        "coordenada":"-33.446838,-70.655167",
         "road_closure":"No"
     },
     {
-        "id":25421891,
-        "name":"Brasil",
-        "coordenada":"-33.533618,-70.655361",
+        "id":23400627,
+        "name":"Nataniel Cox",
+        "coordenada":"-33.444676,-70.654148",
         "road_closure":"No"
     },
     {
-        "id":25421892,
-        "name":"Bombero Óscar Encalada",
-        "coordenada":"-33.536687,-70.657734",
+        "id":23400632,
+        "name":"Rosales",
+        "coordenada":"-33.45058,-70.656462",
         "road_closure":"No"
     },
     {
-        "id":25421894,
-        "name":"Comandante Máximo Humbser",
-        "coordenada":"-33.537231,-70.662435",
+        "id":23400635,
+        "name":"Corte Suprema",
+        "coordenada":"-33.448091,-70.656206",
         "road_closure":"No"
     },
     {
-        "id":25421895,
-        "name":"Cobija",
-        "coordenada":"-33.538332,-70.659557",
+        "id":23400886,
+        "name":"Cóndor",
+        "coordenada":"-33.45111,-70.654486",
         "road_closure":"No"
     },
     {
-        "id":25421898,
-        "name":"Uno Oriente",
-        "coordenada":"-33.538103,-70.6608",
-        "road_closure":"No"
-    },
-    {
-        "id":25421911,
-        "name":"La Vendimia",
-        "coordenada":"-33.535393,-70.680999",
-        "road_closure":"No"
-    },
-    {
-        "id":25421919,
-        "name":"Hurtado de Mendoza",
-        "coordenada":"-33.535839,-70.679225",
-        "road_closure":"No"
-    },
-    {
-        "id":25421922,
-        "name":"Alonso de Ercilla",
-        "coordenada":"-33.536126,-70.678593",
-        "road_closure":"No"
-    },
-    {
-        "id":25421937,
-        "name":"Avenida Goycolea",
-        "coordenada":"-33.541652,-70.657471",
-        "road_closure":"No"
-    },
-    {
-        "id":25421939,
-        "name":"Alhué",
-        "coordenada":"-33.536328,-70.677931",
-        "road_closure":"No"
-    },
-    {
-        "id":25421944,
-        "name":"Alcalde Barrera",
-        "coordenada":"-33.539927,-70.679099",
-        "road_closure":"No"
-    },
-    {
-        "id":25421945,
-        "name":"Trinidad Ramírez",
-        "coordenada":"-33.543501,-70.666683",
-        "road_closure":"No"
-    },
-    {
-        "id":25421948,
-        "name":"Blest Gana",
-        "coordenada":"-33.541366,-70.674106",
-        "road_closure":"No"
-    },
-    {
-        "id":25421953,
-        "name":"Diego Portales",
-        "coordenada":"-33.537953,-70.681034",
-        "road_closure":"No"
-    },
-    {
-        "id":25421954,
-        "name":"Alonso de Ercilla",
-        "coordenada":"-33.537235,-70.679202",
-        "road_closure":"No"
-    },
-    {
-        "id":25421955,
-        "name":"Los Almendros",
-        "coordenada":"-33.539682,-70.679943",
-        "road_closure":"No"
-    },
-    {
-        "id":25421959,
-        "name":"Manuel Ballesteros",
-        "coordenada":"-33.536696,-70.676724",
-        "road_closure":"No"
-    },
-    {
-        "id":25926918,
-        "name":"Comandante Andrés Soza",
-        "coordenada":"-33.537,-70.675722",
-        "road_closure":"No"
-    },
-    {
-        "id":25926921,
-        "name":"Baldomero Lillo",
-        "coordenada":"-33.535711,-70.675418",
-        "road_closure":"No"
-    },
-    {
-        "id":25926922,
-        "name":"Tucumán",
-        "coordenada":"-33.536538,-70.67724",
-        "road_closure":"No"
-    },
-    {
-        "id":25926926,
-        "name":"Joaquín Díaz Garcés",
-        "coordenada":"-33.535918,-70.674744",
-        "road_closure":"No"
-    },
-    {
-        "id":25926928,
-        "name":"Calamar",
-        "coordenada":"-33.53738,-70.674477",
-        "road_closure":"No"
-    },
-    {
-        "id":25926939,
-        "name":"Aurora",
-        "coordenada":"-33.537623,-70.673696",
-        "road_closure":"No"
-    },
-    {
-        "id":25926943,
-        "name":"Canal Alberto",
-        "coordenada":"-33.537827,-70.672645",
-        "road_closure":"No"
-    },
-    {
-        "id":25926947,
-        "name":"Pasaje Canal de Suez",
-        "coordenada":"-33.535684,-70.672959",
-        "road_closure":"No"
-    },
-    {
-        "id":25926968,
-        "name":"Pezoa Véliz",
-        "coordenada":"-33.539743,-70.672539",
-        "road_closure":"No"
-    },
-    {
-        "id":25926981,
-        "name":"Pasaje Los Jacintos",
-        "coordenada":"-33.53902,-70.673383",
-        "road_closure":"No"
-    },
-    {
-        "id":25926996,
-        "name":"Brasil",
-        "coordenada":"-33.541155,-70.67484",
-        "road_closure":"No"
-    },
-    {
-        "id":25927006,
-        "name":"Centro América",
-        "coordenada":"-33.540956,-70.67553",
-        "road_closure":"No"
-    },
-    {
-        "id":25927019,
-        "name":"Argentina",
-        "coordenada":"-33.542151,-70.677173",
-        "road_closure":"No"
-    },
-    {
-        "id":25927050,
-        "name":"Perú",
-        "coordenada":"-33.53948,-70.676045",
-        "road_closure":"No"
-    },
-    {
-        "id":25927055,
-        "name":"Salas",
-        "coordenada":"-33.538392,-70.670911",
-        "road_closure":"No"
-    },
-    {
-        "id":25927056,
-        "name":"Los Claveles",
-        "coordenada":"-33.539484,-70.671875",
-        "road_closure":"No"
-    },
-    {
-        "id":25927057,
-        "name":"Rosario de Santa Fe",
-        "coordenada":"-33.54253,-70.670042",
-        "road_closure":"No"
-    },
-    {
-        "id":25927058,
-        "name":"Las Dalias",
-        "coordenada":"-33.539012,-70.6711",
-        "road_closure":"No"
-    },
-    {
-        "id":25927066,
-        "name":"Los Copihues",
-        "coordenada":"-33.541361,-70.669788",
-        "road_closure":"No"
-    },
-    {
-        "id":25927067,
-        "name":"Los Aromos",
-        "coordenada":"-33.542077,-70.67161",
-        "road_closure":"No"
-    },
-    {
-        "id":25927070,
-        "name":"Rodolfo Errázuriz",
-        "coordenada":"-33.542281,-70.6709",
-        "road_closure":"No"
-    },
-    {
-        "id":25927071,
-        "name":"Pablo Lemetayer",
-        "coordenada":"-33.542764,-70.669185",
-        "road_closure":"No"
-    },
-    {
-        "id":25927072,
-        "name":"Monseñor Carlos Casanueva",
-        "coordenada":"-33.542809,-70.668606",
-        "road_closure":"No"
-    },
-    {
-        "id":25927073,
-        "name":"Padre Hurtado",
-        "coordenada":"-33.540908,-70.666903",
-        "road_closure":"No"
-    },
-    {
-        "id":25927074,
-        "name":"Pasaje Los Franciscanos",
-        "coordenada":"-33.543181,-70.6673",
-        "road_closure":"No"
-    },
-    {
-        "id":25927076,
-        "name":"21 de Mayo",
-        "coordenada":"-33.543518,-70.670358",
-        "road_closure":"No"
-    },
-    {
-        "id":25927101,
-        "name":"Perú",
-        "coordenada":"-33.537369,-70.682922",
-        "road_closure":"No"
-    },
-    {
-        "id":25927104,
-        "name":"Inés Rivas",
-        "coordenada":"-33.536395,-70.681972",
-        "road_closure":"No"
-    },
-    {
-        "id":25927105,
-        "name":"Perú",
-        "coordenada":"-33.537491,-70.683571",
-        "road_closure":"No"
-    },
-    {
-        "id":25927107,
-        "name":"Colón",
-        "coordenada":"-33.523455,-70.669967",
-        "road_closure":"No"
-    },
-    {
-        "id":25927108,
-        "name":"Avenida Industrias",
-        "coordenada":"-33.527714,-70.672415",
-        "road_closure":"No"
-    },
-    {
-        "id":25927111,
-        "name":"Gaston Despouy",
-        "coordenada":"-33.536368,-70.663124",
-        "road_closure":"No"
-    },
-    {
-        "id":25927112,
-        "name":"Ciencias",
-        "coordenada":"-33.529751,-70.667923",
-        "road_closure":"No"
-    },
-    {
-        "id":25927113,
-        "name":"Paulina",
-        "coordenada":"-33.535456,-70.667146",
-        "road_closure":"No"
-    },
-    {
-        "id":25927114,
-        "name":"Augusto Biaut",
-        "coordenada":"-33.534551,-70.669964",
-        "road_closure":"No"
-    },
-    {
-        "id":25927116,
-        "name":"Río de Janeiro",
-        "coordenada":"-33.533113,-70.672386",
-        "road_closure":"No"
-    },
-    {
-        "id":25927118,
-        "name":"Avenida Pedro Aguirre Cerda",
-        "coordenada":"-33.535272,-70.663886",
-        "road_closure":"No"
-    },
-    {
-        "id":25927130,
-        "name":"La Paz",
-        "coordenada":"-33.534513,-70.673096",
-        "road_closure":"No"
-    },
-    {
-        "id":25927132,
-        "name":"Avenida Pedro Aguirre Cerda",
-        "coordenada":"-33.531905,-70.67429",
-        "road_closure":"No"
-    },
-    {
-        "id":25927134,
-        "name":"Bogotá",
-        "coordenada":"-33.532189,-70.671759",
-        "road_closure":"No"
-    },
-    {
-        "id":25927136,
-        "name":"Manuel Fischman",
-        "coordenada":"-33.529049,-70.662204",
-        "road_closure":"No"
-    },
-    {
-        "id":25927137,
-        "name":"La Paz",
-        "coordenada":"-33.53206,-70.672001",
-        "road_closure":"No"
-    },
-    {
-        "id":25927139,
-        "name":"Progreso",
-        "coordenada":"-33.522144,-70.673685",
-        "road_closure":"No"
-    },
-    {
-        "id":25927140,
-        "name":"Avenida Francia",
-        "coordenada":"-33.529917,-70.671034",
-        "road_closure":"No"
-    },
-    {
-        "id":25927143,
-        "name":"Letras",
-        "coordenada":"-33.532728,-70.678593",
-        "road_closure":"No"
-    },
-    {
-        "id":25927144,
-        "name":"Isabel La Católica",
-        "coordenada":"-33.526895,-70.672819",
-        "road_closure":"No"
-    },
-    {
-        "id":25927146,
-        "name":"Plaza Castelar",
-        "coordenada":"-33.525645,-70.676749",
-        "road_closure":"No"
-    },
-    {
-        "id":25927158,
-        "name":"Santa Anselma",
-        "coordenada":"-33.531617,-70.662902",
-        "road_closure":"No"
-    },
-    {
-        "id":26354754,
-        "name":"Los Lirios",
-        "coordenada":"-33.537003,-70.669854",
-        "road_closure":"No"
-    },
-    {
-        "id":26354761,
-        "name":"Los Crisantemos",
-        "coordenada":"-33.538744,-70.669734",
-        "road_closure":"No"
-    },
-    {
-        "id":26354762,
-        "name":"Las Gaviotas",
-        "coordenada":"-33.537571,-70.668843",
-        "road_closure":"No"
-    },
-    {
-        "id":26354763,
-        "name":"Alcalde Ismael Llona",
-        "coordenada":"-33.538249,-70.666635",
-        "road_closure":"No"
-    },
-    {
-        "id":26354767,
-        "name":"Pasaje Los Juncos",
-        "coordenada":"-33.538523,-70.665748",
-        "road_closure":"No"
-    },
-    {
-        "id":26354768,
-        "name":"Pasaje Fernando Rojas Wolff",
-        "coordenada":"-33.53805,-70.664756",
-        "road_closure":"No"
-    },
-    {
-        "id":27479873,
-        "name":"Piloto Guillaumet",
-        "coordenada":"-33.535877,-70.664035",
+        "id":23400887,
+        "name":"Mencía de los Nidos",
+        "coordenada":"-33.451382,-70.652426",
         "road_closure":"No"
     }
 ]

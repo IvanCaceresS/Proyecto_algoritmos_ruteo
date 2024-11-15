@@ -9,7 +9,7 @@ import sys
 # Cargar variables de entorno
 load_dotenv(dotenv_path=r'../.env')
 API_KEY = os.getenv("TOMTOM_API_KEY")
-CACHE_FILE = './Archivos_descargados/api_responses_cache.json'
+CACHE_FILE = './Archivos_descargados/api_responses.json'
 REQUEST_LIMIT = 100  # Limitar a 100 solicitudes
 
 # Cargar la caché de respuestas previas

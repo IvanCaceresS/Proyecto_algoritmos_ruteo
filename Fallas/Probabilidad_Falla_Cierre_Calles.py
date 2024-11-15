@@ -33,9 +33,9 @@ coincidencias = pd.merge(infraestructura, cierres_calles, on='name_normalized', 
 resultados = []
 for _, row in coincidencias.iterrows():
     if row['road_closure'].strip().lower() == 'yes':
-        probabilidad_falla = 0.9
+        probabilidad_falla = 0.99
     else:
-        probabilidad_falla = 0.1
+        probabilidad_falla = 0.01
     
     resultados.append({
         'id_infraestructura': row['id_infra'],
