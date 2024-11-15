@@ -1,9 +1,9 @@
 USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM
 python -m venv virtual_env
 virtual_env\Scripts\activate
-cd "C:\Program Files\IBM\ILOG\CPLEX_Studio2211\cplex\python\3.9\x64_win64"
+cd "C:\Program Files\IBM\ILOG\CPLEX_Studio_Community2211\cplex\python\3.9\x64_win64"
 pip install .
-cd "C:\Users\IVAN\Desktop\Codes\Proyecto_algoritmos_ruteo"
+cd "C:\Users\Ivaaan\Desktop\git\Proyecto_algoritmos_ruteo"
 pip install -r requirements.txt
 python main.py
 

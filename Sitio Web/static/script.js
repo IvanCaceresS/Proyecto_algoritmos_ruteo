@@ -86,6 +86,7 @@ function enableManualLocation() {
       "Por favor, haz clic en el mapa para seleccionar tu ubicación inicial."
     );
   }
+  
   map.on("click", function (e) {
     const lat = e.latlng.lat;
     const lng = e.latlng.lng;
@@ -112,7 +113,7 @@ function enableManualLocation() {
         .openPopup();
 
       findNearestNode(lat, lng, endIcon, "Punto de fin").then(
-        (nearestNodeId) => {
+        async (nearestNodeId) => { // Marcar como función async para el cálculo secuencial
           nearestNodeMarkerEnd = { nodeId: nearestNodeId };
 
           map.off("click");
@@ -121,15 +122,21 @@ function enableManualLocation() {
           );
           console.log("Punto de inicio:", nearestNodeMarker.nodeId);
           console.log("Punto de fin:", nearestNodeMarkerEnd.nodeId);
-          dijkstra();
-          cplex();
-          dijkstraComplete();
-          acoRoute();
+
+          // Cálculo secuencial de rutas
+          await dijkstra();
+          await cplex();
+          await dijkstraComplete();
+          await acoRoute();
+          
+          // Determinar la mejor ruta
+          await bestRoute();
         }
       );
     }
   });
 }
+
 
 // Función para manejar geolocalización y seleccionar nodo más cercano como punto inicial
 function handleGeolocation(position) {
@@ -210,215 +217,235 @@ function loadRouteOnMap(data, routeType = "dijkstra") {
     });
 }
 
-// Función para llamar al backend y calcular la ruta
 function dijkstra() {
-  var tiempoInicial = new Date().getTime();
-  console.log("Calculando la ruta Dijkstra...");
-  fetch("/dijkstra", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      start_id: nearestNodeMarker.nodeId,
-      end_id: nearestNodeMarkerEnd.nodeId,
-    }),
-  })
-    .then((response) =>
-      response.ok ? response.json() : Promise.reject(response.statusText)
-    )
-    .then((data) => {
-      if (data.success && data.geojson.features.length > 0) {
-        var tiempoFinal = new Date().getTime();
-        var tiempoTotal = tiempoFinal - tiempoInicial;
-
-        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
-        fetch("./static/dijkstra_resiliencia.txt")
-          .then((response) => response.text())
-          .then((text) => {
-            // Combinar tiempo total y métricas de resiliencia en el texto
-            var resilienciaInfo = text.replace(/\n/g, "<br>"); // Reemplazar saltos de línea con <br> para HTML
-            document.getElementById("ruta-dijkstra").innerHTML =
-              "Ruta (Dijkstra) - Tiempo total: " +
-              tiempoTotal +
-              " ms<br>" +
-              resilienciaInfo;
-              bestRoute();
-            // Cargar la ruta en el mapa
-            loadRouteOnMap(data.geojson, "dijkstra");
-          })
-          .catch((error) => {
-            console.error("Error al cargar métricas de resiliencia:", error);
-            document.getElementById("ruta-dijkstra").textContent =
-              "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
-          });
-      } else {
-        alert("No se pudo calcular la ruta.");
-        document.getElementById("ruta-dijkstra").textContent =
-          "Ruta (Dijkstra) - No pudo encontrar una solución segura y óptima.";
-      }
+  return new Promise((resolve) => {
+    var tiempoInicial = new Date().getTime();
+    console.log("Calculando la ruta Dijkstra...");
+    fetch("/dijkstra", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        start_id: nearestNodeMarker.nodeId,
+        end_id: nearestNodeMarkerEnd.nodeId,
+      }),
     })
-    .catch((error) =>
-      console.error("Error al calcular la ruta Dijkstra:", error)
-    );
+      .then((response) =>
+        response.ok ? response.json() : Promise.reject(response.statusText)
+      )
+      .then((data) => {
+        if (data.success && data.geojson.features.length > 0) {
+          var tiempoFinal = new Date().getTime();
+          var tiempoTotal = tiempoFinal - tiempoInicial;
+
+          fetch("./static/dijkstra_resiliencia.txt")
+            .then((response) => response.text())
+            .then((text) => {
+              var resilienciaInfo = text.replace(/\n/g, "<br>");
+              document.getElementById("ruta-dijkstra").innerHTML =
+                "Ruta (Dijkstra) - Tiempo total: " +
+                tiempoTotal +
+                " ms<br>" +
+                resilienciaInfo;
+              loadRouteOnMap(data.geojson, "dijkstra");
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Error al cargar métricas de resiliencia:", error);
+              document.getElementById("ruta-dijkstra").textContent =
+                "Ruta (Dijkstra) - Tiempo total: " + tiempoTotal + " ms";
+              resolve();
+            });
+        } else {
+          console.log("No se pudo calcular la ruta Dijkstra.");
+          document.getElementById("ruta-dijkstra").textContent =
+            "Ruta (Dijkstra) - No pudo encontrar una solución segura y óptima.";
+          resolve();
+        }
+      })
+      .catch((error) => {
+        console.error("Error al calcular la ruta Dijkstra:", error);
+        resolve();
+      });
+  });
 }
 
-// Función para llamar al backend y calcular la ruta CPLEX
 function cplex() {
-  var tiempoInicial = new Date().getTime();
-  console.log("Calculando la ruta usando CPLEX...");
-  fetch("/cplex", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      start_id: nearestNodeMarker.nodeId,
-      end_id: nearestNodeMarkerEnd.nodeId,
-    }),
-  })
-    .then((response) =>
-      response.ok ? response.json() : Promise.reject(response.statusText)
-    )
-    .then((data) => {
-      if (data.success && data.geojson.features.length > 0) {
-        var tiempoFinal = new Date().getTime();
-        var tiempoTotal = tiempoFinal - tiempoInicial;
+  return new Promise((resolve) => {
+    var tiempoInicial = new Date().getTime();
+    console.log("Calculando la ruta usando CPLEX...");
 
-        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
-        fetch("./static/cplex_resiliencia.txt")
-          .then((response) => response.text())
-          .then((text) => {
-            var resilienciaInfo = text.replace(/\n/g, "<br>");
-            document.getElementById("ruta-cplex").innerHTML =
-              "Ruta (CPLEX) - Tiempo total: " +
-              tiempoTotal +
-              " ms<br>" +
-              resilienciaInfo;
-            bestRoute();
-            // Cargar la ruta en el mapa
-            loadRouteOnMap(data.geojson, "cplex");
-          })
-          .catch((error) => {
-            console.error("Error al cargar métricas de resiliencia:", error);
-            document.getElementById("ruta-cplex").textContent =
-              "Ruta (CPLEX) - Tiempo total: " + tiempoTotal + " ms";
-          });
-      } else {
-        alert("No se pudo calcular la ruta usando CPLEX.");
-        document.getElementById("ruta-cplex").textContent =
-          "Ruta (CPLEX) - No pudo encontrar una solución segura y óptima.";
-      }
+    fetch("/cplex", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        start_id: nearestNodeMarker.nodeId,
+        end_id: nearestNodeMarkerEnd.nodeId,
+      }),
     })
-    .catch((error) =>
-      console.error("Error al calcular la ruta usando CPLEX:", error)
-    );
-}
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else if (response.status === 500) {
+          document.getElementById("ruta-cplex").textContent =
+            "Ruta (CPLEX) - No se pudo calcular la ruta debido a los límites de la versión Community Edition de CPLEX.";
+          throw new Error("CPLEX limit exceeded");
+        } else {
+          return Promise.reject(response.statusText);
+        }
+      })
+      .then((data) => {
+        if (data.success && data.geojson.features.length > 0) {
+          var tiempoFinal = new Date().getTime();
+          var tiempoTotal = tiempoFinal - tiempoInicial;
 
-// Función para llamar al backend y calcular la ruta Dijkstra Completa
+          fetch("./static/cplex_resiliencia.txt")
+            .then((response) => response.text())
+            .then((text) => {
+              var resilienciaInfo = text.replace(/\n/g, "<br>");
+              document.getElementById("ruta-cplex").innerHTML =
+                "Ruta (CPLEX) - Tiempo total: " +
+                tiempoTotal +
+                " ms<br>" +
+                resilienciaInfo;
+              loadRouteOnMap(data.geojson, "cplex");
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Error al cargar métricas de resiliencia:", error);
+              document.getElementById("ruta-cplex").textContent =
+                "Ruta (CPLEX) - Tiempo total: " + tiempoTotal + " ms";
+              resolve();
+            });
+        } else {
+          console.log("No se pudo calcular la ruta usando CPLEX.");
+          document.getElementById("ruta-cplex").textContent =
+            "Ruta (CPLEX) - No pudo encontrar una solución segura y óptima.";
+          resolve();
+        }
+      })
+      .catch((error) => {
+        if (error.message !== "CPLEX limit exceeded") {
+          console.error("Error al calcular la ruta usando CPLEX:", error);
+        }
+        resolve();
+      });
+  });
+}
 function dijkstraComplete() {
-  var tiempoInicial = new Date().getTime();
-  console.log("Calculando la ruta Dijkstra Completa...");
-  fetch("/dijkstra_complete", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      start_id: nearestNodeMarker.nodeId,
-      end_id: nearestNodeMarkerEnd.nodeId,
-    }),
-  })
-    .then((response) =>
-      response.ok ? response.json() : Promise.reject(response.statusText)
-    )
-    .then((data) => {
-      if (data.success && data.geojson.features.length > 0) {
-        var tiempoFinal = new Date().getTime();
-        var tiempoTotal = tiempoFinal - tiempoInicial;
-
-        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
-        fetch("./static/dijkstra_complete_resiliencia.txt")
-          .then((response) => response.text())
-          .then((text) => {
-            var resilienciaInfo = text.replace(/\n/g, "<br>");
-            document.getElementById("ruta-dijkstra-completa").innerHTML =
-              "Ruta (Dijkstra Completa) - Tiempo total: " +
-              tiempoTotal +
-              " ms<br>" +
-              resilienciaInfo;
-            bestRoute();
-            // Cargar la ruta en el mapa
-            loadRouteOnMap(data.geojson, "dijkstra_complete");
-          })
-          .catch((error) => {
-            console.error("Error al cargar métricas de resiliencia:", error);
-            document.getElementById("ruta-dijkstra-completa").textContent =
-              "Ruta (Dijkstra Completa) - Tiempo total: " + tiempoTotal + " ms";
-          });
-      } else {
-        alert("No se pudo calcular la ruta Dijkstra Completa.");
-        document.getElementById("ruta-dijkstra-completa").textContent =
-          "Ruta (Dijkstra Completa) - No pudo encontrar una solución segura y óptima.";
-      }
+  return new Promise((resolve) => {
+    var tiempoInicial = new Date().getTime();
+    console.log("Calculando la ruta Dijkstra Completa...");
+    fetch("/dijkstra_complete", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        start_id: nearestNodeMarker.nodeId,
+        end_id: nearestNodeMarkerEnd.nodeId,
+      }),
     })
-    .catch((error) =>
-      console.error("Error al calcular la ruta Dijkstra Completa:", error)
-    );
+      .then((response) =>
+        response.ok ? response.json() : Promise.reject(response.statusText)
+      )
+      .then((data) => {
+        if (data.success && data.geojson.features.length > 0) {
+          var tiempoFinal = new Date().getTime();
+          var tiempoTotal = tiempoFinal - tiempoInicial;
+
+          fetch("./static/dijkstra_complete_resiliencia.txt")
+            .then((response) => response.text())
+            .then((text) => {
+              var resilienciaInfo = text.replace(/\n/g, "<br>");
+              document.getElementById("ruta-dijkstra-completa").innerHTML =
+                "Ruta (Dijkstra Completa) - Tiempo total: " +
+                tiempoTotal +
+                " ms<br>" +
+                resilienciaInfo;
+              loadRouteOnMap(data.geojson, "dijkstra_complete");
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Error al cargar métricas de resiliencia:", error);
+              document.getElementById("ruta-dijkstra-completa").textContent =
+                "Ruta (Dijkstra Completa) - Tiempo total: " + tiempoTotal + " ms";
+              resolve();
+            });
+        } else {
+          console.log("No se pudo calcular la ruta Dijkstra Completa.");
+          document.getElementById("ruta-dijkstra-completa").textContent =
+            "Ruta (Dijkstra Completa) - No pudo encontrar una solución segura y óptima.";
+          resolve();
+        }
+      })
+      .catch((error) => {
+        console.error("Error al calcular la ruta Dijkstra Completa:", error);
+        resolve();
+      });
+  });
 }
-
-// Función para llamar al backend y calcular la ruta ACO
 function acoRoute() {
-  var tiempoInicial = new Date().getTime();
-  console.log("Calculando la ruta ACO...");
-  fetch("/aco_route", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      start_id: nearestNodeMarker.nodeId,
-      end_id: nearestNodeMarkerEnd.nodeId,
-    }),
-  })
-    .then((response) => response.ok ? response.json() : Promise.reject(response.statusText))
-    .then((data) => {
-      if (data.success && data.geojson && data.geojson.features.length > 0) {
-        var tiempoFinal = new Date().getTime();
-        var tiempoTotal = tiempoFinal - tiempoInicial;
-
-        // Realizar una solicitud AJAX para obtener las métricas de resiliencia
-        fetch("./static/aco_resiliencia.txt")
-          .then((response) => response.text())
-          .then((text) => {
-            var resilienciaInfo = text.replace(/\n/g, "<br>");
-            document.getElementById("ruta-aco").innerHTML =
-              "Ruta (ACO) - Tiempo total: " +
-              tiempoTotal +
-              " ms<br>" +
-              resilienciaInfo;
-            bestRoute();
-            // Cargar la ruta en el mapa
-            loadRouteOnMap(data.geojson, "aco");
-          })
-          .catch((error) => {
-            console.error("Error al cargar métricas de resiliencia:", error);
-            document.getElementById("ruta-aco").textContent =
-              "Ruta (ACO) - Tiempo total: " + tiempoTotal + " ms";
-          });
-      } else {
-        console.log("No se pudo calcular la ruta ACO o el archivo geojson está vacío.");
-        document.getElementById("ruta-aco").textContent =
-          "Ruta (ACO) - No pudo encontrar una solución segura y óptima.";
-      }
+  return new Promise((resolve) => {
+    var tiempoInicial = new Date().getTime();
+    console.log("Calculando la ruta ACO...");
+    fetch("/aco_route", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        start_id: nearestNodeMarker.nodeId,
+        end_id: nearestNodeMarkerEnd.nodeId,
+      }),
     })
-    .catch((error) => {
-      console.error("Error al calcular la ruta ACO:", error);
-      document.getElementById("ruta-aco").textContent =
-        "Ruta (ACO) - No pudo encontrar una solución segura y óptima.";
-    });
+      .then((response) =>
+        response.ok ? response.json() : Promise.reject(response.statusText)
+      )
+      .then((data) => {
+        if (data.success && data.geojson && data.geojson.features.length > 0) {
+          var tiempoFinal = new Date().getTime();
+          var tiempoTotal = tiempoFinal - tiempoInicial;
+
+          fetch("./static/aco_resiliencia.txt")
+            .then((response) => response.text())
+            .then((text) => {
+              var resilienciaInfo = text.replace(/\n/g, "<br>");
+              document.getElementById("ruta-aco").innerHTML =
+                "Ruta (ACO) - Tiempo total: " +
+                tiempoTotal +
+                " ms<br>" +
+                resilienciaInfo;
+              loadRouteOnMap(data.geojson, "aco");
+              resolve();
+            })
+            .catch((error) => {
+              console.error("Error al cargar métricas de resiliencia:", error);
+              document.getElementById("ruta-aco").textContent =
+                "Ruta (ACO) - Tiempo total: " + tiempoTotal + " ms";
+              resolve();
+            });
+        } else {
+          console.log("No se pudo calcular la ruta ACO.");
+          document.getElementById("ruta-aco").textContent =
+            "Ruta (ACO) - No pudo encontrar una solución segura y óptima.";
+          resolve();
+        }
+      })
+      .catch((error) => {
+        console.error("Error al calcular la ruta ACO:", error);
+        resolve();
+      });
+  });
 }
 
 async function fetchMetrics(filePath) {
   try {
     const response = await fetch(filePath);
     
+    // Si el archivo no existe o no se pudo cargar
     if (!response.ok) throw new Error("File not found");
 
     const text = await response.text();
     
+    // Validar que el contenido no esté vacío
+    if (!text.trim()) throw new Error("Empty file");
+
     // Extraer valores de resiliencia y distancia del contenido del archivo
     const resilienciaCosto = parseFloat(text.match(/Resiliencia en costo \(relativa\): ([\d.]+)/)[1]);
     const resilienciaImpacto = parseFloat(text.match(/Resiliencia en impacto \(elementos no afectados\): ([\d.]+)/)[1]);
@@ -434,12 +461,13 @@ async function fetchMetrics(filePath) {
   }
 }
 
+
 async function bestRoute() {
   const files = [
-    './static/aco_resiliencia.txt',
-    './static/cplex_resiliencia.txt',
     './static/dijkstra_resiliencia.txt',
-    './static/dijkstra_complete_resiliencia.txt'
+    './static/dijkstra_complete_resiliencia.txt',    
+    './static/cplex_resiliencia.txt',
+    './static/aco_resiliencia.txt'
   ];
   
   // Leer todos los archivos y filtrar los resultados válidos

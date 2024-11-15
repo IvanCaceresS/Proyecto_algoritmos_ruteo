@@ -1,20 +1,8 @@
 [
     {
-        "comuna": "ÑUÑOA",
-        "latitud": "-33.4543164",
-        "longitud": "-70.5936358",
-        "precip_mm": 0.0
-    },
-    {
-        "comuna": "PROVIDENCIA",
-        "latitud": "-33.4321835",
-        "longitud": "-70.6095284",
-        "precip_mm": 0.0
-    },
-    {
-        "comuna": "LA REINA",
-        "latitud": "-33.44737295",
-        "longitud": "-70.53341181233888",
+        "comuna": "LA CISTERNA",
+        "latitud": "-33.5346265",
+        "longitud": "-70.6644024",
         "precip_mm": 0.0
     }
 ]

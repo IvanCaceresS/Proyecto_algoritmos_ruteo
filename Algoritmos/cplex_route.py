@@ -11,8 +11,8 @@ from calculo_resiliencia import calcular_resiliencia
 load_dotenv(dotenv_path='../.env')
 
 # Configurar la ruta de CPLEX en la variable de entorno
-os.environ['CPLEX_STUDIO_DIR2211'] = "C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211"
-
+#os.environ['CPLEX_STUDIO_DIR2211'] = "C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio2211"
+os.environ['CPLEX_STUDIO_DIR2211'] = "C:\\Program Files\\IBM\\ILOG\\CPLEX_Studio_Community2211"
 # Configuración de conexión a la base de datos
 host = os.getenv("DB_HOST")
 database = os.getenv("DB_NAME")

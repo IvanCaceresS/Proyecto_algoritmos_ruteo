@@ -1,0 +1,702 @@
+[
+    {
+        "id":15715318,
+        "name":"San Francisco",
+        "coordenada":"-33.51736,-70.644626",
+        "current_speed":36,
+        "free_flow_speed":36
+    },
+    {
+        "id":15715320,
+        "name":"La Granja",
+        "coordenada":"-33.538519,-70.6508",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":15731424,
+        "name":"Cerro Negro",
+        "coordenada":"-33.544889,-70.652127",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24755186,
+        "name":"Lucerna",
+        "coordenada":"-33.519177,-70.670417",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":24755736,
+        "name":"General Freire",
+        "coordenada":"-33.520619,-70.65971",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":24755740,
+        "name":"General Freire",
+        "coordenada":"-33.518523,-70.670162",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":24755186,
+        "name":"Lucerna",
+        "coordenada":"-33.519177,-70.670417",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":24755747,
+        "name":"San Luis",
+        "coordenada":"-33.52442,-70.667289",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":24756490,
+        "name":"Quinta Transversal",
+        "coordenada":"-33.500796,-70.664794",
+        "current_speed":36,
+        "free_flow_speed":36
+    },
+    {
+        "id":24760851,
+        "name":"Baquedano",
+        "coordenada":"-33.555559,-70.666411",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":24760855,
+        "name":"Arturo Prat",
+        "coordenada":"-33.546404,-70.658762",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760898,
+        "name":"Carlos Condell",
+        "coordenada":"-33.543912,-70.666069",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":24760913,
+        "name":"Nueva Poniente",
+        "coordenada":"-33.548671,-70.654078",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760914,
+        "name":"Aníbal Pinto",
+        "coordenada":"-33.551212,-70.655399",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760915,
+        "name":"Almirante Latorre",
+        "coordenada":"-33.5483,-70.656309",
+        "current_speed":96,
+        "free_flow_speed":96
+    },
+    {
+        "id":24760916,
+        "name":"Pasaje Covadonga",
+        "coordenada":"-33.54781,-70.658078",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":24760920,
+        "name":"Manuel Bulnes",
+        "coordenada":"-33.548766,-70.6535",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760924,
+        "name":"Pedro Lagos",
+        "coordenada":"-33.546369,-70.65283",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760925,
+        "name":"Capitán Thompson",
+        "coordenada":"-33.551125,-70.655935",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":24760926,
+        "name":"Torreblanca",
+        "coordenada":"-33.547012,-70.656508",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421854,
+        "name":"Garibaldi",
+        "coordenada":"-33.543101,-70.662928",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25421855,
+        "name":"Concha",
+        "coordenada":"-33.54074,-70.661929",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421859,
+        "name":"Esmeralda",
+        "coordenada":"-33.537654,-70.662533",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421861,
+        "name":"Alfredo Mackenney",
+        "coordenada":"-33.53623,-70.663949",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":25421863,
+        "name":"Dos Oriente",
+        "coordenada":"-33.538553,-70.65825",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421869,
+        "name":"Madame Adriana Bolland",
+        "coordenada":"-33.53573,-70.657448",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421873,
+        "name":"José Asenjo",
+        "coordenada":"-33.523477,-70.652847",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":25421876,
+        "name":"Pasaje Santa Maria",
+        "coordenada":"-33.533859,-70.656055",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421891,
+        "name":"Brasil",
+        "coordenada":"-33.533618,-70.655361",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421892,
+        "name":"Bombero Óscar Encalada",
+        "coordenada":"-33.536687,-70.657734",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421894,
+        "name":"Comandante Máximo Humbser",
+        "coordenada":"-33.537231,-70.662435",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421895,
+        "name":"Cobija",
+        "coordenada":"-33.538332,-70.659557",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421898,
+        "name":"Uno Oriente",
+        "coordenada":"-33.538103,-70.6608",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25421911,
+        "name":"La Vendimia",
+        "coordenada":"-33.535393,-70.680999",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25421919,
+        "name":"Hurtado de Mendoza",
+        "coordenada":"-33.535839,-70.679225",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421922,
+        "name":"Alonso de Ercilla",
+        "coordenada":"-33.536126,-70.678593",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421937,
+        "name":"Avenida Goycolea",
+        "coordenada":"-33.541652,-70.657471",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421939,
+        "name":"Alhué",
+        "coordenada":"-33.536328,-70.677931",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25421944,
+        "name":"Alcalde Barrera",
+        "coordenada":"-33.539927,-70.679099",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25421945,
+        "name":"Trinidad Ramírez",
+        "coordenada":"-33.543501,-70.666683",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25421948,
+        "name":"Blest Gana",
+        "coordenada":"-33.541366,-70.674106",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25421953,
+        "name":"Diego Portales",
+        "coordenada":"-33.537953,-70.681034",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25421954,
+        "name":"Alonso de Ercilla",
+        "coordenada":"-33.537235,-70.679202",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25421955,
+        "name":"Los Almendros",
+        "coordenada":"-33.539682,-70.679943",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25421959,
+        "name":"Manuel Ballesteros",
+        "coordenada":"-33.536696,-70.676724",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926918,
+        "name":"Comandante Andrés Soza",
+        "coordenada":"-33.537,-70.675722",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926921,
+        "name":"Baldomero Lillo",
+        "coordenada":"-33.535711,-70.675418",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926922,
+        "name":"Tucumán",
+        "coordenada":"-33.536538,-70.67724",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926926,
+        "name":"Joaquín Díaz Garcés",
+        "coordenada":"-33.535918,-70.674744",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926928,
+        "name":"Calamar",
+        "coordenada":"-33.53738,-70.674477",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926939,
+        "name":"Aurora",
+        "coordenada":"-33.537623,-70.673696",
+        "current_speed":96,
+        "free_flow_speed":96
+    },
+    {
+        "id":25926943,
+        "name":"Canal Alberto",
+        "coordenada":"-33.537827,-70.672645",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926947,
+        "name":"Pasaje Canal de Suez",
+        "coordenada":"-33.535684,-70.672959",
+        "current_speed":96,
+        "free_flow_speed":96
+    },
+    {
+        "id":25926968,
+        "name":"Pezoa Véliz",
+        "coordenada":"-33.539743,-70.672539",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926981,
+        "name":"Pasaje Los Jacintos",
+        "coordenada":"-33.53902,-70.673383",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25926996,
+        "name":"Brasil",
+        "coordenada":"-33.541155,-70.67484",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927006,
+        "name":"Centro América",
+        "coordenada":"-33.540956,-70.67553",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927019,
+        "name":"Argentina",
+        "coordenada":"-33.542151,-70.677173",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25927050,
+        "name":"Perú",
+        "coordenada":"-33.53948,-70.676045",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927055,
+        "name":"Salas",
+        "coordenada":"-33.538392,-70.670911",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927056,
+        "name":"Los Claveles",
+        "coordenada":"-33.539484,-70.671875",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927057,
+        "name":"Rosario de Santa Fe",
+        "coordenada":"-33.54253,-70.670042",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927058,
+        "name":"Las Dalias",
+        "coordenada":"-33.539012,-70.6711",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927066,
+        "name":"Los Copihues",
+        "coordenada":"-33.541361,-70.669788",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":25927067,
+        "name":"Los Aromos",
+        "coordenada":"-33.542077,-70.67161",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927070,
+        "name":"Rodolfo Errázuriz",
+        "coordenada":"-33.542281,-70.6709",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927071,
+        "name":"Pablo Lemetayer",
+        "coordenada":"-33.542764,-70.669185",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927072,
+        "name":"Monseñor Carlos Casanueva",
+        "coordenada":"-33.542809,-70.668606",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927073,
+        "name":"Padre Hurtado",
+        "coordenada":"-33.540908,-70.666903",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927074,
+        "name":"Pasaje Los Franciscanos",
+        "coordenada":"-33.543181,-70.6673",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927076,
+        "name":"21 de Mayo",
+        "coordenada":"-33.543518,-70.670358",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":25927101,
+        "name":"Perú",
+        "coordenada":"-33.537369,-70.682922",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25927104,
+        "name":"Inés Rivas",
+        "coordenada":"-33.536395,-70.681972",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25927105,
+        "name":"Perú",
+        "coordenada":"-33.537491,-70.683571",
+        "current_speed":53,
+        "free_flow_speed":53
+    },
+    {
+        "id":25927107,
+        "name":"Colón",
+        "coordenada":"-33.523455,-70.669967",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":25927108,
+        "name":"Avenida Industrias",
+        "coordenada":"-33.527714,-70.672415",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":25927111,
+        "name":"Gaston Despouy",
+        "coordenada":"-33.536368,-70.663124",
+        "current_speed":32,
+        "free_flow_speed":32
+    },
+    {
+        "id":25927112,
+        "name":"Ciencias",
+        "coordenada":"-33.529751,-70.667923",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927113,
+        "name":"Paulina",
+        "coordenada":"-33.535456,-70.667146",
+        "current_speed":98,
+        "free_flow_speed":98
+    },
+    {
+        "id":25927114,
+        "name":"Augusto Biaut",
+        "coordenada":"-33.534551,-70.669964",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927116,
+        "name":"Río de Janeiro",
+        "coordenada":"-33.533113,-70.672386",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927118,
+        "name":"Avenida Pedro Aguirre Cerda",
+        "coordenada":"-33.535272,-70.663886",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927130,
+        "name":"La Paz",
+        "coordenada":"-33.534513,-70.673096",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927132,
+        "name":"Avenida Pedro Aguirre Cerda",
+        "coordenada":"-33.531905,-70.67429",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927134,
+        "name":"Bogotá",
+        "coordenada":"-33.532189,-70.671759",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927136,
+        "name":"Manuel Fischman",
+        "coordenada":"-33.529049,-70.662204",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":25927137,
+        "name":"La Paz",
+        "coordenada":"-33.53206,-70.672001",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927139,
+        "name":"Progreso",
+        "coordenada":"-33.522144,-70.673685",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":25927140,
+        "name":"Avenida Francia",
+        "coordenada":"-33.529917,-70.671034",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927143,
+        "name":"Letras",
+        "coordenada":"-33.532728,-70.678593",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":25927144,
+        "name":"Isabel La Católica",
+        "coordenada":"-33.526895,-70.672819",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":25927146,
+        "name":"Plaza Castelar",
+        "coordenada":"-33.525645,-70.676749",
+        "current_speed":41,
+        "free_flow_speed":41
+    },
+    {
+        "id":25927158,
+        "name":"Santa Anselma",
+        "coordenada":"-33.531617,-70.662902",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":26354754,
+        "name":"Los Lirios",
+        "coordenada":"-33.537003,-70.669854",
+        "current_speed":96,
+        "free_flow_speed":96
+    },
+    {
+        "id":26354761,
+        "name":"Los Crisantemos",
+        "coordenada":"-33.538744,-70.669734",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":26354762,
+        "name":"Las Gaviotas",
+        "coordenada":"-33.537571,-70.668843",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":26354763,
+        "name":"Alcalde Ismael Llona",
+        "coordenada":"-33.538249,-70.666635",
+        "current_speed":42,
+        "free_flow_speed":42
+    },
+    {
+        "id":26354767,
+        "name":"Pasaje Los Juncos",
+        "coordenada":"-33.538523,-70.665748",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":26354768,
+        "name":"Pasaje Fernando Rojas Wolff",
+        "coordenada":"-33.53805,-70.664756",
+        "current_speed":34,
+        "free_flow_speed":34
+    },
+    {
+        "id":27479873,
+        "name":"Piloto Guillaumet",
+        "coordenada":"-33.535877,-70.664035",
+        "current_speed":34,
+        "free_flow_speed":34
+    }
+]

@@ -46,7 +46,6 @@ nodos_estacionamiento = [int(feature['properties']['geojson_id'].split('/')[-1])
 with open('./static/Fallas/amenazas_geolocalizadas.geojson', 'r', encoding='utf-8') as f:
     amenazas_geo = json.load(f)
 
-
 # Filtrar los IDs de infraestructuras afectadas por tipo de geometría
 infraestructuras_amenazadas_lineas = [
     feature['properties']['id'] 
@@ -63,31 +62,34 @@ nodos_amenazados_puntos = [
 tipos_amenazas = {feature['properties']['id']: feature['properties']['amenaza'] for feature in amenazas_geo['features']}
 multiplicadores_amenazas = {
     'cierre_calle': 3,
-    'seguridad': 2,
-    'trafico': 1.5,
-    'precipitacion_inundacion': 2.5
+    'seguridad': 1.3,
+    'trafico': 1.2,
+    'precipitacion_inundacion': 1.1
 }
 
-print(f"Calculando ruta desde el nodo {source_id} hasta el nodo {target_id}")
+# Definir condiciones de exclusión para cierres de calles y restricciones de sentido
+fallas_infra_cierre_calle = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'cierre_calle']
 
-# Configurar condiciones para excluir las infraestructuras amenazadas y nodos afectados
-infra_amenazada_cond = f"i.id NOT IN ({', '.join(map(str, infraestructuras_amenazadas_lineas))})" if infraestructuras_amenazadas_lineas else "TRUE"
+# Condición para excluir cierres de calles
+infra_amenazada_cond = f"i.id NOT IN ({', '.join(map(str, fallas_infra_cierre_calle))})" if fallas_infra_cierre_calle else "TRUE"
+
+# Condición para excluir nodos amenazados
 nodos_amenazados_cond = f"i.source NOT IN ({', '.join(map(str, nodos_amenazados_puntos))}) AND i.target NOT IN ({', '.join(map(str, nodos_amenazados_puntos))})" if nodos_amenazados_puntos else "TRUE"
 
-# Ajustar costos de acuerdo a cada tipo de amenaza, ciclovías, iluminación y cercanía a estacionamientos
+# Ajustar condiciones de costo para otras amenazas
 adjusted_cost_conditions = []
 fallas_infra_seguridad = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'seguridad']
 fallas_infra_trafico = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'trafico']
 fallas_infra_precipitacion = [feature['properties']['id'] for feature in amenazas_geo['features'] if feature['properties']['amenaza'] == 'precipitacion_inundacion']
 
 if fallas_infra_seguridad:
-    adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_seguridad))}) THEN i.cost * 1.5")
+    adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_seguridad))}) THEN i.cost * 1.3")  # Multiplicador moderado
 if fallas_infra_trafico:
     adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_trafico))}) THEN i.cost * 1.2")
 if fallas_infra_precipitacion:
     adjusted_cost_conditions.append(f"WHEN i.id IN ({', '.join(map(str, fallas_infra_precipitacion))}) THEN i.cost * 1.1")
 
-# Reducir el costo para ciclovías, iluminación y cercanía a estacionamientos
+# Definir el cálculo ajustado de costos para ciclovías, iluminación, cercanía a estacionamientos y amenazas
 adjusted_cost_case = """
     CASE 
         WHEN i.is_ciclovia THEN i.cost * 0.5
@@ -102,7 +104,27 @@ adjusted_cost_case = """
     amenaza_conditions=" ".join(adjusted_cost_conditions)
 )
 
-# Crear una vista temporal con los costos ajustados y excluyendo infraestructuras y nodos amenazados
+# Definir el cálculo de reverse_cost para calles con sentido único y otras condiciones
+reverse_cost_case = """
+    CASE 
+        WHEN i.oneway = 'yes' THEN -1
+        ELSE (
+            CASE 
+                WHEN i.is_ciclovia THEN i.cost * 0.5
+                WHEN i.id IN ({iluminadas}) THEN i.cost * 0.7
+                WHEN i.source IN ({nodos_est}) OR i.target IN ({nodos_est}) THEN i.cost * 0.8
+                {amenaza_conditions}
+                ELSE i.cost 
+            END
+        )
+    END AS reverse_cost
+""".format(
+    iluminadas=", ".join(map(str, calles_iluminadas)),
+    nodos_est=", ".join(map(str, nodos_estacionamiento)),
+    amenaza_conditions=" ".join(adjusted_cost_conditions)
+)
+
+# Crear la vista temporal con costos ajustados y exclusiones aplicadas
 cur.execute(f"""
     CREATE OR REPLACE VIEW proyectoalgoritmos.infraestructura_ajustada AS
     SELECT 
@@ -111,11 +133,13 @@ cur.execute(f"""
         i.target,
         i.oneway,
         {adjusted_cost_case},
+        {reverse_cost_case},
         i.geometry
     FROM 
         proyectoalgoritmos.infraestructura AS i
     WHERE {infra_amenazada_cond} AND {nodos_amenazados_cond};
 """)
+
 
 # Ejecutar pgr_dijkstra utilizando la vista con los costos ajustados
 cur.execute("""

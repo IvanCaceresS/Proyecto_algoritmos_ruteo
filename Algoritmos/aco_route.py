@@ -218,7 +218,7 @@ with open(resiliencia_path, "w", encoding="utf-8") as txt_file:
     txt_file.write("Métricas de resiliencia de la ruta frente a amenazas:\n")
     txt_file.write(f" - Resiliencia en costo (relativa): {resiliencia_costo:.2f}\n")
     txt_file.write(f" - Resiliencia en impacto (elementos no afectados): {resiliencia_impacto:.2f}\n")
-    txt_file.write(f" - Distancia total de la ruta (km): {distancia_total_km:.2f}\n")
+    txt_file.write(f" - Distancia total de la ruta: {distancia_total_km:.2f} km\n")
 
 print(f"Métricas de resiliencia exportadas como '{resiliencia_path}'")
 
