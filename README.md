@@ -1,7 +1,7 @@
 # Instrucciones para configurar el proyecto
 
 Sigue estos pasos para configurar el entorno virtual, instalar dependencias y ejecutar el proyecto.
-- **USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM,** 
+- **USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM.** 
 
 
 ### 1. Crear y activar el entorno virtual
