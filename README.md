@@ -1,10 +1,10 @@
+# Instrucciones para configurar el proyecto
 
-# Instrucciones para Configurar el Proyecto
+Sigue estos pasos para configurar el entorno virtual, instalar dependencias y ejecutar el proyecto.
+- **USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM,** 
 
-Sigue estos pasos para configurar el entorno virtual, instalar dependencias y ejecutar el proyecto. USAR PYTHON 3.9 y descargar CPLEX_STUDIO2211 DE IBM 
 
-
-### 1. Crear y Activar el Entorno Virtual
+### 1. Crear y activar el entorno virtual
 
 ```bash
 python -m venv virtual_env
@@ -29,11 +29,11 @@ pip install -r requirements.txt
 python main.py
 ```
 
-# Segundo Trabajo Grupal (Fase 2)
+# Segundo trabajo grupal (Fase 2)
 
 Para el segundo trabajo grupal del curso (fase 2), deberá hacer una presentación (que deberá subir a Canvas) donde se detalle claramente el proceso y contenga enlaces a cada archivo (recuerde que se evaluará que el contenido esté en la presentación para poder evaluar por igual a todos).
 
-# Tercer Trabajo Grupal (Fase 3)
+# Tercer trabajo grupal (Fase 3)
 1.- La infraestructura a utilizar deberá permitir generar rutas realistas, es decir, no debe generar líneas rectas entre dos puntos. [LISTO]
 
 2.- Se deberá poder filtrar la información a consultar por comunas (para esto deberá utilizar el siguiente geojsonLinks to an external site.). [LISTO]
