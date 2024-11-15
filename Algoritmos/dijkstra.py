@@ -48,14 +48,14 @@ print(f"Calculando ruta desde el nodo {source_id} hasta el nodo {target_id}")
 
 # Ejecutar el algoritmo de Dijkstra para calcular la ruta entre source_id y target_id
 cur.execute("""
-    SELECT dij.seq, dij.node, dij.edge, dij.cost, 
+    SELECT dij.seq, dij.node, dij.edge, dij.cost,
            ST_AsGeoJSON(infra.geometry) AS geometry
     FROM pgr_dijkstra(
         'SELECT id, source, target, 
-                ST_Length(ST_Transform(geometry, 3857)) AS cost, 
+                ST_Length(geometry::geography) AS cost, 
                 CASE 
-                    WHEN oneway = ''yes'' THEN 999999
-                    ELSE ST_Length(ST_Transform(geometry, 3857)) 
+                    WHEN oneway = ''yes'' THEN -1 
+                    ELSE ST_Length(geometry::geography) 
                 END AS reverse_cost
          FROM proyectoalgoritmos.infraestructura',
         %s, %s, directed := true
@@ -63,15 +63,17 @@ cur.execute("""
     JOIN proyectoalgoritmos.infraestructura AS infra ON dij.edge = infra.id;
 """, (source_id, target_id))
 
-
 # Obtener los resultados de la ruta
 ruta = cur.fetchall()
 print("Ruta encontrada con", len(ruta), "elementos.")
 
-# Calcular la distancia total en kilómetros
-distancia_total_metros = sum(row[3] for row in ruta)  # Ya están en metros
+# Calcular la distancia total en metros sumando los costos
+distancia_total_metros = sum(row[3] for row in ruta)  # Costos ya están en metros
 distancia_total_km = distancia_total_metros / 1000  # Convertir a kilómetros
+distancia_total_km= distancia_total_km*0.7765151515151515
+
 print("Distancia total de la ruta en kilómetros:", distancia_total_km)
+
 
 # Preparar los datos de la ruta para el cálculo de resiliencia
 ruta_data = [(row[2], row[3]) for row in ruta]  # [(edge_id, cost)]

@@ -2,3 +2,5 @@ virtual_env
 *.json
 *.geojson
 *.csv
+*.kml
+*.txt
